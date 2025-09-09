@@ -40,7 +40,7 @@ export function Login() {
   }, {} as State);
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="flex justify-center py-12">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <h1 className="text-2xl font-bold">Login</h1>
@@ -58,7 +58,7 @@ export function Login() {
                 <span className="w-full border-t" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="bg-background px-2 text-gray-500">or</span>
+                <span className="bg-background px-2 text-text-muted">or</span>
               </div>
             </div>
             <form action={formAction} className="space-y-3">
@@ -75,8 +75,16 @@ export function Login() {
             </form>
           </div>
         </ErrorBoundary>
-        {state?.error && <div className="rounded-md border p-3 text-center text-red-600">{state.error}</div>}
-        {state?.message && <div className="rounded-md border p-3 text-center text-green-600">{state.message}</div>}
+        {state?.error && (
+          <div className="rounded-md border border-error-border bg-error-bg p-3 text-center text-error dark:border-error-border-dark dark:bg-error-bg-dark dark:text-error-dark">
+            {state.error}
+          </div>
+        )}
+        {state?.message && (
+          <div className="rounded-md border border-success-border bg-success-bg p-3 text-center text-success dark:border-success-border-dark dark:bg-success-bg-dark dark:text-success-dark">
+            {state.message}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -84,7 +92,7 @@ export function Login() {
 
 function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
   return (
-    <div className="border p-3 text-center">
+    <div className="rounded-md border border-border bg-surface p-3 text-center dark:border-border-dark dark:bg-surface-dark">
       <p className="mb-2">Something went wrong</p>
       <p className="mb-3 text-sm">{error?.message}</p>
       <Button type="button" onClick={resetErrorBoundary}>
