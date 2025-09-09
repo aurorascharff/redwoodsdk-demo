@@ -47,7 +47,6 @@ export function Login() {
         </div>
         <ErrorBoundary fallbackRender={ErrorFallback}>
           <div className="space-y-6">
-            {/* Login Section */}
             <form action={formAction}>
               <Button name="action" value="login" className="w-full">
                 Login with passkey
@@ -58,7 +57,7 @@ export function Login() {
                 <span className="w-full border-t" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="bg-background px-2 text-text-muted">or</span>
+                <span className="bg-background text-text-muted px-2">or</span>
               </div>
             </div>
             <form action={formAction} className="space-y-3">
@@ -76,12 +75,12 @@ export function Login() {
           </div>
         </ErrorBoundary>
         {state?.error && (
-          <div className="rounded-md border border-error-border bg-error-bg p-3 text-center text-error dark:border-error-border-dark dark:bg-error-bg-dark dark:text-error-dark">
+          <div className="border-error-border bg-error-bg text-error dark:border-error-border-dark dark:bg-error-bg-dark dark:text-error-dark rounded-md border p-3 text-center">
             {state.error}
           </div>
         )}
         {state?.message && (
-          <div className="rounded-md border border-success-border bg-success-bg p-3 text-center text-success dark:border-success-border-dark dark:bg-success-bg-dark dark:text-success-dark">
+          <div className="border-success-border bg-success-bg text-success dark:border-success-border-dark dark:bg-success-bg-dark dark:text-success-dark rounded-md border p-3 text-center">
             {state.message}
           </div>
         )}
@@ -92,7 +91,7 @@ export function Login() {
 
 function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
   return (
-    <div className="rounded-md border border-border bg-surface p-3 text-center dark:border-border-dark dark:bg-surface-dark">
+    <div className="border-border bg-surface dark:border-border-dark dark:bg-surface-dark rounded-md border p-3 text-center">
       <p className="mb-2">Something went wrong</p>
       <p className="mb-3 text-sm">{error?.message}</p>
       <Button type="button" onClick={resetErrorBoundary}>
