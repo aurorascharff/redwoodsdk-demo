@@ -3,7 +3,7 @@
 import { env } from 'cloudflare:workers';
 import { renderRealtimeClients } from 'rwsdk/realtime/worker';
 
-export let REACTIONS = ['🤦‍♂️'];
+export let REACTIONS = ['⚛️'];
 
 export type Theme = 'lasvegas' | 'react';
 
