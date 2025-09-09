@@ -1,5 +1,5 @@
 {
-  "name": "@redwoodjs/starter-standard",
+  "name": "redwoodsdk-v1-demo",
   "version": "1.0.0",
   "description": "Build fast, server-driven webapps on Cloudflare with SSR, RSC, and realtime. ",
   "main": "index.js",
