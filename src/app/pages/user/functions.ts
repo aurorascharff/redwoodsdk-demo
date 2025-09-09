@@ -1,11 +1,11 @@
 'use server';
+
 import {
   generateRegistrationOptions,
   generateAuthenticationOptions,
   verifyRegistrationResponse,
   verifyAuthenticationResponse,
 } from '@simplewebauthn/server';
-
 import { env } from 'cloudflare:workers';
 import { requestInfo } from 'rwsdk/worker';
 import { z } from 'zod';
@@ -41,7 +41,6 @@ export async function startPasskeyRegistration(username: string) {
   });
 
   await sessions.save(response.headers, { challenge: options.challenge });
-
   return options;
 }
 
@@ -56,7 +55,6 @@ export async function startPasskeyLogin() {
   });
 
   await sessions.save(headers, { challenge: options.challenge });
-
   return options;
 }
 
@@ -83,7 +81,6 @@ export async function finishPasskeyRegistration(username: string, registration: 
   }
 
   await sessions.save(headers, { challenge: null });
-
   const user = await db.user.create({
     data: {
       username,
@@ -98,7 +95,6 @@ export async function finishPasskeyRegistration(username: string, registration: 
       userId: user.id,
     },
   });
-
   return true;
 }
 
@@ -163,6 +159,5 @@ export async function finishPasskeyLogin(login: AuthenticationResponseJSON) {
     challenge: null,
     userId: user.id,
   });
-
   return true;
 }

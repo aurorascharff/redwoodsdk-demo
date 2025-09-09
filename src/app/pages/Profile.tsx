@@ -13,9 +13,9 @@ export default function Profile({ ctx }: { ctx: AppContext }) {
           <strong>ID:</strong> {ctx.user?.id}
         </p>
       </div>
-      <a href="/user/logout">
+      <form action="/user/logout" method="post">
         <Button type="submit">Logout</Button>
-      </a>
+      </form>
     </div>
   );
 }
