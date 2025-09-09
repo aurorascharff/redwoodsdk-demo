@@ -3,7 +3,7 @@ import { getReactions } from './functions';
 
 export function ReactionPage() {
   return (
-    <div className="bg-background dark:bg-background-dark relative flex min-h-screen flex-col overflow-hidden">
+    <div className="bg-background dark:bg-background-dark relative flex flex-col overflow-hidden">
       <div className="absolute top-8 right-8 z-10">
         <div className="bg-surface dark:bg-surface-dark border-border dark:border-border-dark flex h-32 w-32 items-center justify-center rounded-xl border-2 shadow-lg">
           <div className="text-center">
@@ -13,7 +13,7 @@ export function ReactionPage() {
           </div>
         </div>
       </div>
-      <div className="bg-surface dark:bg-surface-dark border-border dark:border-border-dark text-text dark:text-text-dark relative mx-4 my-8 flex flex-1 flex-col items-center justify-center rounded-3xl border-2 px-8 py-12 shadow-2xl backdrop-blur-sm md:px-12 md:py-16">
+      <div className="bg-surface dark:bg-surface-dark border-border dark:border-border-dark text-text dark:text-text-dark relative mx-4 my-8 flex min-h-[600px] flex-1 flex-col items-center justify-center rounded-3xl border-2 px-8 py-12 shadow-2xl backdrop-blur-sm md:px-12 md:py-16">
         <div className="mb-8 text-center">
           <h1 className="text-primary dark:text-primary-dark mb-4 font-serif text-4xl font-bold tracking-tight md:text-5xl">
             Live Reactions

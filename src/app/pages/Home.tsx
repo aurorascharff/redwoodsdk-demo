@@ -1,10 +1,11 @@
 import type { AppContext } from '@/worker';
 import Button from '../components/ui/Button';
+import Card from '../components/ui/Card';
 
 export function Home({ ctx }: { ctx: AppContext }) {
   return (
     <div className="bg-background dark:bg-background-dark fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md">
-      <div className="bg-surface dark:bg-surface-dark border-border dark:border-border-dark text-text dark:text-text-dark relative mx-4 flex max-w-6xl flex-col items-center rounded-3xl border-2 px-8 py-12 shadow-2xl backdrop-blur-sm md:px-12 md:py-16">
+      <Card className="mx-4 flex max-w-6xl flex-col items-center px-8 py-12 md:px-12 md:py-16">
         <div className="mb-8 text-center">
           <h1 className="text-primary dark:text-primary-dark mb-4 font-serif text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
             RedwoodSDK v1.0
@@ -32,7 +33,7 @@ export function Home({ ctx }: { ctx: AppContext }) {
             <Button type="submit">Login</Button>
           </a>
         )}
-      </div>
+      </Card>
     </div>
   );
 }

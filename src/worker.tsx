@@ -66,7 +66,11 @@ export default defineApp([
     route('/hello', () => {
       return new Response('Hello, World!');
     }),
-    layout(AppLayout, [index(Home), route('/profile', [isAuthenticated, Profile]), prefix('/user', userRoutes)]),
-    route('/realtime', ReactionPage),
+    layout(AppLayout, [
+      index(Home),
+      route('/profile', [isAuthenticated, Profile]),
+      prefix('/user', userRoutes),
+      route('/realtime', ReactionPage),
+    ]),
   ]),
 ]);

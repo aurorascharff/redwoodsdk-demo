@@ -4,6 +4,8 @@ import { startAuthentication, startRegistration } from '@simplewebauthn/browser'
 import { useActionState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import Button from '@/app/components/ui/Button';
+import Card from '@/app/components/ui/Card';
+
 import {
   finishPasskeyLogin,
   finishPasskeyRegistration,
@@ -41,7 +43,7 @@ export function Login() {
 
   return (
     <div className="flex justify-center py-12">
-      <div className="w-full max-w-md space-y-6">
+      <Card className="w-full max-w-md space-y-6 px-6 py-8">
         <div className="text-center">
           <h1 className="text-2xl font-bold">Login</h1>
         </div>
@@ -84,7 +86,7 @@ export function Login() {
             {state.message}
           </div>
         )}
-      </div>
+      </Card>
     </div>
   );
 }
