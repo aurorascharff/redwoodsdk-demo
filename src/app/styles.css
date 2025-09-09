@@ -1,24 +1,33 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-gray: #8b7355;
-  --color-divider-dark: #3d2914;
-  --color-divider: #d4c5a9;
-  --color-card-dark: #1a0f0a;
-  --color-card: #f5f0e8;
-  --color-section: #2d1b0f;
+  --color-background: #fff8f0;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #fffcf7;
+  --color-text: #1a1a1a;
+  --color-text-muted: #78716c;
+  --color-primary: #f97316;
+  --color-primary-hover: #ea580c;
+  --color-accent: #fb923c;
+  --color-accent-light: #fed7aa;
+  --color-gradient-start: #fb923c;
+  --color-gradient-end: #f97316;
+  --color-border: #e7e5e4;
+  --color-border-accent: #fed7aa;
 
-  --color-primary: #d4af37;
-  --color-primary-dark: #b8941f;
-  --color-primary-darker: #996f00;
-
-  --color-accent: #cd853f;
-  --color-accent-dark: #a0522d;
-  --color-accent-light: #daa520;
-
-  --color-primary-variant-1: #f4e4bc;
-  --color-primary-variant-2: #e6d199;
-  --color-primary-variant-3: #8b6914;
+  --color-background-dark: #0c0a09;
+  --color-surface-dark: #1c1917;
+  --color-surface-elevated-dark: #292524;
+  --color-text-dark: #fafaf9;
+  --color-text-muted-dark: #a8a29e;
+  --color-primary-dark: #fb923c;
+  --color-primary-hover-dark: #fdba74;
+  --color-accent-dark: #f97316;
+  --color-accent-light-dark: #431407;
+  --color-gradient-start-dark: #fb923c;
+  --color-gradient-end-dark: #f97316;
+  --color-border-dark: #44403c;
+  --color-border-accent-dark: #78716c;
 
   --font-mono: var(--font-geist-mono);
   --font-sans: var(--font-geist-sans);
@@ -26,35 +35,35 @@
 
 @layer base {
   body {
-    @apply bg-amber-50 font-sans text-amber-900 dark:bg-amber-950 dark:text-amber-100;
+    @apply bg-background dark:bg-background-dark text-text dark:text-text-dark font-sans;
   }
 
   h1 {
-    @apply font-sans text-4xl;
+    @apply font-sans text-4xl font-bold;
   }
 
   h2 {
-    @apply text-xl md:text-2xl;
+    @apply text-xl font-semibold md:text-2xl;
   }
 
   h3 {
-    @apply text-lg md:text-xl;
+    @apply text-lg font-medium md:text-xl;
   }
 
   input {
-    @apply border-divider dark:border-divider-dark placeholder:text-gray focus:outline-primary w-full rounded-md border bg-amber-50 px-4 py-2 text-sm -outline-offset-1 focus:outline-2 dark:bg-amber-950;
+    @apply border-border dark:border-border-dark bg-surface dark:bg-surface-dark focus:outline-primary w-full rounded-md border px-4 py-2 text-sm -outline-offset-1 focus:outline-2;
   }
 
   textarea {
-    @apply border-divider dark:border-divider-dark placeholder:text-gray focus:outline-primary w-full resize-y rounded-md border bg-amber-50 px-4 py-3 -outline-offset-1 focus:outline-2 dark:bg-amber-950;
+    @apply border-border dark:border-border-dark bg-surface dark:bg-surface-dark focus:outline-primary w-full resize-y rounded-md border px-4 py-3 -outline-offset-1 focus:outline-2;
   }
 
   select {
-    @apply border-divider dark:border-divider-dark focus:outline-primary w-full rounded-md border bg-amber-50 px-4 py-2 -outline-offset-1 focus:outline-2 dark:bg-amber-950;
+    @apply border-border dark:border-border-dark bg-surface dark:bg-surface-dark focus:outline-primary w-full rounded-md border px-4 py-2 -outline-offset-1 focus:outline-2;
   }
 
   label {
-    @apply mb-1 block text-sm font-medium text-amber-700 dark:text-amber-300;
+    @apply text-text-muted dark:text-text-muted-dark mb-1 block text-sm font-medium;
   }
 }
 
