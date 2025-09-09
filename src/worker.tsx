@@ -1,4 +1,5 @@
 import { env } from 'cloudflare:workers';
+import { realtimeRoute } from 'rwsdk/realtime/worker';
 import { route, render, prefix, index, layout } from 'rwsdk/router';
 import { defineApp, ErrorResponse } from 'rwsdk/worker';
 import { Document } from '@/app/Document';
@@ -8,9 +9,11 @@ import { userRoutes } from '@/app/pages/user/routes';
 import { type User, db, setupDb } from '@/db';
 import AppLayout from './app/layouts/AppLayout';
 import Profile from './app/pages/Profile';
+import { ReactionPage } from './app/pages/reactions/Reactions';
 import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
+export { RealtimeDurableObject } from 'rwsdk/realtime/durableObject';
 
 export type AppContext = {
   session: Session | null;
@@ -56,10 +59,14 @@ export default defineApp([
       });
     }
   },
+  realtimeRoute(env => {
+    return env.REALTIME_DURABLE_OBJECT;
+  }),
   render(Document, [
     route('/hello', () => {
       return new Response('Hello, World!');
     }),
     layout(AppLayout, [index(Home), route('/profile', [isAuthenticated, Profile]), prefix('/user', userRoutes)]),
+    route('/realtime', ReactionPage),
   ]),
 ]);

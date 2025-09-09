@@ -67,6 +67,21 @@
   }
 }
 
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+
+.float-up {
+  animation: floatUp 3s ease-out forwards;
+}
+
 .skeleton-animation {
   background: rgba(150, 150, 150, 0.2);
   background: -webkit-gradient(

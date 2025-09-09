@@ -3,7 +3,7 @@
 import { startAuthentication, startRegistration } from '@simplewebauthn/browser';
 import { useActionState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import Button from '@/app/components/Button';
+import Button from '@/app/components/ui/Button';
 import {
   finishPasskeyLogin,
   finishPasskeyRegistration,

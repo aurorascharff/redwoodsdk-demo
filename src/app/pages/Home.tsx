@@ -1,5 +1,5 @@
 import type { AppContext } from '@/worker';
-import Button from '../components/Button';
+import Button from '../components/ui/Button';
 
 export function Home({ ctx }: { ctx: AppContext }) {
   return (

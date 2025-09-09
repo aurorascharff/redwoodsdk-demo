@@ -1,4 +1,4 @@
-import Button from '@/app/components/Button';
+import Button from '@/app/components/ui/Button';
 import type { AppContext } from '@/worker';
 
 export default function Profile({ ctx }: { ctx: AppContext }) {
