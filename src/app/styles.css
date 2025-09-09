@@ -1,0 +1,206 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-gray: #9ca3af;
+  --color-divider-dark: #374151;
+  --color-divider: #e5e7eb;
+  --color-card-dark: #131313;
+  --color-card: #e5e7eb;
+  --color-section: #2a2929;
+
+  --color-primary: #8132fe;
+  --color-primary-dark: #6b21ff;
+  --color-primary-darker: #5b1ddb;
+
+  --color-accent: #3352b3;
+  --color-accent-dark: #2a4292;
+  --color-accent-light: #4563c7;
+
+  --color-primary-variant-1: #95ade9;
+  --color-primary-variant-2: #7a90c6;
+  --color-primary-variant-3: #273e76;
+
+  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans);
+}
+
+@layer base {
+  body {
+    @apply bg-white font-sans text-black dark:bg-black dark:text-white;
+  }
+
+  h1 {
+    @apply font-sans text-4xl;
+  }
+
+  h2 {
+    @apply text-xl md:text-2xl;
+  }
+
+  h3 {
+    @apply text-lg md:text-xl;
+  }
+
+  input {
+    @apply w-full rounded-md border border-divider dark:border-divider-dark px-4 py-2 bg-white dark:bg-black placeholder:text-gray  focus:outline-primary focus:outline-2 -outline-offset-1 text-sm;
+  }
+
+  textarea {
+    @apply w-full rounded-md border border-divider dark:border-divider-dark px-4 py-3 bg-white dark:bg-black placeholder:text-gray  focus:outline-primary focus:outline-2 -outline-offset-1 resize-y;
+  }
+
+  select {
+    @apply w-full rounded-md border border-divider dark:border-divider-dark px-4 py-2 bg-white dark:bg-black focus:outline-primary focus:outline-2 -outline-offset-1;
+  }
+
+  label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
+  }
+}
+
+.skeleton-animation {
+  background: rgba(150, 150, 150, 0.2);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(8%, rgba(130, 130, 130, 0.2)),
+    color-stop(18%, rgba(170, 170, 170, 0.3)),
+    color-stop(33%, rgba(150, 150, 150, 0.2))
+  );
+  background: linear-gradient(
+    to right,
+    rgba(130, 130, 130, 0.2) 8%,
+    rgba(170, 170, 170, 0.3) 18%,
+    rgba(150, 150, 150, 0.2) 33%
+  );
+  background-size: 800px 100px;
+  animation: wave-lines 2s infinite ease-out;
+}
+
+@keyframes wave-lines {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+@keyframes wave-squares {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+::view-transition-group(anything) {
+  z-index: 100;
+}
+
+::view-transition-old(.slide-down) {
+  animation: 150ms ease-out both fade-out, 150ms ease-out both slide-down;
+}
+
+::view-transition-new(.slide-up) {
+  animation: 210ms ease-in 150ms both fade-in, 400ms ease-in both slide-up;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+::view-transition-old(.slide-in) {
+  animation-name: slideOutRight;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+}
+
+::view-transition-new(.slide-in) {
+  animation-name: slideInRight;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+}
+
+::view-transition-old(.slide-out) {
+  animation-name: slideOutLeft;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+}
+
+::view-transition-new(.slide-out) {
+  animation-name: slideInLeft;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
