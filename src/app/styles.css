@@ -1,24 +1,24 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-gray: #9ca3af;
-  --color-divider-dark: #374151;
-  --color-divider: #e5e7eb;
-  --color-card-dark: #131313;
-  --color-card: #e5e7eb;
-  --color-section: #2a2929;
+  --color-gray: #8b7355;
+  --color-divider-dark: #3d2914;
+  --color-divider: #d4c5a9;
+  --color-card-dark: #1a0f0a;
+  --color-card: #f5f0e8;
+  --color-section: #2d1b0f;
 
-  --color-primary: #8132fe;
-  --color-primary-dark: #6b21ff;
-  --color-primary-darker: #5b1ddb;
+  --color-primary: #d4af37;
+  --color-primary-dark: #b8941f;
+  --color-primary-darker: #996f00;
 
-  --color-accent: #3352b3;
-  --color-accent-dark: #2a4292;
-  --color-accent-light: #4563c7;
+  --color-accent: #cd853f;
+  --color-accent-dark: #a0522d;
+  --color-accent-light: #daa520;
 
-  --color-primary-variant-1: #95ade9;
-  --color-primary-variant-2: #7a90c6;
-  --color-primary-variant-3: #273e76;
+  --color-primary-variant-1: #f4e4bc;
+  --color-primary-variant-2: #e6d199;
+  --color-primary-variant-3: #8b6914;
 
   --font-mono: var(--font-geist-mono);
   --font-sans: var(--font-geist-sans);
@@ -26,7 +26,7 @@
 
 @layer base {
   body {
-    @apply bg-white font-sans text-black dark:bg-black dark:text-white;
+    @apply bg-amber-50 font-sans text-amber-900 dark:bg-amber-950 dark:text-amber-100;
   }
 
   h1 {
@@ -42,19 +42,19 @@
   }
 
   input {
-    @apply w-full rounded-md border border-divider dark:border-divider-dark px-4 py-2 bg-white dark:bg-black placeholder:text-gray  focus:outline-primary focus:outline-2 -outline-offset-1 text-sm;
+    @apply border-divider dark:border-divider-dark placeholder:text-gray focus:outline-primary w-full rounded-md border bg-amber-50 px-4 py-2 text-sm -outline-offset-1 focus:outline-2 dark:bg-amber-950;
   }
 
   textarea {
-    @apply w-full rounded-md border border-divider dark:border-divider-dark px-4 py-3 bg-white dark:bg-black placeholder:text-gray  focus:outline-primary focus:outline-2 -outline-offset-1 resize-y;
+    @apply border-divider dark:border-divider-dark placeholder:text-gray focus:outline-primary w-full resize-y rounded-md border bg-amber-50 px-4 py-3 -outline-offset-1 focus:outline-2 dark:bg-amber-950;
   }
 
   select {
-    @apply w-full rounded-md border border-divider dark:border-divider-dark px-4 py-2 bg-white dark:bg-black focus:outline-primary focus:outline-2 -outline-offset-1;
+    @apply border-divider dark:border-divider-dark focus:outline-primary w-full rounded-md border bg-amber-50 px-4 py-2 -outline-offset-1 focus:outline-2 dark:bg-amber-950;
   }
 
   label {
-    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
+    @apply mb-1 block text-sm font-medium text-amber-700 dark:text-amber-300;
   }
 }
 
@@ -95,16 +95,16 @@
   }
 }
 
-::view-transition-group(anything) {
-  z-index: 100;
-}
-
 ::view-transition-old(.slide-down) {
-  animation: 150ms ease-out both fade-out, 150ms ease-out both slide-down;
+  animation:
+    150ms ease-out both fade-out,
+    150ms ease-out both slide-down;
 }
 
 ::view-transition-new(.slide-up) {
-  animation: 210ms ease-in 150ms both fade-in, 400ms ease-in both slide-up;
+  animation:
+    210ms ease-in 150ms both fade-in,
+    400ms ease-in both slide-up;
 }
 
 @keyframes slide-up {

@@ -1,17 +1,17 @@
-import { route } from "rwsdk/router";
-import { Login } from "./Login";
-import { sessions } from "@/session/store";
+import { route } from 'rwsdk/router';
+import { sessions } from '@/session/store';
+import { Login } from './Login';
 
 export const userRoutes = [
-  route("/login", [Login]),
-  route("/logout", async function ({ request }) {
+  route('/login', [Login]),
+  route('/logout', async function ({ request }) {
     const headers = new Headers();
     await sessions.remove(request, headers);
-    headers.set("Location", "/");
+    headers.set('Location', '/');
 
     return new Response(null, {
-      status: 302,
       headers,
+      status: 302,
     });
   }),
 ];

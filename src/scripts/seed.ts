@@ -1,5 +1,5 @@
-import { defineScript } from "rwsdk/worker";
-import { db, setupDb } from "@/db";
+import { defineScript } from 'rwsdk/worker';
+import { db, setupDb } from '@/db';
 
 export default defineScript(async ({ env }) => {
   await setupDb(env);
@@ -11,10 +11,10 @@ export default defineScript(async ({ env }) => {
 
   await db.user.create({
     data: {
-      id: "1",
-      username: "testuser",
+      id: '1',
+      username: 'testuser',
     },
   });
 
-  console.log("🌱 Finished seeding");
+  console.log('🌱 Finished seeding');
 });

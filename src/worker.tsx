@@ -1,18 +1,28 @@
-import { defineApp, ErrorResponse } from "rwsdk/worker";
-import { route, render, prefix } from "rwsdk/router";
-import { Document } from "@/app/Document";
-import { Home } from "@/app/pages/Home";
-import { setCommonHeaders } from "@/app/headers";
-import { userRoutes } from "@/app/pages/user/routes";
-import { sessions, setupSessionStore } from "./session/store";
-import { Session } from "./session/durableObject";
-import { type User, db, setupDb } from "@/db";
-import { env } from "cloudflare:workers";
-export { SessionDurableObject } from "./session/durableObject";
+import { env } from 'cloudflare:workers';
+import { route, render, prefix, index, layout } from 'rwsdk/router';
+import { defineApp, ErrorResponse } from 'rwsdk/worker';
+import { Document } from '@/app/Document';
+import { setCommonHeaders } from '@/app/headers';
+import { Home } from '@/app/pages/Home';
+import { userRoutes } from '@/app/pages/user/routes';
+import { type User, db, setupDb } from '@/db';
+import AppLayout from './app/layouts/AppLayout';
+import { sessions, setupSessionStore } from './session/store';
+import type { Session } from './session/durableObject';
+export { SessionDurableObject } from './session/durableObject';
 
 export type AppContext = {
   session: Session | null;
   user: User | null;
+};
+
+const isAuthenticated = ({ ctx }: { ctx: AppContext }) => {
+  if (!ctx.user) {
+    return new Response(null, {
+      headers: { Location: '/user/login' },
+      status: 302,
+    });
+  }
 };
 
 export default defineApp([
@@ -26,11 +36,11 @@ export default defineApp([
     } catch (error) {
       if (error instanceof ErrorResponse && error.code === 401) {
         await sessions.remove(request, headers);
-        headers.set("Location", "/user/login");
+        headers.set('Location', '/user/login');
 
         return new Response(null, {
-          status: 302,
           headers,
+          status: 302,
         });
       }
 
@@ -46,18 +56,11 @@ export default defineApp([
     }
   },
   render(Document, [
-    route("/", () => new Response("Hello, World!")),
-    route("/protected", [
-      ({ ctx }) => {
-        if (!ctx.user) {
-          return new Response(null, {
-            status: 302,
-            headers: { Location: "/user/login" },
-          });
-        }
-      },
-      Home,
-    ]),
-    prefix("/user", userRoutes),
+    route('/hello', () => {
+      return new Response('Hello, World!');
+    }),
+    route('/protected', [isAuthenticated, Home]),
+    prefix('/user', userRoutes),
+    layout(AppLayout, [index(Home), prefix('/user', userRoutes)]),
   ]),
 ]);

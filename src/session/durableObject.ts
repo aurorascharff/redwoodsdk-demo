@@ -1,5 +1,6 @@
-import { MAX_SESSION_DURATION } from "rwsdk/auth";
-import { DurableObject } from "cloudflare:workers";
+/* eslint-disable no-undef */
+import { DurableObject } from 'cloudflare:workers';
+import { MAX_SESSION_DURATION } from 'rwsdk/auth';
 
 export interface Session {
   userId?: string | null;
@@ -22,12 +23,12 @@ export class SessionDurableObject extends DurableObject {
     challenge?: string | null;
   }): Promise<Session> {
     const session: Session = {
-      userId,
       challenge,
       createdAt: Date.now(),
+      userId,
     };
 
-    await this.ctx.storage.put<Session>("session", session);
+    await this.ctx.storage.put<Session>('session', session);
     this.session = session;
     return session;
   }
@@ -37,18 +38,18 @@ export class SessionDurableObject extends DurableObject {
       return { value: this.session };
     }
 
-    const session = await this.ctx.storage.get<Session>("session");
+    const session = await this.ctx.storage.get<Session>('session');
 
     if (!session) {
       return {
-        error: "Invalid session",
+        error: 'Invalid session',
       };
     }
 
     if (session.createdAt + MAX_SESSION_DURATION < Date.now()) {
       await this.revokeSession();
       return {
-        error: "Session expired",
+        error: 'Session expired',
       };
     }
 
@@ -57,7 +58,7 @@ export class SessionDurableObject extends DurableObject {
   }
 
   async revokeSession() {
-    await this.ctx.storage.delete("session");
+    await this.ctx.storage.delete('session');
     this.session = undefined;
   }
 }
