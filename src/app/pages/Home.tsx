@@ -1,5 +1,3 @@
-import Button from '@/app/components/Button';
-
 export function Home() {
   return (
     <div className="bg-background dark:bg-background-dark fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md">
@@ -25,17 +23,6 @@ export function Home() {
             <FeatureItem>Web Standards</FeatureItem>
             <FeatureItem>Cloudflare Ready</FeatureItem>
           </div>
-        </div>
-
-        <div className="text-center">
-          <form className="mt-6">
-            <Button
-              type="submit"
-              className="from-gradient-start dark:from-gradient-start-dark to-gradient-end dark:to-gradient-end-dark hover:from-primary-hover dark:hover:from-primary-hover-dark transform bg-gradient-to-r px-12 py-4 text-lg font-semibold text-white transition-all duration-200 hover:scale-105 hover:shadow-lg"
-            >
-              Explore RedwoodSDK v1 ✨
-            </Button>
-          </form>
         </div>
       </div>
     </div>

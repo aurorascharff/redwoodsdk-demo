@@ -61,6 +61,6 @@ export default defineApp([
     }),
     route('/protected', [isAuthenticated, Home]),
     prefix('/user', userRoutes),
-    layout(AppLayout, [index(Home), prefix('/user', userRoutes)]),
+    layout(AppLayout, [index(Home)]),
   ]),
 ]);
