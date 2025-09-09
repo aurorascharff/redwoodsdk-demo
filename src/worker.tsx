@@ -7,6 +7,7 @@ import { Home } from '@/app/pages/Home';
 import { userRoutes } from '@/app/pages/user/routes';
 import { type User, db, setupDb } from '@/db';
 import AppLayout from './app/layouts/AppLayout';
+import Profile from './app/pages/Profile';
 import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
@@ -59,8 +60,6 @@ export default defineApp([
     route('/hello', () => {
       return new Response('Hello, World!');
     }),
-    route('/protected', [isAuthenticated, Home]),
-    prefix('/user', userRoutes),
-    layout(AppLayout, [index(Home)]),
+    layout(AppLayout, [index(Home), route('/profile', [isAuthenticated, Profile]), prefix('/user', userRoutes)]),
   ]),
 ]);

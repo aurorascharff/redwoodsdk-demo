@@ -1,4 +1,7 @@
-export function Home() {
+import type { AppContext } from '@/worker';
+import Button from '../components/Button';
+
+export function Home({ ctx }: { ctx: AppContext }) {
   return (
     <div className="bg-background dark:bg-background-dark fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md">
       <div className="bg-surface dark:bg-surface-dark border-border dark:border-border-dark text-text dark:text-text-dark relative mx-4 flex max-w-6xl flex-col items-center rounded-3xl border-2 px-8 py-12 shadow-2xl backdrop-blur-sm md:px-12 md:py-16">
@@ -24,6 +27,11 @@ export function Home() {
             <FeatureItem>Cloudflare Ready</FeatureItem>
           </div>
         </div>
+        {!ctx.user && (
+          <a href="/user/login">
+            <Button type="submit">Login</Button>
+          </a>
+        )}
       </div>
     </div>
   );

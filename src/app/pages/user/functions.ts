@@ -8,9 +8,12 @@ import {
 
 import { env } from 'cloudflare:workers';
 import { requestInfo } from 'rwsdk/worker';
+import { z } from 'zod';
 import { db } from '@/db';
 import { sessions } from '@/session/store';
 import type { RegistrationResponseJSON, AuthenticationResponseJSON } from '@simplewebauthn/server';
+
+const usernameSchema = z.string().min(3, 'Username must be at least 3 characters');
 
 function getWebAuthnConfig(request: Request) {
   const rpID = env.WEBAUTHN_RP_ID ?? new URL(request.url).hostname;
@@ -22,19 +25,19 @@ function getWebAuthnConfig(request: Request) {
 }
 
 export async function startPasskeyRegistration(username: string) {
+  const validatedUsername = usernameSchema.parse(username);
+
   const { rpName, rpID } = getWebAuthnConfig(requestInfo.request);
   const { response } = requestInfo;
 
   const options = await generateRegistrationOptions({
     authenticatorSelection: {
-      // Require the authenticator to store the credential, enabling a username-less login experience
       residentKey: 'required',
-      // Prefer user verification (biometric, PIN, etc.), but allow authentication even if it's not available
       userVerification: 'preferred',
     },
     rpID,
     rpName,
-    userName: username,
+    userName: validatedUsername,
   });
 
   await sessions.save(response.headers, { challenge: options.challenge });

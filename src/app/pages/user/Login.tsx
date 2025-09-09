@@ -1,7 +1,9 @@
 'use client';
 
 import { startAuthentication, startRegistration } from '@simplewebauthn/browser';
-import { useState, useTransition } from 'react';
+import { useActionState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import Button from '@/app/components/Button';
 import {
   finishPasskeyLogin,
   finishPasskeyRegistration,
@@ -9,74 +11,85 @@ import {
   startPasskeyRegistration,
 } from './functions';
 
+type State = {
+  error?: string;
+  message?: string;
+};
+
 export function Login() {
-  const [username, setUsername] = useState('');
-  const [result, setResult] = useState('');
-  const [isPending, startTransition] = useTransition();
+  const [state, formAction] = useActionState(async (_prevState: State | undefined, formData: FormData) => {
+    const action = formData.get('action') as string;
 
-  const passkeyLogin = async () => {
-    // 1. Get a challenge from the worker
-    const options = await startPasskeyLogin();
-
-    // 2. Ask the browser to sign the challenge
-    const login = await startAuthentication({ optionsJSON: options });
-
-    // 3. Give the signed challenge to the worker to finish the login process
-    const success = await finishPasskeyLogin(login);
-
-    if (!success) {
-      setResult('Login failed');
-    } else {
-      setResult('Login successful!');
+    if (action === 'login') {
+      const options = await startPasskeyLogin();
+      const login = await startAuthentication({ optionsJSON: options });
+      const success = await finishPasskeyLogin(login);
+      if (success) {
+        window.location.href = '/';
+      }
+      return success ? { message: 'Login successful!' } : { error: 'Login failed' };
     }
-  };
 
-  const passkeyRegister = async () => {
-    // 1. Get a challenge from the worker
-    const options = await startPasskeyRegistration(username);
-
-    // 2. Ask the browser to sign the challenge
-    const registration = await startRegistration({ optionsJSON: options });
-
-    // 3. Give the signed challenge to the worker to finish the registration process
-    const success = await finishPasskeyRegistration(username, registration);
-
-    if (!success) {
-      setResult('Registration failed');
-    } else {
-      setResult('Registration successful!');
+    if (action === 'register') {
+      const username = formData.get('username') as string;
+      const options = await startPasskeyRegistration(username);
+      const registration = await startRegistration({ optionsJSON: options });
+      const success = await finishPasskeyRegistration(username, registration);
+      return success ? { message: 'Registration successful!' } : { error: 'Registration failed' };
     }
-  };
-
-  const handlePerformPasskeyLogin = () => {
-    startTransition(() => {
-      return void passkeyLogin();
-    });
-  };
-
-  const handlePerformPasskeyRegister = () => {
-    startTransition(() => {
-      return void passkeyRegister();
-    });
-  };
+  }, {} as State);
 
   return (
-    <>
-      <input
-        type="text"
-        value={username}
-        onChange={e => {
-          return setUsername(e.target.value);
-        }}
-        placeholder="Username"
-      />
-      <button onClick={handlePerformPasskeyLogin} disabled={isPending}>
-        {isPending ? <>...</> : 'Login with passkey'}
-      </button>
-      <button onClick={handlePerformPasskeyRegister} disabled={isPending}>
-        {isPending ? <>...</> : 'Register with passkey'}
-      </button>
-      {result && <div>{result}</div>}
-    </>
+    <div className="flex min-h-screen items-center justify-center p-4">
+      <div className="w-full max-w-md space-y-6">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold">Login</h1>
+        </div>
+        <ErrorBoundary fallbackRender={ErrorFallback}>
+          <div className="space-y-6">
+            {/* Login Section */}
+            <form action={formAction}>
+              <Button name="action" value="login" className="w-full">
+                Login with passkey
+              </Button>
+            </form>
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-background px-2 text-gray-500">or</span>
+              </div>
+            </div>
+            <form action={formAction} className="space-y-3">
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                className="w-full rounded-md border p-3"
+                required
+              />
+              <Button name="action" value="register" className="w-full">
+                Register with passkey
+              </Button>
+            </form>
+          </div>
+        </ErrorBoundary>
+        {state?.error && <div className="rounded-md border p-3 text-center text-red-600">{state.error}</div>}
+        {state?.message && <div className="rounded-md border p-3 text-center text-green-600">{state.message}</div>}
+      </div>
+    </div>
+  );
+}
+
+function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
+  return (
+    <div className="border p-3 text-center">
+      <p className="mb-2">Something went wrong</p>
+      <p className="mb-3 text-sm">{error?.message}</p>
+      <Button type="button" onClick={resetErrorBoundary}>
+        Try Again
+      </Button>
+    </div>
   );
 }
