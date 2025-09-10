@@ -76,7 +76,7 @@ export function EmojiPicker({ theme, lastChanged }: { theme: Theme; lastChanged:
                 return handleThemeChange(key as Theme);
               }}
               className={cn(
-                'w-20 rounded-full px-3 py-1.5 text-xs font-medium text-nowrap transition-all sm:w-24 sm:px-4 sm:py-2 sm:text-sm',
+                'min-w-20 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-all sm:min-w-24 sm:px-4 sm:py-2 sm:text-sm',
                 optimisticTheme === key
                   ? `bg-gradient-to-r ${theme.colors} text-white shadow-lg`
                   : isDisabled
