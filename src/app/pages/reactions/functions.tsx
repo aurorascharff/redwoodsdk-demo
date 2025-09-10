@@ -2,35 +2,43 @@
 
 import { env } from 'cloudflare:workers';
 import { renderRealtimeClients } from 'rwsdk/realtime/worker';
+import type { Reaction, ThemeState } from '@/reactionsDurableObject';
+import type { Theme } from './EmojiPicker';
 
-export let REACTIONS = ['⚛️'];
+export const getReactions = async (): Promise<Reaction[]> => {
+  const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');
+  const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
+  return reactionsDO.getReactions();
+};
 
-export type Theme = 'lasvegas' | 'react';
-
-export const themes = {
-  lasvegas: {
-    colors: 'from-yellow-400 to-red-600',
-    description: 'What happens in Vegas...',
-    emojis: ['🎰', '🎲', '🃏', '💎', '🎯', '🎊', '💸', '🏆', '🔥'],
-    name: 'Las Vegas',
-  },
-  react: {
-    colors: 'from-blue-400 to-cyan-600',
-    description: 'Build amazing UIs',
-    emojis: ['⚛️', '🚀', '💙', '🔥', '⚡', '🧪', '🎯', '💻', '🛠️'],
-    name: 'React',
-  },
-} as const;
-
-export async function addReaction(reaction: string) {
-  REACTIONS = [...REACTIONS, reaction];
+export const addReaction = async (emoji: string): Promise<void> => {
+  const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');
+  const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
+  await reactionsDO.addReaction(emoji);
 
   await renderRealtimeClients({
     durableObjectNamespace: env.REALTIME_DURABLE_OBJECT,
-    key: 'redwood-realtime-client-key',
+    key: 'reactions',
   });
-}
+};
 
-export function getReactions() {
-  return REACTIONS;
-}
+export const getThemeState = async (): Promise<ThemeState> => {
+  const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');
+  const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
+  return reactionsDO.getThemeState();
+};
+
+export const setTheme = async (theme: Theme): Promise<{ remainingCooldown?: number; success: boolean }> => {
+  const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');
+  const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
+  const result = await reactionsDO.setTheme(theme);
+
+  if (result.success) {
+    await renderRealtimeClients({
+      durableObjectNamespace: env.REALTIME_DURABLE_OBJECT,
+      key: 'reactions',
+    });
+  }
+
+  return result;
+};

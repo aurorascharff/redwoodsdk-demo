@@ -3,6 +3,7 @@ import { realtimeRoute } from 'rwsdk/realtime/worker';
 import { route, render, prefix, index, layout } from 'rwsdk/router';
 import { defineApp, ErrorResponse } from 'rwsdk/worker';
 import { Document } from '@/app/Document';
+import { apiRoutes } from '@/app/api/routes';
 import { setCommonHeaders } from '@/app/headers';
 import { Home } from '@/app/pages/Home';
 import { userRoutes } from '@/app/pages/user/routes';
@@ -14,6 +15,7 @@ import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
 export { RealtimeDurableObject } from 'rwsdk/realtime/durableObject';
+export { ReactionsDurableObject } from './reactionsDurableObject';
 
 export type AppContext = {
   session: Session | null;
@@ -62,6 +64,7 @@ export default defineApp([
   realtimeRoute(env => {
     return env.REALTIME_DURABLE_OBJECT;
   }),
+  prefix('/api', apiRoutes),
   render(Document, [
     route('/hello', () => {
       return new Response('Hello, World!');

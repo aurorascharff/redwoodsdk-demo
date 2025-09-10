@@ -1,7 +1,10 @@
 import { EmojiPicker } from './EmojiPicker';
-import { getReactions } from './functions';
+import { getReactions, getThemeState } from './functions';
 
-export function ReactionPage() {
+export async function ReactionPage() {
+  const reactions = await getReactions();
+  const theme = await getThemeState();
+
   return (
     <div className="bg-background dark:bg-background-dark relative flex flex-col">
       <div className="absolute top-4 right-4 z-10 sm:top-8 sm:right-8">
@@ -20,13 +23,13 @@ export function ReactionPage() {
           </h1>
         </div>
         <div className="relative flex w-full max-w-4xl flex-1 items-center justify-center text-2xl sm:text-4xl">
-          {getReactions().map((emoji, index) => {
+          {reactions.map((reaction, index) => {
             const left = ((index * 37) % 80) + 10;
             const top = ((index * 23) % 80) + 10;
 
             return (
               <span
-                key={index}
+                key={reaction.id}
                 className="float-up absolute"
                 style={{
                   left: `${left}%`,
@@ -34,14 +37,14 @@ export function ReactionPage() {
                   transform: 'translate(-50%, -50%)',
                 }}
               >
-                {emoji}
+                {reaction.emoji}
               </span>
             );
           })}
         </div>
       </div>
       <div className="relative z-20 px-2 pb-4 sm:px-0 sm:pb-8">
-        <EmojiPicker />
+        <EmojiPicker lastChanged={theme.lastChanged} theme={theme.currentTheme} />
       </div>
     </div>
   );

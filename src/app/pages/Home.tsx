@@ -36,10 +36,14 @@ export function Home({ ctx }: { ctx: AppContext }) {
               <Button type="submit">Login</Button>
             </a>
             <a href="/realtime">
-              <Button type="button" variant="secondary">Realtime</Button>
+              <Button type="button" variant="secondary">
+                Realtime
+              </Button>
             </a>
             <a href="/profile">
-              <Button type="button" variant="secondary">Profile</Button>
+              <Button type="button" variant="secondary">
+                Profile
+              </Button>
             </a>
           </div>
         )}

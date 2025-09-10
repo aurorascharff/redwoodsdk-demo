@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { addReaction } from './functions';
+import { useEffect, useOptimistic, useTransition } from 'react';
+import { cn } from '@/utils/cn';
+import { addReaction, setTheme } from './functions';
 
 export type Theme = 'lasvegas' | 'react';
 
@@ -20,13 +21,23 @@ export const themes = {
   },
 } as const;
 
-export function EmojiPicker({ onThemeChange }: { onThemeChange?: (theme: Theme) => void }) {
-  const [currentTheme, setCurrentTheme] = useState<Theme>('react');
-  const currentThemeData = themes[currentTheme];
+export function EmojiPicker({ theme, lastChanged }: { theme: Theme; lastChanged: number }) {
+  const [optimisticTheme, setOptimisticTheme] = useOptimistic(theme);
+  const [isPending, startTransition] = useTransition();
+  const currentThemeData = themes[optimisticTheme];
+  const now = Date.now();
+  const cooldownDuration = 10 * 1000; // 10 seconds
+  const timeSinceLastChange = now - lastChanged;
+  const cooldownRemaining = Math.max(0, Math.ceil((cooldownDuration - timeSinceLastChange) / 1000));
 
-  useEffect(() => {
-    onThemeChange?.(currentTheme);
-  }, [currentTheme, onThemeChange]);
+  const handleThemeChange = async (newTheme: Theme) => {
+    if (isPending || cooldownRemaining > 0) return;
+
+    startTransition(async () => {
+      setOptimisticTheme(newTheme);
+      await setTheme(newTheme);
+    });
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -38,8 +49,8 @@ export function EmojiPicker({ onThemeChange }: { onThemeChange?: (theme: Theme) 
         }
       }
       if (event.key.toLowerCase() === 't') {
-        const newTheme = currentTheme === 'react' ? 'lasvegas' : 'react';
-        setCurrentTheme(newTheme);
+        const newTheme = optimisticTheme === 'react' ? 'lasvegas' : 'react';
+        handleThemeChange(newTheme);
       }
     };
 
@@ -47,35 +58,43 @@ export function EmojiPicker({ onThemeChange }: { onThemeChange?: (theme: Theme) 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentTheme, currentThemeData.emojis]);
+  }, [optimisticTheme, currentThemeData.emojis]);
 
   return (
     <div className="flex flex-col items-center gap-3 sm:gap-4">
       <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex flex-wrap items-center justify-center gap-2 rounded-full border px-3 py-2 sm:gap-4 sm:px-6">
         <span className="text-text-muted text-xs sm:text-sm">Theme:</span>
         {Object.entries(themes).map(([key, theme]) => {
+          const isDisabled = isPending || cooldownRemaining > 0;
           return (
             <button
               key={key}
+              disabled={isDisabled}
               onClick={() => {
-                return setCurrentTheme(key as Theme);
+                return handleThemeChange(key as Theme);
               }}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all sm:px-4 sm:py-2 sm:text-sm ${
-                currentTheme === key
+              className={cn(
+                'w-16 rounded-full px-3 py-1.5 text-xs font-medium text-nowrap transition-all sm:w-20 sm:px-4 sm:py-2 sm:text-sm',
+                optimisticTheme === key
                   ? `bg-gradient-to-r ${theme.colors} text-white shadow-lg`
-                  : 'bg-background text-text-muted hover:bg-accent/10 dark:bg-background-dark'
-              }`}
+                  : isDisabled
+                    ? 'bg-background text-text-muted dark:bg-background-dark cursor-not-allowed opacity-50'
+                    : 'bg-background text-text-muted hover:bg-accent/10 dark:bg-background-dark',
+              )}
             >
-              {theme.name}
+              {isPending && optimisticTheme === key ? '...' : theme.name}
             </button>
           );
         })}
         <kbd className="text-text-muted bg-background border-border dark:bg-background-dark dark:border-border-dark rounded border px-1.5 py-0.5 text-xs sm:px-2 sm:py-1">
-          T
+          T{cooldownRemaining > 0 ? ` (${cooldownRemaining}s)` : ''}
         </kbd>
       </div>
       <div
-        className={`relative flex items-center justify-center overflow-visible rounded-xl bg-gradient-to-r p-0.5 sm:rounded-2xl sm:p-1 ${currentThemeData.colors}`}
+        className={cn(
+          'relative flex items-center justify-center overflow-visible rounded-xl bg-gradient-to-r p-0.5 sm:rounded-2xl sm:p-1',
+          currentThemeData.colors,
+        )}
       >
         <div className="bg-surface/95 dark:bg-surface-dark/95 flex items-center gap-2 rounded-lg px-3 py-3 backdrop-blur-sm sm:gap-4 sm:rounded-xl sm:px-6 sm:py-4">
           {currentThemeData.emojis.map((emoji, index) => {

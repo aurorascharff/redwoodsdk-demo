@@ -3,49 +3,48 @@
   "name": "redwoodsdk-v1-demo",
   "main": "src/worker.tsx",
   "compatibility_date": "2024-09-23",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
-    "binding": "ASSETS"
+    "binding": "ASSETS",
   },
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
   "durable_objects": {
     "bindings": [
       {
         "name": "SESSION_DURABLE_OBJECT",
-        "class_name": "SessionDurableObject"
+        "class_name": "SessionDurableObject",
       },
       {
         "name": "REALTIME_DURABLE_OBJECT",
-        "class_name": "RealtimeDurableObject"
-      }
-    ]
+        "class_name": "RealtimeDurableObject",
+      },
+      {
+        "name": "REACTIONS_DURABLE_OBJECT",
+        "class_name": "ReactionsDurableObject",
+      },
+    ],
   },
   "vars": {
-    "WEBAUTHN_APP_NAME": "redwoodsdk-v1-demo"
+    "WEBAUTHN_APP_NAME": "redwoodsdk-v1-demo",
   },
   "migrations": [
     {
       "tag": "v1",
-      "new_sqlite_classes": [
-        "SessionDurableObject",
-        "RealtimeDurableObject"
-      ]
-    }
+      "new_sqlite_classes": ["SessionDurableObject", "RealtimeDurableObject", "ReactionsDurableObject"],
+    },
   ],
   "d1_databases": [
     {
       "binding": "my_project_db",
       "database_name": "my-project-db",
-      "database_id": "92f67da4-0e45-49c8-becc-e9def544943a"
+      "database_id": "92f67da4-0e45-49c8-becc-e9def544943a",
     },
     {
       "binding": "DB",
       "database_name": "redwoodsdk-v1-demo-original-octopus",
-      "database_id": "e239b95f-3e9a-4fe9-b45f-c027423e761b"
-    }
-  ]
+      "database_id": "e239b95f-3e9a-4fe9-b45f-c027423e761b",
+    },
+  ],
 }
