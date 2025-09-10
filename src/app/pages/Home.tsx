@@ -4,20 +4,22 @@ import Card from '../components/ui/Card';
 
 export function Home({ ctx }: { ctx: AppContext }) {
   return (
-    <div className="bg-background dark:bg-background-dark fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md">
-      <Card className="mx-4 flex max-w-6xl flex-col items-center px-8 py-12 md:px-12 md:py-16">
+    <div className="bg-background dark:bg-background-dark flex justify-center py-2 backdrop-blur-md sm:py-8">
+      <Card className="mx-4 flex w-full max-w-6xl flex-col items-center px-4 py-6 sm:px-8 sm:py-12 md:px-12 md:py-16">
         <div className="mb-8 text-center">
-          <h1 className="text-primary dark:text-primary-dark mb-4 font-serif text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+          <h1 className="text-primary dark:text-primary-dark mb-4 font-serif text-3xl font-bold tracking-tight sm:text-4xl md:text-6xl lg:text-7xl">
             RedwoodSDK v1.0
           </h1>
-          <div className="from-gradient-start dark:from-gradient-start-dark to-gradient-end dark:to-gradient-end-dark bg-gradient-to-br bg-clip-text text-xl font-medium text-transparent md:text-2xl lg:text-3xl">
+          <div className="from-gradient-start dark:from-gradient-start-dark to-gradient-end dark:to-gradient-end-dark bg-gradient-to-br bg-clip-text text-lg font-medium text-transparent sm:text-xl md:text-2xl lg:text-3xl">
             Web Standards Meet Full-Stack React
           </div>
         </div>
 
         <div className="mb-10 max-w-4xl text-center">
-          <h2 className="text-accent dark:text-accent-dark mb-6 text-2xl font-semibold">Built for the Edge</h2>
-          <p className="text-text-muted dark:text-text-muted-dark mb-8 text-lg leading-relaxed">
+          <h2 className="text-accent dark:text-accent-dark mb-6 text-xl font-semibold sm:text-2xl">
+            Built for the Edge
+          </h2>
+          <p className="text-text-muted dark:text-text-muted-dark mb-8 text-base leading-relaxed sm:text-lg">
             A new way to build full-stack React apps without heavy frameworks or hidden abstractions. Built on web
             standards with direct access to native Requests and Responses.
           </p>

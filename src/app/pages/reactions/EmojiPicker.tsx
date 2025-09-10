@@ -50,10 +50,9 @@ export function EmojiPicker({ onThemeChange }: { onThemeChange?: (theme: Theme) 
   }, [currentTheme, currentThemeData.emojis]);
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      {/* Theme Selector */}
-      <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex items-center gap-4 rounded-full border px-6 py-2">
-        <span className="text-text-muted text-sm">Theme:</span>
+    <div className="flex flex-col items-center gap-3 sm:gap-4">
+      <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex flex-wrap items-center justify-center gap-2 rounded-full border px-3 py-2 sm:gap-4 sm:px-6">
+        <span className="text-text-muted text-xs sm:text-sm">Theme:</span>
         {Object.entries(themes).map(([key, theme]) => {
           return (
             <button
@@ -61,7 +60,7 @@ export function EmojiPicker({ onThemeChange }: { onThemeChange?: (theme: Theme) 
               onClick={() => {
                 return setCurrentTheme(key as Theme);
               }}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
+              className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all sm:px-4 sm:py-2 sm:text-sm ${
                 currentTheme === key
                   ? `bg-gradient-to-r ${theme.colors} text-white shadow-lg`
                   : 'bg-background text-text-muted hover:bg-accent/10 dark:bg-background-dark'
@@ -71,31 +70,33 @@ export function EmojiPicker({ onThemeChange }: { onThemeChange?: (theme: Theme) 
             </button>
           );
         })}
-        <kbd className="text-text-muted bg-background border-border dark:bg-background-dark dark:border-border-dark rounded border px-2 py-1 text-xs">
+        <kbd className="text-text-muted bg-background border-border dark:bg-background-dark dark:border-border-dark rounded border px-1.5 py-0.5 text-xs sm:px-2 sm:py-1">
           T
         </kbd>
       </div>
       <div
-        className={`relative flex items-center justify-center gap-4 overflow-visible rounded-2xl bg-gradient-to-r ${currentThemeData.colors} p-1`}
+        className={`relative flex items-center justify-center overflow-visible rounded-xl bg-gradient-to-r p-0.5 sm:rounded-2xl sm:p-1 ${currentThemeData.colors}`}
       >
-        <div className="bg-surface/95 dark:bg-surface-dark/95 flex items-center gap-4 rounded-xl px-6 py-4 backdrop-blur-sm">
+        <div className="bg-surface/95 dark:bg-surface-dark/95 flex items-center gap-2 rounded-lg px-3 py-3 backdrop-blur-sm sm:gap-4 sm:rounded-xl sm:px-6 sm:py-4">
           {currentThemeData.emojis.map((emoji, index) => {
             return (
               <div
                 key={emoji}
-                className="group relative flex cursor-pointer flex-col items-center text-4xl transition-transform hover:scale-125"
+                className="group relative flex cursor-pointer flex-col items-center text-2xl transition-transform hover:scale-125 sm:text-4xl"
                 onClick={() => {
                   return addReaction(emoji);
                 }}
               >
                 {emoji}
-                <span className="bg-text/70 text-background mt-1 rounded px-1.5 py-0.5 text-xs">{index + 1}</span>
+                <span className="bg-text/70 text-background mt-0.5 rounded px-1 py-0.5 text-xs sm:mt-1 sm:px-1.5">
+                  {index + 1}
+                </span>
               </div>
             );
           })}
         </div>
       </div>
-      <p className="text-text-muted text-center text-sm">
+      <p className="text-text-muted px-2 text-center text-xs sm:px-0 sm:text-sm">
         {currentThemeData.description} • Press 1-9 or click to react
       </p>
     </div>
