@@ -23,7 +23,6 @@ export async function ReactionPage() {
 
   return (
     <div className="relative flex min-h-screen flex-col">
-      {/* Themed background gradient */}
       <div className={`absolute inset-0 bg-gradient-to-br ${currentThemeData.colors} opacity-10`} />
       <div className="bg-background/80 dark:bg-background-dark/80 absolute inset-0 backdrop-blur-3xl" />
 

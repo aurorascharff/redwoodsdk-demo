@@ -109,9 +109,6 @@ export function EmojiPicker({
           })}
         </div>
       </div>
-      <p className="text-text-muted px-2 text-center text-xs sm:px-0 sm:text-sm">
-        {currentThemeData.description} • Press 1-9 or click to react
-      </p>
     </div>
   );
 }
