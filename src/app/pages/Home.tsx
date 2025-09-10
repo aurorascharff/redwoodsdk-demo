@@ -31,9 +31,17 @@ export function Home({ ctx }: { ctx: AppContext }) {
           </div>
         </div>
         {!ctx.user && (
-          <a href="/user/login">
-            <Button type="submit">Login</Button>
-          </a>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href="/user/login">
+              <Button type="submit">Login</Button>
+            </a>
+            <a href="/realtime">
+              <Button type="button" variant="secondary">Realtime</Button>
+            </a>
+            <a href="/profile">
+              <Button type="button" variant="secondary">Profile</Button>
+            </a>
+          </div>
         )}
       </Card>
     </div>

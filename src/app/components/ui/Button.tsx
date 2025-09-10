@@ -34,7 +34,7 @@ export default function Button({
         'focus-visible:outline-primary rounded-lg border px-4 py-2 font-medium -outline-offset-1 transition-colors focus-visible:outline-2',
         variant === 'primary'
           ? 'bg-primary border-primary enabled:hover:bg-primary-dark disabled:bg-primary-darker text-white'
-          : 'border-divider bg-card dark:bg-card-dark enabled:hover:bg-primary-variant-1 dark:enabled:hover:bg-accent-dark text-amber-900 disabled:opacity-60 dark:text-amber-100',
+          : 'border-border bg-surface dark:bg-surface-dark enabled:hover:bg-surface-elevated dark:enabled:hover:bg-surface-elevated-dark enabled:hover:border-text-muted dark:enabled:hover:border-text-muted-dark text-text dark:text-text-dark disabled:opacity-60',
         className,
       )}
       {...otherProps}

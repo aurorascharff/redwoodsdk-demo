@@ -22,19 +22,15 @@ export const themes = {
   },
 } as const;
 
-export function addReaction(reaction: string) {
+export async function addReaction(reaction: string) {
   REACTIONS = [...REACTIONS, reaction];
-}
-
-export function getReactions() {
-  return REACTIONS;
-}
-
-export async function resetActions() {
-  REACTIONS = ['🤷‍♂️'];
 
   await renderRealtimeClients({
     durableObjectNamespace: env.REALTIME_DURABLE_OBJECT,
     key: 'redwood-realtime-client-key',
   });
+}
+
+export function getReactions() {
+  return REACTIONS;
 }
