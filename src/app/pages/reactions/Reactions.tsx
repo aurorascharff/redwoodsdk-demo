@@ -7,7 +7,7 @@ export const themes = {
   lasvegas: {
     colors: 'from-yellow-400 via-orange-500 to-red-600',
     description: '🎲 What happens in Vegas... gets reacted to! 🎰',
-    emojis: ['🤑', '🔥', '💀', '😍', '🤯', '🎊', '💸', '🏆', '🎰', '🎲', '🃏'],
+    emojis: ['🤑', '🔥', '💀', '😍', '🎊', '💸', '🏆', '🎰', '🎲', '🃏'],
     name: 'Las Vegas',
   },
   react: {
