@@ -12,19 +12,22 @@ export type Theme = 'lasvegas' | 'react';
 export interface ThemeState {
   currentTheme: Theme;
   lastChanged: number;
+  remainingCooldown?: number;
 }
 
 export class ReactionsDurableObject extends DurableObject {
+  private state: DurableObjectState;
   private reactions: Reaction[] = [];
   private themeState: ThemeState | undefined = undefined;
 
   constructor(state: DurableObjectState, env: Env) {
     super(state, env);
+    this.state = state;
   }
 
   async getReactions(): Promise<Reaction[]> {
     if (this.reactions.length === 0) {
-      const stored = await this.ctx.storage.get<Reaction[]>('reactions');
+      const stored = await this.state.storage.get<Reaction[]>('reactions');
       this.reactions = stored || [{ emoji: '⚛️', id: 'initial', timestamp: Date.now() }];
     }
     return this.reactions;
@@ -38,15 +41,25 @@ export class ReactionsDurableObject extends DurableObject {
     };
 
     this.reactions.push(reaction);
-    await this.ctx.storage.put('reactions', this.reactions);
+    await this.state.storage.put('reactions', this.reactions);
   }
 
   async getThemeState(): Promise<ThemeState> {
     if (!this.themeState) {
-      const stored = await this.ctx.storage.get<ThemeState>('themeState');
+      const stored = await this.state.storage.get<ThemeState>('themeState');
       this.themeState = stored || { currentTheme: 'react', lastChanged: 0 };
     }
-    return this.themeState;
+
+    const now = Date.now();
+    const cooldownDuration = 10 * 1000; // 10 seconds
+    const timeSinceLastChange = now - this.themeState.lastChanged;
+    const remainingCooldown =
+      timeSinceLastChange < cooldownDuration ? Math.ceil((cooldownDuration - timeSinceLastChange) / 1000) : 0;
+
+    return {
+      ...this.themeState,
+      remainingCooldown,
+    };
   }
 
   async setTheme(theme: Theme): Promise<{ success: boolean; remainingCooldown?: number }> {
@@ -65,7 +78,7 @@ export class ReactionsDurableObject extends DurableObject {
       lastChanged: now,
     };
 
-    await this.ctx.storage.put('themeState', this.themeState);
+    await this.state.storage.put('themeState', this.themeState);
     return { success: true };
   }
 }

@@ -8,22 +8,18 @@ import { addReaction, setTheme } from './functions';
 
 export function EmojiPicker({
   theme,
-  lastChanged,
   currentThemeData,
+  remainingCooldown = 0,
 }: {
   theme: Theme;
-  lastChanged: number;
   currentThemeData: (typeof themes)[Theme];
+  remainingCooldown?: number;
 }) {
   const [optimisticTheme, setOptimisticTheme] = useOptimistic(theme);
   const [isPending, startThemeTransition] = useTransition();
-  const now = Date.now();
-  const cooldownDuration = 10 * 1000; // 10 seconds
-  const timeSinceLastChange = now - lastChanged;
-  const cooldownRemaining = Math.max(0, Math.ceil((cooldownDuration - timeSinceLastChange) / 1000));
 
   const handleThemeChange = async (newTheme: Theme) => {
-    if (isPending || cooldownRemaining > 0) return;
+    if (isPending || remainingCooldown > 0) return;
 
     startThemeTransition(async () => {
       setOptimisticTheme(newTheme);
@@ -59,7 +55,7 @@ export function EmojiPicker({
       <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex flex-wrap items-center justify-center gap-2 rounded-full border px-3 py-2 sm:gap-4 sm:px-6">
         <span className="text-text-muted text-xs sm:text-sm">Theme:</span>
         {Object.entries(themes).map(([key, theme]) => {
-          const isDisabled = isPending || cooldownRemaining > 0;
+          const isDisabled = isPending || remainingCooldown > 0;
           return (
             <button
               key={key}
@@ -81,7 +77,7 @@ export function EmojiPicker({
           );
         })}
         <kbd className="text-text-muted bg-background border-border dark:bg-background-dark dark:border-border-dark rounded border px-1.5 py-0.5 text-xs sm:px-2 sm:py-1">
-          T{cooldownRemaining > 0 ? ` (${cooldownRemaining}s)` : ''}
+          T{remainingCooldown > 0 ? ` (${remainingCooldown}s)` : ''}
         </kbd>
       </div>
       <div
