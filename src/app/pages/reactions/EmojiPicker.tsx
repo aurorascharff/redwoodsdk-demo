@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useOptimistic, useTransition } from 'react';
+import { startTransition, useEffect, useOptimistic, useTransition } from 'react';
 import { cn } from '@/utils/cn';
 import { addReaction, setTheme } from './functions';
 
@@ -23,7 +23,7 @@ export const themes = {
 
 export function EmojiPicker({ theme, lastChanged }: { theme: Theme; lastChanged: number }) {
   const [optimisticTheme, setOptimisticTheme] = useOptimistic(theme);
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startThemeTransition] = useTransition();
   const currentThemeData = themes[optimisticTheme];
   const now = Date.now();
   const cooldownDuration = 10 * 1000; // 10 seconds
@@ -33,7 +33,7 @@ export function EmojiPicker({ theme, lastChanged }: { theme: Theme; lastChanged:
   const handleThemeChange = async (newTheme: Theme) => {
     if (isPending || cooldownRemaining > 0) return;
 
-    startTransition(async () => {
+    startThemeTransition(async () => {
       setOptimisticTheme(newTheme);
       await setTheme(newTheme);
     });
@@ -45,7 +45,9 @@ export function EmojiPicker({ theme, lastChanged }: { theme: Theme; lastChanged:
       if (keyNum >= 1 && keyNum <= 9) {
         const emojiIndex = keyNum - 1;
         if (emojiIndex < currentThemeData.emojis.length) {
-          addReaction(currentThemeData.emojis[emojiIndex]);
+          startTransition(async () => {
+            await addReaction(currentThemeData.emojis[emojiIndex]);
+          });
         }
       }
       if (event.key.toLowerCase() === 't') {
@@ -74,7 +76,7 @@ export function EmojiPicker({ theme, lastChanged }: { theme: Theme; lastChanged:
                 return handleThemeChange(key as Theme);
               }}
               className={cn(
-                'w-16 rounded-full px-3 py-1.5 text-xs font-medium text-nowrap transition-all sm:w-20 sm:px-4 sm:py-2 sm:text-sm',
+                'w-20 rounded-full px-3 py-1.5 text-xs font-medium text-nowrap transition-all sm:w-24 sm:px-4 sm:py-2 sm:text-sm',
                 optimisticTheme === key
                   ? `bg-gradient-to-r ${theme.colors} text-white shadow-lg`
                   : isDisabled

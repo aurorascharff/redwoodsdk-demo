@@ -32,7 +32,11 @@
   "migrations": [
     {
       "tag": "v1",
-      "new_sqlite_classes": ["SessionDurableObject", "RealtimeDurableObject", "ReactionsDurableObject"],
+      "new_sqlite_classes": ["SessionDurableObject", "RealtimeDurableObject"],
+    },
+    {
+      "tag": "v2",
+      "new_sqlite_classes": ["ReactionsDurableObject"],
     },
   ],
   "d1_databases": [
