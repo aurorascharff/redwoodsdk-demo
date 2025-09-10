@@ -6,7 +6,6 @@ export default function Profile({ ctx }: { ctx: AppContext }) {
   return (
     <div className="relative flex min-h-screen flex-col">
       <div className="bg-background/80 dark:bg-background-dark/80 absolute inset-0" />
-
       <div className="relative z-10 flex flex-col">
         <div className="bg-surface/95 dark:bg-surface-dark/95 border-border dark:border-border-dark text-text dark:text-text-dark relative mx-2 mt-8 mb-4 flex min-h-[400px] flex-1 flex-col items-center justify-center rounded-3xl border-2 px-4 py-8 shadow-2xl sm:mx-4 sm:my-8 sm:min-h-[500px] sm:px-8 sm:py-12 md:px-12 md:py-16">
           <div className="mb-8 text-center">
@@ -15,7 +14,6 @@ export default function Profile({ ctx }: { ctx: AppContext }) {
             </h1>
             <p className="text-text-muted dark:text-text-muted-dark text-sm sm:text-base">Your account information</p>
           </div>
-          
           <div className="w-full max-w-md space-y-6">
             <div className="bg-surface/50 dark:bg-surface-dark/50 border-border dark:border-border-dark rounded-xl border p-6">
               <div className="space-y-4">
@@ -31,12 +29,9 @@ export default function Profile({ ctx }: { ctx: AppContext }) {
                 </div>
               </div>
             </div>
-            
             <div className="flex justify-center">
               <a href={link('/user/logout')}>
-                <Button type="submit">
-                  Logout
-                </Button>
+                <Button type="submit">Logout</Button>
               </a>
             </div>
           </div>
