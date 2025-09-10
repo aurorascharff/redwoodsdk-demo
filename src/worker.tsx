@@ -7,6 +7,7 @@ import { apiRoutes } from '@/app/api/routes';
 import { setCommonHeaders } from '@/app/headers';
 import { Home } from '@/app/pages/Home';
 import { userRoutes } from '@/app/pages/user/routes';
+import { link } from '@/app/shared/links';
 import { type User, db, setupDb } from '@/db';
 import AppLayout from './app/layouts/AppLayout';
 import Profile from './app/pages/Profile';
@@ -25,7 +26,7 @@ export type AppContext = {
 const isAuthenticated = ({ ctx }: { ctx: AppContext }) => {
   if (!ctx.user) {
     return new Response(null, {
-      headers: { Location: '/user/login' },
+      headers: { Location: link('/user/login') },
       status: 302,
     });
   }
@@ -42,7 +43,7 @@ export default defineApp([
     } catch (error) {
       if (error instanceof ErrorResponse && error.code === 401) {
         await sessions.remove(request, headers);
-        headers.set('Location', '/user/login');
+        headers.set('Location', link('/user/login'));
 
         return new Response(null, {
           headers,

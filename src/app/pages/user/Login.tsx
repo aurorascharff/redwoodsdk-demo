@@ -5,6 +5,7 @@ import { useActionState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import Button from '@/app/components/ui/Button';
 import Card from '@/app/components/ui/Card';
+import { link } from '@/app/shared/links';
 
 import {
   finishPasskeyLogin,
@@ -27,7 +28,7 @@ export function Login() {
       const login = await startAuthentication({ optionsJSON: options });
       const success = await finishPasskeyLogin(login);
       if (success) {
-        window.location.href = '/';
+        window.location.href = link('/');
       }
       return success ? { message: 'Login successful!' } : { error: 'Login failed' };
     }

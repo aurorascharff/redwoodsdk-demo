@@ -1,3 +1,4 @@
+import { link } from '@/app/shared/links';
 import type { AppContext } from '@/worker';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
@@ -32,15 +33,15 @@ export function Home({ ctx }: { ctx: AppContext }) {
         </div>
         {!ctx.user && (
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="/user/login">
+            <a href={link('/user/login')}>
               <Button type="submit">Login</Button>
             </a>
-            <a href="/realtime">
+            <a href={link('/realtime')}>
               <Button type="button" variant="secondary">
                 Realtime
               </Button>
             </a>
-            <a href="/profile">
+            <a href={link('/profile')}>
               <Button type="button" variant="secondary">
                 Profile
               </Button>
