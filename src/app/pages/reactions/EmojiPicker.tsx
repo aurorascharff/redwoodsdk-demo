@@ -1,30 +1,22 @@
 'use client';
 
 import { startTransition, useEffect, useOptimistic, useTransition } from 'react';
+import type { Theme } from '@/reactionsDurableObject';
 import { cn } from '@/utils/cn';
+import { themes } from './Reactions';
 import { addReaction, setTheme } from './functions';
 
-export type Theme = 'lasvegas' | 'react';
-
-export const themes = {
-  lasvegas: {
-    colors: 'from-yellow-400 to-red-600',
-    description: 'What happens in Vegas...',
-    emojis: ['🎰', '🎲', '🃏', '💎', '🎯', '🎊', '💸', '🏆', '🔥'],
-    name: 'Las Vegas',
-  },
-  react: {
-    colors: 'from-blue-400 to-cyan-600',
-    description: 'Build amazing UIs',
-    emojis: ['⚛️', '🚀', '💙', '🔥', '⚡', '🧪', '🎯', '💻', '🛠️'],
-    name: 'React',
-  },
-} as const;
-
-export function EmojiPicker({ theme, lastChanged }: { theme: Theme; lastChanged: number }) {
+export function EmojiPicker({
+  theme,
+  lastChanged,
+  currentThemeData,
+}: {
+  theme: Theme;
+  lastChanged: number;
+  currentThemeData: (typeof themes)[Theme];
+}) {
   const [optimisticTheme, setOptimisticTheme] = useOptimistic(theme);
   const [isPending, startThemeTransition] = useTransition();
-  const currentThemeData = themes[optimisticTheme];
   const now = Date.now();
   const cooldownDuration = 10 * 1000; // 10 seconds
   const timeSinceLastChange = now - lastChanged;
@@ -76,7 +68,7 @@ export function EmojiPicker({ theme, lastChanged }: { theme: Theme; lastChanged:
                 return handleThemeChange(key as Theme);
               }}
               className={cn(
-                'min-w-20 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-all sm:min-w-24 sm:px-4 sm:py-2 sm:text-sm',
+                'min-w-20 rounded-full px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-all sm:min-w-24 sm:px-4 sm:py-2 sm:text-sm',
                 optimisticTheme === key
                   ? `bg-gradient-to-r ${theme.colors} text-white shadow-lg`
                   : isDisabled
