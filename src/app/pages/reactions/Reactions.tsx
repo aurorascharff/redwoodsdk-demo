@@ -33,17 +33,17 @@ export async function ReactionPage() {
         }}
       />
       <div className="absolute top-8 right-4 z-10 sm:top-12 sm:right-8">
-        <Card className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-xl transition-transform duration-300 hover:scale-110 sm:h-32 sm:w-32">
+        <Card className="flex h-16 w-16 items-center justify-center rounded-xl sm:h-32 sm:w-32">
           <div className="text-center">
-            <div className="animate-bounce text-xl sm:text-2xl">📱</div>
+            <div className="text-xl sm:text-2xl">📱</div>
             <div className="text-text-muted text-xs font-semibold">QR</div>
           </div>
         </Card>
       </div>
-      <Card className="hover:shadow-3xl group relative mx-2 mb-4 flex min-h-[400px] flex-col items-center justify-center px-4 py-8 transition-all duration-500 sm:mx-4 sm:mb-8 sm:min-h-[600px] sm:px-8 sm:py-12 md:px-12 md:py-16">
+      <Card className="relative mx-2 mb-4 flex min-h-[400px] flex-col items-center justify-center px-4 py-8 sm:mx-4 sm:mb-8 sm:min-h-[600px] sm:px-8 sm:py-12 md:px-12 md:py-16">
         <div className="mb-8 text-center">
-          <h1 className="mb-4 font-serif tracking-tight transition-transform duration-300 group-hover:scale-105 sm:text-4xl md:text-5xl">
-            <span className={`bg-gradient-to-r ${currentThemeData.colors} animate-pulse bg-clip-text text-transparent`}>
+          <h1 className="mb-4 font-serif tracking-tight sm:text-4xl md:text-5xl">
+            <span className={`bg-gradient-to-r ${currentThemeData.colors} bg-clip-text text-transparent`}>
               ✨ Live Reactions ✨
             </span>
           </h1>
@@ -64,7 +64,7 @@ export async function ReactionPage() {
             return (
               <span
                 key={reaction.id}
-                className="float-up absolute cursor-pointer transition-transform duration-200 hover:scale-150"
+                className="float-up absolute"
                 style={{
                   animationDelay: `${delay}s`,
                   left: `${left}%`,
