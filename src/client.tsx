@@ -1,8 +1,9 @@
-import { initClient, initClientNavigation } from 'rwsdk/client';
+import { initClientNavigation } from 'rwsdk/client';
 import { initRealtimeClient } from 'rwsdk/realtime/client';
 
 const { handleResponse } = initClientNavigation();
-initClient({ handleResponse });
+
 initRealtimeClient({
+  handleResponse,
   key: window.location.pathname,
 });
