@@ -1,7 +1,7 @@
 'use client';
 
 import { startTransition, useEffect, useOptimistic, useTransition } from 'react';
-import type { Theme } from '@/reactionsDurableObject';
+import type { Theme } from '@/types/reaction';
 import { cn } from '@/utils/cn';
 import { themes } from './Reactions';
 import { addReaction, setTheme } from './functions';
@@ -12,7 +12,7 @@ export function EmojiPicker({
   remainingCooldown = 0,
 }: {
   theme: Theme;
-  currentThemeData: (typeof themes)[Theme];
+  currentThemeData: (typeof themes)[keyof typeof themes];
   remainingCooldown?: number;
 }) {
   const [optimisticTheme, setOptimisticTheme] = useOptimistic(theme);

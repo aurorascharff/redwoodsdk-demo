@@ -10,7 +10,6 @@ import { link } from '@/app/shared/links';
 import { type User, db, setupDb } from '@/db';
 import { apiRoutes } from './app/api/routes';
 import AppLayout from './app/layouts/AppLayout';
-import Profile from './app/pages/Profile';
 import { ReactionPage } from './app/pages/reactions/Reactions';
 import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
@@ -21,15 +20,6 @@ export { ReactionsDurableObject } from './reactionsDurableObject';
 export type AppContext = {
   session: Session | null;
   user: User | null;
-};
-
-const isAuthenticated = ({ ctx }: { ctx: AppContext }) => {
-  if (!ctx.user) {
-    return new Response(null, {
-      headers: { Location: link('/user/login') },
-      status: 302,
-    });
-  }
 };
 
 export default defineApp([
@@ -70,11 +60,6 @@ export default defineApp([
     route('/hello', () => {
       return new Response('Hello, World!');
     }),
-    layout(AppLayout, [
-      index(Home),
-      route('/profile', [isAuthenticated, Profile]),
-      prefix('/user', userRoutes),
-      route('/realtime', ReactionPage),
-    ]),
+    layout(AppLayout, [index(Home), prefix('/user', userRoutes), route('/realtime', ReactionPage)]),
   ]),
 ]);

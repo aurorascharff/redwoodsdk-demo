@@ -1,19 +1,6 @@
 /* eslint-disable no-undef */
 import { DurableObject } from 'cloudflare:workers';
-
-export interface Reaction {
-  emoji: string;
-  id: string;
-  timestamp: number;
-}
-
-export type Theme = 'lasvegas' | 'react';
-
-export interface ThemeState {
-  currentTheme: Theme;
-  lastChanged: number;
-  remainingCooldown?: number;
-}
+import type { ThemeState, Theme, Reaction } from './types/reaction';
 
 export class ReactionsDurableObject extends DurableObject {
   private state: DurableObjectState;

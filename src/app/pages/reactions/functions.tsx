@@ -2,7 +2,7 @@
 
 import { env } from 'cloudflare:workers';
 import { renderRealtimeClients } from 'rwsdk/realtime/worker';
-import type { Reaction, Theme, ThemeState } from '@/reactionsDurableObject';
+import type { Reaction, ThemeState, Theme } from '@/types/reaction';
 
 export const getReactions = async (): Promise<Reaction[]> => {
   const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');

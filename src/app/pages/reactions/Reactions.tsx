@@ -1,3 +1,4 @@
+import type { Theme } from '@/types/reaction';
 import { EmojiPicker } from './EmojiPicker';
 import { getReactions, getThemeState } from './functions';
 
@@ -19,7 +20,7 @@ export const themes = {
 export async function ReactionPage() {
   const reactions = await getReactions();
   const themeState = await getThemeState();
-  const currentThemeData = themes[themeState.currentTheme];
+  const currentThemeData = themes[themeState.currentTheme as Theme];
 
   return (
     <div className="relative flex min-h-screen flex-col">
@@ -68,8 +69,8 @@ export async function ReactionPage() {
         </div>
         <div className="relative z-20 px-2 pb-4 sm:px-0 sm:pb-8">
           <EmojiPicker
-            remainingCooldown={themeState.remainingCooldown || 0}
             theme={themeState.currentTheme}
+            remainingCooldown={themeState.remainingCooldown || 0}
             currentThemeData={currentThemeData}
           />
         </div>

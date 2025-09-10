@@ -15,7 +15,6 @@ export function Home({ ctx }: { ctx: AppContext }) {
             Web Standards Meet Full-Stack React
           </div>
         </div>
-
         <div className="mb-10 max-w-4xl text-center">
           <h2 className="text-accent dark:text-accent-dark mb-6 text-xl font-semibold sm:text-2xl">
             Built for the Edge
@@ -31,23 +30,23 @@ export function Home({ ctx }: { ctx: AppContext }) {
             <FeatureItem>Cloudflare Ready</FeatureItem>
           </div>
         </div>
-        {!ctx.user && (
-          <div className="flex flex-wrap justify-center gap-3">
+        <div className="flex flex-wrap justify-center gap-3">
+          {!ctx.user && (
             <a href={link('/user/login')}>
               <Button type="submit">Login</Button>
             </a>
-            <a href={link('/realtime')}>
-              <Button type="button" variant="secondary">
-                Realtime
-              </Button>
-            </a>
-            <a href={link('/profile')}>
-              <Button type="button" variant="secondary">
-                Profile
-              </Button>
-            </a>
-          </div>
-        )}
+          )}
+          <a href={link('/realtime')}>
+            <Button type="button" variant="secondary">
+              Realtime
+            </Button>
+          </a>
+          <a href={link('/user/profile')}>
+            <Button type="button" variant="secondary">
+              Profile
+            </Button>
+          </a>
+        </div>
       </Card>
     </div>
   );
