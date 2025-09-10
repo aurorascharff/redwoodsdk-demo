@@ -40,7 +40,7 @@
     "react": "^0.0.0-experimental-6b70072c-20250909",
     "react-dom": "^0.0.0-experimental-6b70072c-20250909",
     "react-error-boundary": "^6.0.0",
-    "rwsdk": "0.3.6",
+    "rwsdk": "0.3.7",
     "server-only": "^0.0.1",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.12",
