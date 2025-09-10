@@ -7,13 +7,13 @@ export const themes = {
   lasvegas: {
     colors: 'from-yellow-400 via-orange-500 to-red-600',
     description: '🎲 What happens in Vegas... gets reacted to! 🎰',
-    emojis: ['🎰', '🎲', '🃏', '💎', '🎯', '🎊', '💸', '🏆', '🔥'],
+    emojis: ['🤑', '🔥', '💀', '😍', '🤯', '🎊', '💸', '🏆', '🎰', '🎲', '🃏'],
     name: 'Las Vegas',
   },
   react: {
     colors: 'from-blue-400 via-cyan-500 to-blue-600',
     description: '⚛️ Building the future, one emoji at a time! 🚀',
-    emojis: ['⚛️', '🚀', '💙', '🔥', '⚡', '🧪', '🎯', '💻', '🛠️'],
+    emojis: ['🤓', '🚀', '💡', '🤯', '🔥', '⚡', '🧠', '💪', '💻', '⚛️'],
     name: 'React',
   },
 } as const;
