@@ -78,12 +78,12 @@ export function Login() {
           </div>
         </ErrorBoundary>
         {state?.error && (
-          <div className="border-error-border bg-error-bg text-error dark:border-error-border-dark dark:bg-error-bg-dark dark:text-error-dark rounded-md border p-3 text-center">
+          <div className="rounded-md border border-red-200 bg-red-50 p-3 text-center text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200">
             {state.error}
           </div>
         )}
         {state?.message && (
-          <div className="border-success-border bg-success-bg text-success dark:border-success-border-dark dark:bg-success-bg-dark dark:text-success-dark rounded-md border p-3 text-center">
+          <div className="rounded-md border border-green-200 bg-green-50 p-3 text-center text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-200">
             {state.message}
           </div>
         )}
