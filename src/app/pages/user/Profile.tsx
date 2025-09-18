@@ -26,9 +26,9 @@ export default function Profile({ ctx }: { ctx: AppContext }) {
             </div>
           </div>
           <div className="flex justify-center pt-4">
-            <a href={link('/user/logout')}>
+            <form action={link('/user/logout')}>
               <Button type="submit">Logout</Button>
-            </a>
+            </form>
           </div>
         </div>
       </Card>

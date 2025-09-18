@@ -33,7 +33,7 @@ export async function ReactionPage() {
         }}
       />
       <div className="absolute top-8 right-4 z-10 sm:top-12 sm:right-8">
-        <Card className="flex h-16 w-16 items-center justify-center rounded-xl sm:h-32 sm:w-32">
+        <Card className="hidden h-16 w-16 items-center justify-center rounded-xl sm:flex sm:h-32 sm:w-32">
           <div className="text-center">
             <div className="text-xl sm:text-2xl">📱</div>
             <div className="text-text-muted text-xs font-semibold">QR</div>

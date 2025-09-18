@@ -82,27 +82,43 @@ export function EmojiPicker({
       </div>
       <div
         className={cn(
-          'relative flex items-center justify-center overflow-visible rounded-xl bg-gradient-to-r p-0.5 sm:rounded-2xl sm:p-1',
+          'relative overflow-visible rounded-xl bg-gradient-to-r p-0.5 sm:flex sm:items-center sm:justify-center sm:rounded-2xl sm:p-1',
           currentThemeData.colors,
         )}
       >
-        <div className="bg-surface/95 dark:bg-surface-dark/95 flex items-center gap-2 rounded-lg px-3 py-3 backdrop-blur-sm sm:gap-4 sm:rounded-xl sm:px-6 sm:py-4">
-          {currentThemeData.emojis.map((emoji, index) => {
-            return (
-              <div
-                key={emoji}
-                className="group relative flex cursor-pointer flex-col items-center text-2xl transition-transform hover:scale-125 sm:text-4xl"
-                onClick={() => {
-                  return addReaction(emoji);
-                }}
-              >
-                {emoji}
-                <span className="bg-text/70 text-background mt-0.5 rounded px-1 py-0.5 text-xs sm:mt-1 sm:px-1.5">
-                  {index + 1}
-                </span>
-              </div>
-            );
-          })}
+        <div className="bg-surface/95 dark:bg-surface-dark/95 w-full rounded-lg px-3 py-3 backdrop-blur-sm sm:rounded-xl sm:px-6 sm:py-4">
+          {/* Mobile: Grid layout without numbers */}
+          <div className="grid w-full grid-cols-4 gap-3 sm:hidden">
+            {currentThemeData.emojis.map(emoji => {
+              return (
+                <div
+                  key={emoji}
+                  className="bg-background/50 hover:bg-background/70 flex aspect-square cursor-pointer items-center justify-center rounded-lg py-4 text-2xl transition-all hover:scale-110 active:scale-95"
+                  onClick={() => {
+                    return addReaction(emoji);
+                  }}
+                >
+                  {emoji}
+                </div>
+              );
+            })}
+          </div>
+          <div className="hidden items-center gap-4 sm:flex">
+            {currentThemeData.emojis.map((emoji, index) => {
+              return (
+                <div
+                  key={emoji}
+                  className="group relative flex cursor-pointer flex-col items-center text-4xl transition-transform hover:scale-125"
+                  onClick={() => {
+                    return addReaction(emoji);
+                  }}
+                >
+                  {emoji}
+                  <span className="bg-text/70 text-background mt-1 rounded px-1.5 py-0.5 text-xs">{index + 1}</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
