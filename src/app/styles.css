@@ -65,6 +65,18 @@
   label {
     @apply text-text-muted dark:text-text-muted-dark mb-1 block text-sm font-medium;
   }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  a.nav-link {
+    @apply flex items-center gap-2 opacity-60 transition-opacity hover:opacity-100;
+  }
+
+  a.external-link {
+    @apply text-text-muted dark:text-text-muted-dark hover:text-primary dark:hover:text-primary-dark inline-flex items-center gap-2 text-sm transition-colors duration-200;
+  }
 }
 
 @keyframes floatUp {

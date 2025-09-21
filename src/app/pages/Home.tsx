@@ -2,6 +2,7 @@ import { link } from '@/app/shared/links';
 import type { AppContext } from '@/worker';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
+import GitHubIcon from '../components/ui/icons/GitHubIcon';
 
 export function Home({ ctx }: { ctx: AppContext }) {
   return (
@@ -46,6 +47,17 @@ export function Home({ ctx }: { ctx: AppContext }) {
             <Button type="button" variant="secondary">
               Realtime
             </Button>
+          </a>
+        </div>
+        <div className="mt-8 text-center">
+          <a
+            href="https://github.com/aurorascharff/redwoodsdk-v1-demo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="external-link"
+          >
+            <GitHubIcon className="h-5 w-5" />
+            View on GitHub
           </a>
         </div>
       </Card>

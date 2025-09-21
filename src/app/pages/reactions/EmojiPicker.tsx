@@ -3,7 +3,7 @@
 import { startTransition, useEffect, useOptimistic } from 'react';
 import type { Theme } from '@/types/reaction';
 import { cn } from '@/utils/cn';
-import { themes } from './Reactions';
+import { themes } from './Realtime';
 import { addReaction, setTheme } from './functions';
 
 export function EmojiPicker({

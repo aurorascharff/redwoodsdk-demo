@@ -10,7 +10,7 @@ import { link } from '@/app/shared/links';
 import { type User, db, setupDb } from '@/db';
 import { apiRoutes } from './app/api/routes';
 import AppLayout from './app/layouts/AppLayout';
-import { ReactionPage } from './app/pages/reactions/Reactions';
+import { RealtimePage } from './app/pages/reactions/Realtime';
 import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
@@ -60,6 +60,6 @@ export default defineApp([
     route('/hello', () => {
       return new Response('Hello, World!');
     }),
-    layout(AppLayout, [index(Home), prefix('/user', userRoutes), route('/realtime', ReactionPage)]),
+    layout(AppLayout, [index(Home), prefix('/user', userRoutes), route('/realtime', RealtimePage)]),
   ]),
 ]);
