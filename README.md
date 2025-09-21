@@ -1,6 +1,8 @@
-# Standard RedwoodSDK Starter
+# RedwoodSDK v1 Demo
 
-This "standard starter" is the recommended implementation for RedwoodSDK. You get a Typescript project with:
+A demo application for RedwoodSDK v1 featuring real-time updates and React View Transitions, using Tailwind CSS and Prisma.
+
+Based on the "standard starter," the recommended implementation for RedwoodSDK is. You get a Typescript project with:
 
 - Vite
 - database (Prisma via D1)
