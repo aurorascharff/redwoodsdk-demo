@@ -17,7 +17,7 @@ import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
 export { RealtimeDurableObject } from 'rwsdk/realtime/durableObject';
-export { ReactionsDurableObject } from './reactionsDurableObject';
+export { ReactionsDurableObject } from './app/pages/realtime/reactionsDurableObject';
 
 export type AppContext = {
   session: Session | null;
@@ -29,7 +29,6 @@ export default defineApp([
   async ({ ctx, request, headers }) => {
     await setupDb(env);
     setupSessionStore(env);
-
     try {
       ctx.session = await sessions.load(request);
     } catch (error) {
@@ -44,7 +43,6 @@ export default defineApp([
       }
       throw error;
     }
-
     if (ctx.session?.userId) {
       ctx.user = await db.user.findUnique({
         where: {
@@ -58,8 +56,11 @@ export default defineApp([
   }),
   prefix('/api', apiRoutes),
   render(Document, [
+    route('/ping', () => {
+      return new Response('pong', { status: 200 });
+    }),
     route('/hello', () => {
-      return new Response('Hello, World!');
+      return <div className="bg-primary m-4 w-fit rounded p-4"> Hello World!</div>;
     }),
     layout(AppLayout, [
       index(Home),
