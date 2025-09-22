@@ -9,11 +9,9 @@
   --color-primary: #f97316;
   --color-primary-hover: #ea580c;
   --color-accent: #fb923c;
-  --color-accent-light: #fed7aa;
   --color-gradient-start: #fb923c;
   --color-gradient-end: #f97316;
   --color-border: #e7e5e4;
-  --color-border-accent: #fed7aa;
 
   --color-background-dark: #0c0a09;
   --color-surface-dark: #1c1917;
@@ -23,14 +21,9 @@
   --color-primary-dark: #fb923c;
   --color-primary-hover-dark: #fdba74;
   --color-accent-dark: #f97316;
-  --color-accent-light-dark: #431407;
   --color-gradient-start-dark: #fb923c;
   --color-gradient-end-dark: #f97316;
   --color-border-dark: #44403c;
-  --color-border-accent-dark: #78716c;
-
-  --font-mono: var(--font-geist-mono);
-  --font-sans: var(--font-geist-sans);
 }
 
 @layer base {

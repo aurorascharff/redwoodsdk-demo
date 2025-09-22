@@ -1,9 +1,9 @@
 import { cn } from '@/utils/cn';
-import type { PropsWithChildren } from 'react';
 
-interface CardProps extends PropsWithChildren {
+type CardProps = {
   className?: string;
-}
+  children: React.ReactNode;
+};
 
 export default function Card({ children, className = '' }: CardProps) {
   return (

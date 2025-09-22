@@ -1,13 +1,13 @@
 export type Theme = 'lasvegas' | 'react';
 
-export interface ThemeState {
+export type ThemeState = {
   currentTheme: Theme;
   lastChanged: number;
   remainingCooldown?: number;
-}
+};
 
-export interface Reaction {
+export type Reaction = {
   emoji: string;
   id: string;
   timestamp: number;
-}
+};

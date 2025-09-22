@@ -17,9 +17,6 @@ export function Home({ ctx }: { ctx: AppContext }) {
           </div>
         </div>
         <div className="mb-10 max-w-4xl text-center">
-          <h2 className="text-accent dark:text-accent-dark mb-6 text-xl font-semibold sm:text-2xl">
-            &ldquo;Webdev, the good parts.&rdquo;
-          </h2>
           <p className="text-text-muted dark:text-text-muted-dark mb-8 text-base leading-relaxed sm:text-lg">
             A full-stack React framework that strips web development back to its essentials. TypeScript-only,
             composable, and built on web standards with native Request/Response access.

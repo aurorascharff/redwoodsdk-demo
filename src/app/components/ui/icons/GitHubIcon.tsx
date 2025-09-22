@@ -1,11 +1,11 @@
 import { cn } from '@/utils/cn';
 
-interface GitHubIconProps {
+type Props = {
   className?: string;
   size?: number;
-}
+};
 
-export default function GitHubIcon({ className, size }: GitHubIconProps) {
+export default function GitHubIcon({ className, size }: Props) {
   return (
     <svg
       className={cn('fill-current', className)}

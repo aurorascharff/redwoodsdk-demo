@@ -2,11 +2,11 @@
 import { DurableObject } from 'cloudflare:workers';
 import { MAX_SESSION_DURATION } from 'rwsdk/auth';
 
-export interface Session {
+export type Session = {
   userId?: string | null;
   challenge?: string | null;
   createdAt: number;
-}
+};
 
 export class SessionDurableObject extends DurableObject {
   private session: Session | undefined = undefined;
