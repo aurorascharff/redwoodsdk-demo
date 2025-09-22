@@ -1,6 +1,5 @@
-import { Suspense, type PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 import { link } from '@/app/shared/links';
-import Spinner from '../components/ui/Spinner';
 
 export default function MainLayout({ children }: PropsWithChildren) {
   return (
@@ -21,18 +20,7 @@ export default function MainLayout({ children }: PropsWithChildren) {
           </svg>
         </a>
       </div>
-      <Suspense fallback={<GlobalLoader />}>{children}</Suspense>
-    </div>
-  );
-}
-
-function GlobalLoader() {
-  return (
-    <div className="bg-background dark:bg-background-dark fixed inset-0 z-50 flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-        <Spinner className="text-orange-500" width={32} height={32} />
-        <p className="text-text-muted text-sm">Loading...</p>
-      </div>
+      {children}
     </div>
   );
 }
