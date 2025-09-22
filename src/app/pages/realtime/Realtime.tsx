@@ -27,7 +27,6 @@ export async function RealtimePage() {
 
   return (
     <>
-      <meta name="title" content="Live Reactions - RedwoodSDK v1.0" />
       <div className="relative flex h-screen flex-col">
         <div
           className={`fixed inset-0 bg-gradient-to-br ${currentThemeData.colors} animate-pulse opacity-5`}
