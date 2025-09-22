@@ -1,10 +1,7 @@
 import React from 'react';
-
-import { slow } from '@/utils/slow';
 import { getReactions } from './functions';
 
 export default async function Reactions() {
-  await slow();
   const reactions = await getReactions();
 
   return (

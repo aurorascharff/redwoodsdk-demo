@@ -11,7 +11,8 @@ import { type User, db, setupDb } from '@/db';
 import { apiRoutes } from './app/api/routes';
 import AppLayout from './app/layouts/AppLayout';
 import MainLayout from './app/layouts/MainLayout';
-import { RealtimePage } from './app/pages/realtime/Realtime';
+import { RealtimePage } from './app/pages/realtime/RealtimePage';
+import TodosPage from './app/pages/todos/TodosPage';
 import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
@@ -62,7 +63,7 @@ export default defineApp([
     }),
     layout(AppLayout, [
       index(Home),
-      layout(MainLayout, [prefix('/user', userRoutes), route('/realtime', RealtimePage)]),
+      layout(MainLayout, [prefix('/user', userRoutes), route('/realtime', RealtimePage), route('/todos', TodosPage)]),
     ]),
   ]),
 ]);

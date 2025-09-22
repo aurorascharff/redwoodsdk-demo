@@ -19,7 +19,7 @@ type State = {
   message?: string;
 };
 
-export function Login() {
+export function LoginPage() {
   const [state, formAction] = useActionState(async (_prevState: State | undefined, formData: FormData) => {
     const action = formData.get('action') as string;
 

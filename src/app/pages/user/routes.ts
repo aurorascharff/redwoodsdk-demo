@@ -2,7 +2,7 @@ import { route } from 'rwsdk/router';
 import { link } from '@/app/shared/links';
 import { sessions } from '@/session/store';
 import type { AppContext } from '@/worker';
-import { Login } from './Login';
+import { LoginPage } from './LoginPage';
 import Profile from './Profile';
 
 const isAuthenticated = ({ ctx }: { ctx: AppContext }) => {
@@ -24,7 +24,7 @@ const shouldRedirectHome = ({ ctx }: { ctx: AppContext }) => {
 };
 
 export const userRoutes = [
-  route('/login', [shouldRedirectHome, Login]),
+  route('/login', [shouldRedirectHome, LoginPage]),
   route('/profile', [isAuthenticated, Profile]),
   route('/logout', async function ({ request }) {
     const headers = new Headers();

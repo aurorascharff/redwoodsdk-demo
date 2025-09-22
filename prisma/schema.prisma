@@ -41,3 +41,10 @@ model Credential {
   @@index([credentialId])
   @@index([userId])
 }
+
+model Todo {
+  id        String   @id @default(uuid())
+  title     String
+  done      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

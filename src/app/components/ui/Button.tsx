@@ -12,6 +12,7 @@ type Props = {
   type?: 'button' | 'submit' | 'reset';
   variant?: 'primary' | 'secondary' | 'tertiary';
   disabled?: boolean;
+  hideSpinner?: boolean;
 };
 
 export default function Button({
@@ -21,10 +22,11 @@ export default function Button({
   variant = 'primary',
   className,
   disabled,
+  hideSpinner,
   ...otherProps
 }: Props & React.HTMLProps<HTMLButtonElement>) {
   const { pending } = useFormStatus();
-  const isSubmitting = pending || loading;
+  const isSubmitting = (pending || loading) && !hideSpinner;
 
   return (
     <button

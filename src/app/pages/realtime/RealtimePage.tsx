@@ -1,9 +1,7 @@
-import { Suspense } from 'react';
-import { unstable_ViewTransition as ViewTransition } from 'react';
 import Card from '@/app/components/ui/Card';
 import type { Theme } from '@/types/reaction';
 import { EmojiPicker } from './EmojiPicker';
-import Reactions, { ReactionsSkeleton } from './Reactions';
+import Reactions from './Reactions';
 import { getThemeState } from './functions';
 
 export const themes = {
@@ -50,17 +48,7 @@ export async function RealtimePage() {
               </h1>
               <p className="text-text-muted text-sm font-medium sm:text-base">{currentThemeData.description}</p>
             </div>
-            <Suspense
-              fallback={
-                <ViewTransition exit="slide-down">
-                  <ReactionsSkeleton />
-                </ViewTransition>
-              }
-            >
-              <ViewTransition enter="slide-up">
-                <Reactions />
-              </ViewTransition>
-            </Suspense>
+            <Reactions />
           </Card>
         </div>
         <div className="relative z-20 p-4 sm:p-8 sm:pt-0">

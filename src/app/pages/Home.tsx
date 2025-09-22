@@ -45,6 +45,11 @@ export function Home({ ctx }: { ctx: AppContext }) {
               Realtime
             </Button>
           </a>
+          <a href={link('/todos')}>
+            <Button type="button" variant="secondary">
+              Todos
+            </Button>
+          </a>
         </div>
         <div className="mt-8 text-center">
           <a
