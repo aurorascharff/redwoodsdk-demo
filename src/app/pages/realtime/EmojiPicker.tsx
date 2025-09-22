@@ -1,6 +1,6 @@
 'use client';
 
-import { startTransition, useEffect, useOptimistic } from 'react';
+import { useEffect, useOptimistic, useTransition } from 'react';
 import type { Theme } from '@/types/reaction';
 import { cn } from '@/utils/cn';
 import { themes } from './Realtime';
@@ -16,10 +16,13 @@ export function EmojiPicker({
   remainingCooldown?: number;
 }) {
   const [optimisticTheme, setOptimisticTheme] = useOptimistic(theme);
+  const [isPending, startTransition] = useTransition();
 
-  const changeThemeAction = async (newTheme: Theme) => {
-    setOptimisticTheme(newTheme);
-    await setTheme(newTheme);
+  const changeThemeAction = (newTheme: Theme) => {
+    startTransition(async () => {
+      setOptimisticTheme(newTheme);
+      await setTheme(newTheme);
+    });
   };
 
   useEffect(() => {
@@ -50,27 +53,24 @@ export function EmojiPicker({
       <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex flex-wrap items-center justify-center gap-2 rounded-full border px-3 py-2 sm:gap-4 sm:px-6">
         <span className="text-text-muted text-xs sm:text-sm">Theme:</span>
         {Object.entries(themes).map(([key, theme]) => {
-          const isDisabled = remainingCooldown > 0;
+          const isDisabled = remainingCooldown > 0 || isPending;
           return (
-            <form
+            <button
               key={key}
-              action={() => {
+              onClick={() => {
                 changeThemeAction(key as Theme);
               }}
+              disabled={isDisabled}
+              className={cn(
+                'min-w-20 rounded-full px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-all sm:min-w-24 sm:px-4 sm:py-2 sm:text-sm',
+                'bg-background text-text-muted hover:bg-accent/10 dark:bg-background-dark',
+                'disabled:hover:bg-background disabled:dark:hover:bg-background-dark disabled:cursor-not-allowed disabled:opacity-50',
+                optimisticTheme === key && 'bg-gradient-to-r text-white shadow-lg',
+                optimisticTheme === key && theme.colors,
+              )}
             >
-              <button
-                disabled={isDisabled}
-                className={cn(
-                  'min-w-20 rounded-full px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-all sm:min-w-24 sm:px-4 sm:py-2 sm:text-sm',
-                  'bg-background text-text-muted hover:bg-accent/10 dark:bg-background-dark',
-                  'disabled:hover:bg-background disabled:dark:hover:bg-background-dark disabled:cursor-not-allowed disabled:opacity-50',
-                  optimisticTheme === key && 'bg-gradient-to-r text-white shadow-lg',
-                  optimisticTheme === key && theme.colors,
-                )}
-              >
-                {theme.name}
-              </button>
-            </form>
+              {theme.name}
+            </button>
           );
         })}
         <kbd className="text-text-muted bg-background border-border dark:bg-background-dark dark:border-border-dark rounded border px-1.5 py-0.5 text-xs sm:px-2 sm:py-1">

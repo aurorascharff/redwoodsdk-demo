@@ -18,11 +18,11 @@ export function Home({ ctx }: { ctx: AppContext }) {
         </div>
         <div className="mb-10 max-w-4xl text-center">
           <h2 className="text-accent dark:text-accent-dark mb-6 text-xl font-semibold sm:text-2xl">
-            Built for the Edge
+            &ldquo;Webdev, the good parts.&rdquo;
           </h2>
           <p className="text-text-muted dark:text-text-muted-dark mb-8 text-base leading-relaxed sm:text-lg">
-            A new way to build full-stack React apps without heavy frameworks or hidden abstractions. Built on web
-            standards with direct access to native Requests and Responses.
+            A full-stack React framework that strips web development back to its essentials. TypeScript-only,
+            composable, and built on web standards with native Request/Response access.
           </p>
           <div className="flex flex-wrap justify-center gap-3 md:gap-4">
             <FeatureItem>Server Components</FeatureItem>
