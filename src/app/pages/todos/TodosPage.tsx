@@ -1,6 +1,4 @@
-import { Suspense } from 'react';
-import { unstable_ViewTransition as ViewTransition } from 'react';
-import Todos, { TodosSkeleton } from './Todos';
+import Todos from './Todos';
 import { getTodos } from './queries';
 
 export default async function TodosPage() {
@@ -13,17 +11,7 @@ export default async function TodosPage() {
           Todo App
         </h1>
       </div>
-      <Suspense
-        fallback={
-          <ViewTransition exit="slide-down">
-            <TodosSkeleton />
-          </ViewTransition>
-        }
-      >
-        <ViewTransition enter="slide-up" default="none">
-          <Todos todosPromise={initialTodos} />
-        </ViewTransition>
-      </Suspense>
+      <Todos todosPromise={initialTodos} />
     </div>
   );
 }

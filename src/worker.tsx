@@ -1,18 +1,10 @@
 import { env } from 'cloudflare:workers';
-import { realtimeRoute } from 'rwsdk/realtime/worker';
-import { route, render, prefix, index, layout } from 'rwsdk/router';
+import { route, render } from 'rwsdk/router';
 import { defineApp, ErrorResponse } from 'rwsdk/worker';
 import { Document } from '@/app/Document';
 import { setCommonHeaders } from '@/app/headers';
-import { Home } from '@/app/pages/Home';
-import { userRoutes } from '@/app/pages/user/routes';
 import { link } from '@/app/shared/links';
 import { type User, db, setupDb } from '@/db';
-import { apiRoutes } from './app/api/routes';
-import AppLayout from './app/layouts/AppLayout';
-import MainLayout from './app/layouts/MainLayout';
-import { RealtimePage } from './app/pages/realtime/RealtimePage';
-import TodosPage from './app/pages/todos/TodosPage';
 import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
@@ -51,10 +43,6 @@ export default defineApp([
       });
     }
   },
-  realtimeRoute(env => {
-    return env.REALTIME_DURABLE_OBJECT;
-  }),
-  prefix('/api', apiRoutes),
   render(Document, [
     route('/ping', () => {
       return new Response('pong', { status: 200 });
@@ -62,9 +50,5 @@ export default defineApp([
     route('/hello', () => {
       return <div className="bg-primary m-4 w-fit rounded p-4"> Hello World!</div>;
     }),
-    layout(AppLayout, [
-      index(Home),
-      layout(MainLayout, [prefix('/user', userRoutes), route('/realtime', RealtimePage), route('/todos', TodosPage)]),
-    ]),
   ]),
 ]);
