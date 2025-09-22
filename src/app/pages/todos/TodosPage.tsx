@@ -9,9 +9,11 @@ export default async function TodosPage() {
   return (
     <div className="mx-auto max-w-2xl p-6">
       <div className="mb-8 text-center">
-        <h1 className="mb-2 bg-gradient-to-r from-orange-600 via-red-500 to-amber-600 bg-clip-text text-3xl font-bold text-transparent">
-          Todo App
-        </h1>
+        <ViewTransition name="todos">
+          <h1 className="mb-2 bg-gradient-to-r from-orange-600 via-red-500 to-amber-600 bg-clip-text text-3xl font-bold text-transparent">
+            Todos
+          </h1>
+        </ViewTransition>
       </div>
       <Suspense
         fallback={
