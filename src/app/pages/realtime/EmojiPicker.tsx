@@ -26,14 +26,12 @@ export function EmojiPicker({
   };
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = async (event: KeyboardEvent) => {
       const keyNum = parseInt(event.key);
       if (keyNum >= 1 && keyNum <= 9) {
         const emojiIndex = keyNum - 1;
         if (emojiIndex < currentThemeData.emojis.length) {
-          startTransition(async () => {
-            await addReaction(currentThemeData.emojis[emojiIndex]);
-          });
+          await addReaction(currentThemeData.emojis[emojiIndex]);
         }
       }
       if (event.key.toLowerCase() === 't') {
@@ -63,7 +61,7 @@ export function EmojiPicker({
               disabled={isDisabled}
               className={cn(
                 'min-w-20 rounded-full px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-all sm:min-w-24 sm:px-4 sm:py-2 sm:text-sm',
-                'bg-background text-text-muted hover:bg-accent/10 dark:bg-background-dark',
+                'bg-background text-text-muted hover:bg-accent/25 hover:text-text-dark dark:bg-background-dark dark:hover:bg-accent/20 hover:font-semibold dark:hover:text-white',
                 'disabled:hover:bg-background disabled:dark:hover:bg-background-dark disabled:cursor-not-allowed disabled:opacity-50',
                 optimisticTheme === key && 'bg-gradient-to-r text-white shadow-lg',
                 optimisticTheme === key && theme.colors,
