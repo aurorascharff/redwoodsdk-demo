@@ -79,39 +79,55 @@ export function EmojiPicker({
       </div>
       <div
         className={cn(
-          'relative w-full overflow-visible rounded-xl bg-gradient-to-r p-0.5 sm:flex sm:w-fit sm:items-center sm:justify-center sm:rounded-2xl sm:p-1',
+          'relative w-full overflow-visible rounded-xl bg-gradient-to-r p-0.5 transition-all duration-300 sm:flex sm:w-fit sm:items-center sm:justify-center sm:rounded-2xl sm:p-1',
           currentThemeData.colors,
+          isPending && 'opacity-60 saturate-50',
         )}
       >
-        <div className="bg-surface/95 dark:bg-surface-dark/95 w-full rounded-lg px-3 py-3 backdrop-blur-sm sm:rounded-xl sm:px-6 sm:py-4">
+        <div
+          className={cn(
+            'bg-surface/95 dark:bg-surface-dark/95 w-full rounded-lg px-3 py-3 backdrop-blur-sm transition-all duration-300 sm:rounded-xl sm:px-6 sm:py-4',
+            isPending && 'bg-surface/50 dark:bg-surface-dark/50',
+          )}
+        >
           <div className="grid w-full grid-cols-4 gap-3 sm:hidden">
             {currentThemeData.emojis.map(emoji => {
               return (
-                <div
+                <button
                   key={emoji}
-                  className="bg-background/50 hover:bg-background/70 flex aspect-square cursor-pointer items-center justify-center rounded-lg py-4 text-2xl transition-all hover:scale-110 active:scale-95"
+                  type="button"
+                  disabled={isPending}
+                  className={cn(
+                    'bg-background/50 hover:bg-background/70 flex aspect-square items-center justify-center rounded-lg py-4 text-2xl transition-all hover:scale-110 active:scale-95',
+                    'disabled:hover:bg-background/50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100',
+                  )}
                   onClick={() => {
                     return addReaction(emoji);
                   }}
                 >
                   {emoji}
-                </div>
+                </button>
               );
             })}
           </div>
           <div className="hidden items-center gap-4 sm:flex">
             {currentThemeData.emojis.map((emoji, index) => {
               return (
-                <div
+                <button
                   key={emoji}
-                  className="group relative flex cursor-pointer flex-col items-center text-4xl transition-transform hover:scale-125"
+                  type="button"
+                  disabled={isPending}
+                  className={cn(
+                    'group relative flex flex-col items-center text-4xl transition-transform hover:scale-125',
+                    'disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100',
+                  )}
                   onClick={() => {
                     return addReaction(emoji);
                   }}
                 >
                   {emoji}
                   <span className="bg-text/70 text-background mt-1 rounded px-1.5 py-0.5 text-xs">{index + 1}</span>
-                </div>
+                </button>
               );
             })}
           </div>
