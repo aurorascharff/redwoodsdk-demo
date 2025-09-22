@@ -56,15 +56,19 @@ export function EmojiPicker({
             <button
               key={key}
               onClick={() => {
+                if (key === optimisticTheme || isDisabled) return;
                 changeThemeAction(key as Theme);
               }}
               disabled={isDisabled}
               className={cn(
                 'min-w-20 rounded-full px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-all sm:min-w-24 sm:px-4 sm:py-2 sm:text-sm',
-                'bg-background text-text-muted hover:bg-accent/25 hover:text-text-dark dark:bg-background-dark dark:hover:bg-accent/20 hover:font-semibold dark:hover:text-white',
-                'disabled:hover:bg-background disabled:dark:hover:bg-background-dark disabled:cursor-not-allowed disabled:opacity-50',
-                optimisticTheme === key && 'bg-gradient-to-r text-white shadow-lg',
+                'bg-background text-text-muted dark:bg-background-dark',
+                optimisticTheme === key && 'cursor-default bg-gradient-to-r text-white shadow-lg',
                 optimisticTheme === key && theme.colors,
+                optimisticTheme !== key &&
+                  !isDisabled &&
+                  'hover:bg-accent/25 hover:text-text-dark dark:hover:bg-accent/20 hover:font-semibold dark:hover:text-white',
+                isDisabled && 'cursor-not-allowed opacity-50',
               )}
             >
               {theme.name}
@@ -84,8 +88,8 @@ export function EmojiPicker({
       >
         <div
           className={cn(
-            'bg-surface/95 dark:bg-surface-dark/95 w-full rounded-lg px-3 py-3 backdrop-blur-sm transition-all duration-300 sm:rounded-xl sm:px-6 sm:py-4',
-            isPending && 'bg-surface/50 dark:bg-surface-dark/50',
+            'dark:bg-surface-dark/85 border-border/20 dark:border-border-dark/20 w-full rounded-lg border bg-white px-3 py-3 shadow-md backdrop-blur-sm transition-all duration-300 sm:rounded-xl sm:px-6 sm:py-4',
+            isPending && 'dark:bg-surface-dark/60 bg-white/90',
           )}
         >
           <div className="grid w-full grid-cols-4 gap-3 sm:hidden">
@@ -96,8 +100,8 @@ export function EmojiPicker({
                   type="button"
                   disabled={isPending}
                   className={cn(
-                    'bg-background/50 hover:bg-background/70 flex aspect-square items-center justify-center rounded-lg py-4 text-2xl transition-all hover:scale-110 active:scale-95',
-                    'disabled:hover:bg-background/50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100',
+                    'bg-background/80 hover:bg-background/90 dark:bg-background-dark/60 dark:hover:bg-background-dark/80 flex aspect-square items-center justify-center rounded-lg py-4 text-2xl transition-all hover:scale-110 active:scale-95',
+                    'disabled:hover:bg-background/80 disabled:dark:hover:bg-background-dark/60 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100',
                   )}
                   onClick={() => {
                     return addReaction(emoji);

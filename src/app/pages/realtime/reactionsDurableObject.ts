@@ -13,29 +13,39 @@ export class ReactionsDurableObject extends DurableObject {
   }
 
   async getReactions(): Promise<Reaction[]> {
-    if (this.reactions.length === 0) {
-      const stored = await this.state.storage.get<Reaction[]>('reactions');
-      this.reactions = stored || [{ emoji: '⚛️', id: 'initial', timestamp: Date.now() }];
+    const stored = await this.state.storage.get<Reaction[]>('reactions');
+    const allReactions = stored || [];
+
+    const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
+    const freshReactions = allReactions.filter(reaction => {
+      return reaction.timestamp > fiveMinutesAgo;
+    });
+
+    if (freshReactions.length !== allReactions.length) {
+      await this.state.storage.put('reactions', freshReactions);
     }
-    return this.reactions;
+
+    this.reactions = freshReactions;
+    return freshReactions;
   }
 
   async addReaction(emoji: string): Promise<void> {
+    const currentReactions = await this.getReactions();
+
     const reaction: Reaction = {
       emoji,
       id: crypto.randomUUID(),
       timestamp: Date.now(),
     };
 
-    this.reactions.push(reaction);
-    await this.state.storage.put('reactions', this.reactions);
+    const updatedReactions = [...currentReactions, reaction];
+    this.reactions = updatedReactions;
+    await this.state.storage.put('reactions', updatedReactions);
   }
 
   async getThemeState(): Promise<ThemeState> {
-    if (!this.themeState) {
-      const stored = await this.state.storage.get<ThemeState>('themeState');
-      this.themeState = stored || { currentTheme: 'react', lastChanged: 0 };
-    }
+    const stored = await this.state.storage.get<ThemeState>('themeState');
+    this.themeState = stored || { currentTheme: 'react', lastChanged: 0 };
 
     const now = Date.now();
     const cooldownDuration = 10 * 1000; // 10 seconds
@@ -47,6 +57,12 @@ export class ReactionsDurableObject extends DurableObject {
       ...this.themeState,
       remainingCooldown,
     };
+  }
+
+  async clearOldReactions(): Promise<void> {
+    const freshReactions = await this.getReactions();
+    this.reactions = freshReactions;
+    await this.state.storage.put('reactions', freshReactions);
   }
 
   async setTheme(theme: Theme): Promise<{ success: boolean; remainingCooldown?: number }> {

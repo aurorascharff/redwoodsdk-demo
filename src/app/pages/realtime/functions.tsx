@@ -41,3 +41,14 @@ export const setTheme = async (theme: Theme): Promise<{ remainingCooldown?: numb
 
   return result;
 };
+
+export const clearOldReactions = async (): Promise<void> => {
+  const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');
+  const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
+  await reactionsDO.clearOldReactions();
+
+  await renderRealtimeClients({
+    durableObjectNamespace: env.REALTIME_DURABLE_OBJECT,
+    key: 'reactions',
+  });
+};

@@ -38,7 +38,9 @@ export function Home({ ctx }: { ctx: AppContext }) {
             </a>
           ) : (
             <a href={link('/user/login')}>
-              <Button type="submit">Login</Button>
+              <Button type="submit" variant="secondary">
+                Login
+              </Button>
             </a>
           )}
           <a href={link('/realtime')}>

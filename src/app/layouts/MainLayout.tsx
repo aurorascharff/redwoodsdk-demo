@@ -1,27 +1,38 @@
+import { Suspense, type PropsWithChildren } from 'react';
 import { link } from '@/app/shared/links';
-import Button from '../components/ui/Button';
-import type { PropsWithChildren } from 'react';
+import Spinner from '../components/ui/Spinner';
 
 export default function MainLayout({ children }: PropsWithChildren) {
   return (
     <div className="relative">
-      <div className="absolute top-8 left-8 z-10 sm:top-12 sm:left-12">
-        <a href={link('/')}>
-          <Button type="button" variant="tertiary" className="flex items-center gap-2">
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Back
-          </Button>
+      <div className="absolute top-4 left-4 z-10 sm:top-6 sm:left-6">
+        <a
+          href={link('/')}
+          className="border-border/20 dark:border-border-dark/30 text-text dark:text-text-dark hover:text-accent dark:hover:text-accent-dark flex h-10 w-10 items-center justify-center rounded-full border bg-white/80 shadow-lg backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/95 active:scale-95 dark:bg-black/60 dark:hover:bg-black/80"
+        >
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
         </a>
       </div>
-      {children}
+      <Suspense fallback={<GlobalLoader />}>{children}</Suspense>
+    </div>
+  );
+}
+
+function GlobalLoader() {
+  return (
+    <div className="bg-background dark:bg-background-dark fixed inset-0 z-50 flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <Spinner className="text-orange-500" width={32} height={32} />
+        <p className="text-text-muted text-sm">Loading...</p>
+      </div>
     </div>
   );
 }

@@ -10,7 +10,7 @@ type Props = {
   className?: string;
   loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  variant?: 'primary' | 'secondary' | 'tertiary';
+  variant?: 'primary' | 'secondary';
   disabled?: boolean;
   hideSpinner?: boolean;
 };
@@ -36,9 +36,7 @@ export default function Button({
         'focus-visible:outline-primary rounded-lg border px-4 py-2 font-medium -outline-offset-1 transition-colors focus-visible:outline-2',
         variant === 'primary'
           ? 'bg-primary border-primary enabled:hover:bg-primary-dark disabled:bg-primary-darker text-white'
-          : variant === 'secondary'
-            ? 'border-border bg-surface dark:bg-surface-dark enabled:hover:bg-surface-elevated dark:enabled:hover:bg-surface-elevated-dark enabled:hover:border-text-muted dark:enabled:hover:border-text-muted-dark text-text dark:text-text-dark disabled:opacity-60'
-            : 'border-border/20 enabled:hover:bg-surface/50 dark:enabled:hover:bg-surface-dark/50 enabled:hover:border-border text-text dark:text-text-dark bg-transparent disabled:opacity-60',
+          : 'border-border bg-surface dark:bg-surface-dark enabled:hover:bg-surface-elevated dark:enabled:hover:bg-surface-elevated-dark enabled:hover:border-text-muted dark:enabled:hover:border-text-muted-dark text-text dark:text-text-dark disabled:opacity-60',
         className,
       )}
       {...otherProps}
