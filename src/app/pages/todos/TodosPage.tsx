@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+// @ts-expect-error - unstable API but works in React 19
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import Todos, { TodosSkeleton } from './Todos';
 import { getTodos } from './queries';

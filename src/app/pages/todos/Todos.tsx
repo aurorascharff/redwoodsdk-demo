@@ -1,6 +1,7 @@
 'use client';
 
 import { useActionState, useOptimistic, use, useRef, useState, startTransition } from 'react';
+// @ts-expect-error - unstable API but works in React 19
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import Button from '@/app/components/ui/Button';
 import type { Todo } from '@/types/todo';
