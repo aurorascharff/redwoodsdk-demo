@@ -1,9 +1,14 @@
 import Button from '@/app/components/ui/Button';
-import type { Todo } from '@generated/prisma';
+import { getTodos } from './queries';
 
-export default async function SimpleTodos({ todos }: { todos: Todo[] }) {
+export default async function SimpleTodosPage() {
+  const todos = await getTodos();
+
   return (
-    <>
+    <div className="mx-auto max-w-2xl p-6">
+      <div className="mb-8 text-center">
+        <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Simple Todos</h1>
+      </div>
       <form action="/api/todos/add" method="POST" className="mb-6">
         <div className="flex gap-2">
           <input
@@ -88,6 +93,6 @@ export default async function SimpleTodos({ todos }: { todos: Todo[] }) {
           }
         </p>
       </div>
-    </>
+    </div>
   );
 }
