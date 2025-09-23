@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { DurableObject } from 'cloudflare:workers';
-import type { ThemeState, Theme, Reaction } from '../../../types/reaction';
+import type { ThemeState, Reaction, Theme } from '../../../types/reaction';
 
 export class ReactionsDurableObject extends DurableObject {
   private state: DurableObjectState;
@@ -57,12 +57,6 @@ export class ReactionsDurableObject extends DurableObject {
       ...this.themeState,
       remainingCooldown,
     };
-  }
-
-  async clearOldReactions(): Promise<void> {
-    const freshReactions = await this.getReactions();
-    this.reactions = freshReactions;
-    await this.state.storage.put('reactions', freshReactions);
   }
 
   async setTheme(theme: Theme): Promise<{ success: boolean; remainingCooldown?: number }> {

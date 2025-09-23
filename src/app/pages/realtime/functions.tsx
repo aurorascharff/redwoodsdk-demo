@@ -26,9 +26,3 @@ export const setTheme = async (theme: Theme) => {
   const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
   await reactionsDO.setTheme(theme);
 };
-
-export const clearOldReactions = async () => {
-  const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');
-  const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
-  await reactionsDO.clearOldReactions();
-};
