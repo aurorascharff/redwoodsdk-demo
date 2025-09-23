@@ -8,6 +8,7 @@ import { Home } from '@/app/pages/Home';
 import { userRoutes } from '@/app/pages/user/routes';
 import { link } from '@/app/shared/links';
 import { type User, db, setupDb } from '@/db';
+import { NoJSDocument } from './app/NoJSDocument';
 import { apiRoutes } from './app/api/routes';
 import AppLayout from './app/layouts/AppLayout';
 import MainLayout from './app/layouts/MainLayout';
@@ -65,20 +66,22 @@ export default defineApp([
     }),
     layout(AppLayout, [
       index(Home),
-      layout(MainLayout, [
-        prefix('/user', userRoutes),
-        route('/realtime', RealtimePage),
-        route('/todos', TodosPage),
-        route('/todos/simple', () => {
-          return (
-            <div className="mx-auto max-w-2xl p-6">
-              <div className="mb-8 text-center">
-                <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Simple Todos</h1>
+      layout(MainLayout, [prefix('/user', userRoutes), route('/realtime', RealtimePage), route('/todos', TodosPage)]),
+    ]),
+    render(NoJSDocument, [
+      layout(AppLayout, [
+        layout(MainLayout, [
+          route('/todos/simple', () => {
+            return (
+              <div className="mx-auto max-w-2xl p-6">
+                <div className="mb-8 text-center">
+                  <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Simple Todos</h1>
+                </div>
+                <SimpleTodos />
               </div>
-              <SimpleTodos />
-            </div>
-          );
-        }),
+            );
+          }),
+        ]),
       ]),
     ]),
   ]),

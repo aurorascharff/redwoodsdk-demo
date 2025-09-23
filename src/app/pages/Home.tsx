@@ -55,6 +55,11 @@ export function Home({ ctx }: { ctx: AppContext }) {
               </Button>
             </a>
           </ViewTransition>
+          <a href={link('/todos/simple')}>
+            <Button type="button" variant="secondary">
+              Simple Todos
+            </Button>
+          </a>
         </div>
         <div className="mt-8 text-center">
           <a
