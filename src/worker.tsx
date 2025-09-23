@@ -13,9 +13,8 @@ import { apiRoutes } from './app/api/routes';
 import AppLayout from './app/layouts/AppLayout';
 import MainLayout from './app/layouts/MainLayout';
 import { RealtimePage } from './app/pages/realtime/RealtimePage';
-import SimpleTodos from './app/pages/todos/SimpleTodos';
+import SimpleTodosPage from './app/pages/todos/SimpleTodosPage';
 import TodosPage from './app/pages/todos/TodosPage';
-import { getTodos } from './app/pages/todos/queries';
 import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
@@ -74,16 +73,7 @@ export default defineApp([
     layout(AppLayout, [
       layout(MainLayout, [
         route('/todos/simple', async () => {
-          const todos = await getTodos();
-
-          return (
-            <div className="mx-auto max-w-2xl p-6">
-              <div className="mb-8 text-center">
-                <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Simple Todos</h1>
-              </div>
-              <SimpleTodos todos={todos} />
-            </div>
-          );
+          return <SimpleTodosPage />;
         }),
       ]),
     ]),
