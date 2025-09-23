@@ -54,3 +54,30 @@ export async function todosReducer(state: Todo[], action: TodoAction): Promise<T
       throw new Error('Invalid action type');
   }
 }
+
+export async function addTodoAction(formData: FormData) {
+  const title = formData.get('title') as string;
+
+  if (!title || title.trim() === '') {
+    return;
+  }
+
+  await createTodo({
+    done: false,
+    id: crypto.randomUUID(),
+    title: title.trim(),
+  });
+}
+
+export async function toggleTodoAction(formData: FormData) {
+  const id = formData.get('id') as string;
+  const done = formData.get('done') === 'true';
+
+  await updateTodo(id, { done: !done });
+}
+
+export async function deleteTodoAction(formData: FormData) {
+  const id = formData.get('id') as string;
+
+  await deleteTodo(id);
+}

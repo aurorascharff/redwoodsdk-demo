@@ -1,53 +1,55 @@
-import { env } from 'cloudflare:workers';
-import { renderRealtimeClients } from 'rwsdk/realtime/worker';
 import { route } from 'rwsdk/router';
+import { db } from '@/db';
 
 export const apiRoutes = [
-  route('/reactions', async ({ request }) => {
+  route('/todos/add', async ({ request }) => {
     if (request.method === 'POST') {
-      const body = (await request.json()) as { emoji: string };
+      const formData = await request.formData();
+      const title = formData.get('title') as string;
 
-      const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');
-      const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
-      await reactionsDO.addReaction(body.emoji);
-
-      await renderRealtimeClients({
-        durableObjectNamespace: env.REALTIME_DURABLE_OBJECT,
-        key: 'reactions',
-      });
-
-      return new Response(null, { status: 200 });
-    }
-  }),
-  route('/theme', async ({ request }) => {
-    if (request.method === 'GET') {
-      const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');
-      const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
-      const themeState = await reactionsDO.getThemeState();
-      return new Response(JSON.stringify(themeState), {
-        headers: { 'Content-Type': 'application/json' },
-        status: 200,
-      });
-    }
-    if (request.method === 'POST') {
-      const body = (await request.json()) as { theme: string };
-
-      const doId = env.REACTIONS_DURABLE_OBJECT.idFromName('reactions');
-      const reactionsDO = env.REACTIONS_DURABLE_OBJECT.get(doId);
-      const result = await reactionsDO.setTheme(body.theme as 'react' | 'lasvegas');
-
-      if (result.success) {
-        await renderRealtimeClients({
-          durableObjectNamespace: env.REALTIME_DURABLE_OBJECT,
-          key: 'reactions',
-        });
+      if (!title || title.trim() === '') {
+        const url = new URL(request.url);
+        return Response.redirect(`${url.origin}/todos/simple`);
       }
 
-      return new Response(JSON.stringify(result), {
-        headers: { 'Content-Type': 'application/json' },
-        status: result.success ? 200 : 429,
+      await db.todo.create({
+        data: {
+          done: false,
+          id: crypto.randomUUID(),
+          title: title.trim(),
+        },
       });
+
+      const url = new URL(request.url);
+      return Response.redirect(`${url.origin}/todos/simple`);
     }
-    return new Response(null, { status: 405 });
+  }),
+  route('/todos/toggle', async ({ request }) => {
+    if (request.method === 'POST') {
+      const formData = await request.formData();
+      const id = formData.get('id') as string;
+      const done = formData.get('done') === 'true';
+
+      await db.todo.update({
+        data: { done: !done },
+        where: { id },
+      });
+
+      const url = new URL(request.url);
+      return Response.redirect(`${url.origin}/todos/simple`);
+    }
+  }),
+  route('/todos/delete', async ({ request }) => {
+    if (request.method === 'POST') {
+      const formData = await request.formData();
+      const id = formData.get('id') as string;
+
+      await db.todo.delete({
+        where: { id },
+      });
+
+      const url = new URL(request.url);
+      return Response.redirect(`${url.origin}/todos/simple`);
+    }
   }),
 ];

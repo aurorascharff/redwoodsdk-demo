@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react';
 
 export default async function AppLayout({ children }: PropsWithChildren) {
   return (
-    <div className="flex h-dvh flex-col justify-between px-4 py-2 sm:p-10 xl:px-40 2xl:px-60">
+    <div className="flex h-dvh flex-col justify-between px-4 xl:px-40 2xl:px-60">
       {children}
       <footer className="relative z-10">
         <div className="flex flex-col items-center justify-center gap-4 p-4 sm:flex-row sm:justify-between sm:p-6">
