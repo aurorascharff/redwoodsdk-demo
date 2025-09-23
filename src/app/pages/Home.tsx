@@ -32,15 +32,11 @@ export function Home({ ctx }: { ctx: AppContext }) {
         <div className="flex flex-wrap justify-center gap-3">
           {ctx.user ? (
             <a href={link('/user/profile')}>
-              <Button type="button" variant="secondary">
-                Profile
-              </Button>
+              <Button type="button">Profile</Button>
             </a>
           ) : (
             <a href={link('/user/login')}>
-              <Button type="submit" variant="secondary">
-                Login
-              </Button>
+              <Button type="submit">Login</Button>
             </a>
           )}
           <a href={link('/todos/simple')}>

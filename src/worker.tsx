@@ -15,6 +15,7 @@ import MainLayout from './app/layouts/MainLayout';
 import { RealtimePage } from './app/pages/realtime/RealtimePage';
 import SimpleTodos from './app/pages/todos/SimpleTodos';
 import TodosPage from './app/pages/todos/TodosPage';
+import { getTodos } from './app/pages/todos/queries';
 import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
@@ -68,20 +69,22 @@ export default defineApp([
       index(Home),
       layout(MainLayout, [prefix('/user', userRoutes), route('/realtime', RealtimePage), route('/todos', TodosPage)]),
     ]),
-    render(NoJSDocument, [
-      layout(AppLayout, [
-        layout(MainLayout, [
-          route('/todos/simple', () => {
-            return (
-              <div className="mx-auto max-w-2xl p-6">
-                <div className="mb-8 text-center">
-                  <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Simple Todos</h1>
-                </div>
-                <SimpleTodos />
+  ]),
+  render(NoJSDocument, [
+    layout(AppLayout, [
+      layout(MainLayout, [
+        route('/todos/simple', async () => {
+          const todos = await getTodos();
+
+          return (
+            <div className="mx-auto max-w-2xl p-6">
+              <div className="mb-8 text-center">
+                <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Simple Todos</h1>
               </div>
-            );
-          }),
-        ]),
+              <SimpleTodos todos={todos} />
+            </div>
+          );
+        }),
       ]),
     ]),
   ]),

@@ -1,9 +1,7 @@
 import Button from '@/app/components/ui/Button';
-import { getTodos } from './queries';
+import type { Todo } from '@generated/prisma';
 
-export default async function SimpleTodos() {
-  const todos = await getTodos();
-
+export default async function SimpleTodos({ todos }: { todos: Todo[] }) {
   return (
     <>
       <form action="/api/todos/add" method="POST" className="mb-6">
