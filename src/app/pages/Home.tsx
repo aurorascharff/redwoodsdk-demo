@@ -43,9 +43,9 @@ export function Home({ ctx }: { ctx: AppContext }) {
               </Button>
             </a>
           )}
-          <a href={link('/realtime')}>
+          <a href={link('/todos/simple')}>
             <Button type="button" variant="secondary">
-              Realtime
+              Simple Todos
             </Button>
           </a>
           <ViewTransition name="todos">
@@ -55,9 +55,9 @@ export function Home({ ctx }: { ctx: AppContext }) {
               </Button>
             </a>
           </ViewTransition>
-          <a href={link('/todos/simple')}>
+          <a href={link('/realtime')}>
             <Button type="button" variant="secondary">
-              Simple Todos
+              Realtime
             </Button>
           </a>
         </div>
