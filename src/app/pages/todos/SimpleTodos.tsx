@@ -1,5 +1,4 @@
 import Button from '@/app/components/ui/Button';
-import { addTodoAction, toggleTodoAction, deleteTodoAction } from './functions';
 import { getTodos } from './queries';
 
 export default async function SimpleTodos() {
@@ -7,7 +6,7 @@ export default async function SimpleTodos() {
 
   return (
     <>
-      <form action={addTodoAction} className="mb-6">
+      <form action="/api/todos/add" method="POST" className="mb-6">
         <div className="flex gap-2">
           <input
             type="text"
@@ -31,7 +30,7 @@ export default async function SimpleTodos() {
                 key={todo.id}
                 className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex items-center gap-3 rounded-lg border p-4"
               >
-                <form action={toggleTodoAction} className="flex items-center">
+                <form action="/api/todos/toggle" method="POST" className="flex items-center">
                   <input type="hidden" name="id" value={todo.id} />
                   <input type="hidden" name="done" value={todo.done.toString()} />
                   <button
@@ -58,7 +57,7 @@ export default async function SimpleTodos() {
                 >
                   {todo.title}
                 </span>
-                <form action={deleteTodoAction} className="flex items-center">
+                <form action="/api/todos/delete" method="POST" className="flex items-center">
                   <input type="hidden" name="id" value={todo.id} />
                   <button
                     type="submit"
