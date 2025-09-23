@@ -6,7 +6,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 import Button from '@/app/components/ui/Button';
 import Card from '@/app/components/ui/Card';
 import { link } from '@/app/shared/links';
-
 import {
   finishPasskeyLogin,
   finishPasskeyRegistration,
