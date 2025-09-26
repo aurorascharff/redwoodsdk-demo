@@ -32,8 +32,7 @@ export default function Todos({ todosPromise }: Props) {
     formRef.current?.reset();
   };
 
-  const statusChangeAction = (formData: FormData, todo: Todo) => {
-    const done = formData.get('done') === 'true';
+  const statusChangeAction = (done: boolean, todo: Todo) => {
     const payload = { id: todo.id, updatedTodo: { ...todo, done } };
     setOptimisticTodos((prev: Todo[]) => {
       return prev.map(item => {
@@ -43,11 +42,11 @@ export default function Todos({ todosPromise }: Props) {
     dispatch({ payload, type: 'edit' });
   };
 
-  const deleteAction = (todo: Todo) => {
-    const payload = { id: todo.id };
+  const deleteAction = (todoId: string) => {
+    const payload = { id: todoId };
     setOptimisticTodos((prev: Todo[]) => {
       return prev.filter(item => {
-        return item.id !== todo.id;
+        return item.id !== todoId;
       });
     });
     dispatch({ payload, type: 'delete' });
@@ -71,7 +70,7 @@ export default function Todos({ todosPromise }: Props) {
           </Button>
         </div>
       </form>
-      {optimisticTodos.length > 0 && <SortButton setSortOrder={setSortOrder} sortOrder={sortOrder} />}
+      {optimisticTodos.length > 0 && <SortButton sortOrderAction={setSortOrder} sortOrder={sortOrder} />}
       <div className="space-y-2">
         {optimisticTodos.length === 0 ? (
           <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark rounded-lg border p-8 text-center">
@@ -83,11 +82,11 @@ export default function Todos({ todosPromise }: Props) {
               <TodoItem
                 key={todo.id}
                 done={todo.done}
-                statusChangeAction={formData => {
-                  return statusChangeAction(formData, todo);
+                statusChangeAction={done => {
+                  statusChangeAction(done, todo);
                 }}
                 deleteAction={() => {
-                  return deleteAction(todo);
+                  deleteAction(todo.id);
                 }}
               >
                 {todo.title}
@@ -121,7 +120,7 @@ function SortButton({
   sortOrder,
   setSortOrder,
 }: {
-  sortOrderAction?: (order: SortOrder) => Promise<void>;
+  sortOrderAction?: (order: SortOrder) => Promise<void> | void;
   setSortOrder?: (order: SortOrder) => void;
   sortOrder: SortOrder;
 }) {
