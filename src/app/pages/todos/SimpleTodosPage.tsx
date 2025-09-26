@@ -1,4 +1,5 @@
 import Button from '@/app/components/ui/Button';
+import { cn } from '@/utils/cn';
 import { getTodos } from './queries';
 
 export default async function SimpleTodosPage() {
@@ -56,7 +57,7 @@ export default async function SimpleTodosPage() {
                   </button>
                 </form>
                 <span
-                  className={`flex-1 ${todo.done ? 'text-text-muted line-through' : 'text-text dark:text-text-dark'}`}
+                  className={cn('flex-1', todo.done ? 'text-text-muted line-through' : 'text-text dark:text-text-dark')}
                 >
                   {todo.title}
                 </span>
