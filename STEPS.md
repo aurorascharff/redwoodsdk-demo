@@ -41,7 +41,7 @@
 
 - Since we have client side nav, redwoodsdk actually implements it using the suspense enabled router pattern, meaning it uses transitions under the hood, which means we can also add view transitions.
 - Let's say we want to animate across the navigation into a fancier todos route. Add fancy todos, shared element transition into this.
-- This fancier todos uses useActionState sort of like an async reducer, so since our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Using the actions convention across all interactions! Works with useoptimistic to make it snappy. Also using server functions instead of API routes.
+- This fancier todos uses useActionState sort of like an async reducer, so since our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Using the actions convention across all interactions! Works with useoptimistic to make it snappy. Also using server functions instead of API routes. Also forms.
 - Viewtrans our suspense loading state on enter exit. Default none.
 - Add viewtransition to our sort button, switch this for a action prop so we can handle the sort as a transition, activation the view transition, letting react automatically animate from the result of the transition into this new UI.
 
