@@ -59,12 +59,6 @@ export class ReactionsDurableObject extends DurableObject {
     };
   }
 
-  async clearOldReactions(): Promise<void> {
-    const freshReactions = await this.getReactions();
-    this.reactions = freshReactions;
-    await this.state.storage.put('reactions', freshReactions);
-  }
-
   async setTheme(theme: Theme): Promise<{ success: boolean; remainingCooldown?: number }> {
     const currentState = await this.getThemeState();
     const now = Date.now();

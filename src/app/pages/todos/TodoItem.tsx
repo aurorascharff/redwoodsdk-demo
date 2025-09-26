@@ -39,13 +39,7 @@ export function TodoItem({ done, statusChangeAction, deleteAction, children = fa
       >
         {children}
       </span>
-      <form
-        action={() => {
-          return startTransition(() => {
-            return deleteAction();
-          });
-        }}
-      >
+      <form action={deleteAction}>
         <Button
           type="submit"
           variant="secondary"

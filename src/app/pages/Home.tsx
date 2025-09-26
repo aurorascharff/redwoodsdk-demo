@@ -40,16 +40,6 @@ export function Home({ ctx }: { ctx: AppContext }) {
               <Button type="submit">Login</Button>
             </a>
           )}
-          <a href={link('/realtime')}>
-            <Button type="button" variant="secondary">
-              Realtime
-            </Button>
-          </a>
-          <a href={link('/todos')}>
-            <Button type="button" variant="secondary">
-              Todos
-            </Button>
-          </a>
         </div>
         <div className="mt-8 text-center">
           <a
