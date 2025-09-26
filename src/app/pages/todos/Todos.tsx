@@ -55,12 +55,6 @@ export default function Todos({ todosPromise }: Props) {
     dispatch({ payload, type: 'delete' });
   };
 
-  const cycleSortOrderAction = () => {
-    startTransition(() => {
-      setSortOrder(getNextSortOrder(sortOrder));
-    });
-  };
-
   const sortedTodos = getSortedTodos(optimisticTodos, sortOrder);
 
   return (
@@ -79,13 +73,7 @@ export default function Todos({ todosPromise }: Props) {
           </Button>
         </div>
       </form>
-      {optimisticTodos.length > 0 && (
-        <div className="mb-4 flex justify-end">
-          <Button type="button" variant="secondary" onClick={cycleSortOrderAction} className="text-sm">
-            {getSortOrderLabel(sortOrder)}
-          </Button>
-        </div>
-      )}
+      {optimisticTodos.length > 0 && <SortButton sortOrderAction={setSortOrder} sortOrder={sortOrder} />}
       <div className="space-y-2">
         {optimisticTodos.length === 0 ? (
           <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark rounded-lg border p-8 text-center">
@@ -128,6 +116,35 @@ export default function Todos({ todosPromise }: Props) {
         </p>
       </div>
     </>
+  );
+}
+
+function SortButton({
+  sortOrderAction,
+  sortOrder,
+  setSortOrder,
+}: {
+  sortOrderAction?: (order: SortOrder) => void;
+  setSortOrder?: (order: SortOrder) => void;
+  sortOrder: SortOrder;
+}) {
+  return (
+    <div className="mb-4 flex justify-end">
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={() => {
+          const newSortOrder = getNextSortOrder(sortOrder);
+          setSortOrder?.(newSortOrder);
+          startTransition(() => {
+            sortOrderAction?.(newSortOrder);
+          });
+        }}
+        className="text-sm"
+      >
+        {getSortOrderLabel(sortOrder)}
+      </Button>
+    </div>
   );
 }
 
