@@ -6,7 +6,7 @@
 - RedwoodSDK is essentially just added as a vite plugin. It unlocks the ssr and server components and things like realtime features.
 - We configure out app inside our worker.tsx file here, the entrypoint for our cloudflare worker.
 
-## Worker.tsx every route is just a function, middleware
+## Worker.tsx every route is just a function
 
 - So, in redwood, every route is just a function. I have a simple response and also a jsx component returned here. Notice we can use the native Request and Response here. Ownership request and response.
 - Notice the different routes return simple Response and our JSX.
@@ -19,7 +19,7 @@
 - Add a simple crud api route here, all native SSR and req/res. Simple todos! Whats a demo without todos? Using simple SSR and streaming with Suspense and server components! Just the mental model of server components that React suggests. Web standard form actions.
 - Hooked up to the cloudflare d1 database provided in the starter! Set up with miniflare to emulate cloudflare workers. It just works between dev and prod.
 
-## Hydration/client-side rendering and server functions
+## Hydration/client-side rendering and server functions, layouts, middleware, interruptors and auth
 
 - Add a regular Document enabling client side hydration with adding the script tag. Add initClient to client.tsx.
 - Add an layout() applayout and index() home route. Wrap another layout() mainlayout.
