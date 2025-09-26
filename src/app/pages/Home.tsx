@@ -42,11 +42,6 @@ export function Home({ ctx }: { ctx: AppContext }) {
               <Button type="submit">Login</Button>
             </a>
           )}
-          <a href={link('/realtime')}>
-            <Button type="button" variant="secondary">
-              Realtime
-            </Button>
-          </a>
           <a href={link('/todos/simple')}>
             <Button type="button" variant="secondary">
               Simple Todos
@@ -57,6 +52,11 @@ export function Home({ ctx }: { ctx: AppContext }) {
               <ViewTransition name="todos">
                 <span>Todos</span>
               </ViewTransition>
+            </Button>
+          </a>
+          <a href={link('/realtime')}>
+            <Button type="button" variant="secondary">
+              Realtime
             </Button>
           </a>
         </div>
