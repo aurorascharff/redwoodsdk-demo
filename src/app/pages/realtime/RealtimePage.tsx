@@ -34,11 +34,6 @@ export async function RealtimePage() {
             background: `linear-gradient(45deg, ${currentThemeData.colors.replace('from-', '').replace('via-', ', ').replace('to-', ', ')})`,
           }}
         />
-        <div className="absolute top-8 right-8 z-10 sm:top-12 sm:right-12">
-          <Card className="hidden h-16 w-16 items-center justify-center overflow-hidden rounded-xl sm:flex sm:h-32 sm:w-32">
-            <img src="/images/QR.jpeg" alt="QR Code" className="h-full w-full object-cover" />
-          </Card>
-        </div>
         <div className="flex flex-1 flex-col p-4 sm:p-8">
           <Card className="relative flex flex-1 flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:px-12 md:py-16">
             <div className="mb-8 text-center">
