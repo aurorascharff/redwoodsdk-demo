@@ -17,6 +17,7 @@ export type AppContext = {
 };
 
 export default defineApp([
+  // Middleware
   setCommonHeaders(),
   async ({ ctx, request, response }) => {
     await setupDb(env);
@@ -43,10 +44,11 @@ export default defineApp([
       });
     }
   },
+  // Route handlers
+  route('/ping', () => {
+    return new Response('pong', { status: 200 });
+  }),
   render(Document, [
-    route('/ping', () => {
-      return new Response('pong', { status: 200 });
-    }),
     route('/hello', () => {
       return <div className="bg-primary m-4 w-fit rounded p-4"> Hello World!</div>;
     }),
