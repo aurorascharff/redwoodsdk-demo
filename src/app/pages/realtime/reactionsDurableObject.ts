@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { DurableObject } from 'cloudflare:workers';
-import type { ThemeState, Theme, Reaction } from '../../../types/reaction';
+import type { Reaction, Theme, ThemeState } from '@/types/reaction';
 
 export class ReactionsDurableObject extends DurableObject {
   private state: DurableObjectState;
