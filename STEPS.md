@@ -11,11 +11,14 @@
 - So, in redwood, every route is just a function. I have a simple response and also a jsx component returned here. Notice we can use the native Request and Response here. Ownership request and response.
 - Notice the different routes return simple Response and our JSX.
 - This is just functions, which means we have max flexibility.
-- For our routes, we can render the Document. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering. Showcase network.
+- For our routes, we can render the NOJSDocument. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering. Showcase network.
 - We can colocate our logic and our ui, for example I can bring in a bunch of route handlers for a user page.
 
 ## React Server Components and api routes, d1 database
 
+- Redwoodsdk uses server components as the default, similar to nextjs, and everything you might be used to there works with the same mental model in redwoodsdk.
+- Add a layout() around the user route using server components.
+- Render a JSDocument for our other routes.
 - Add a simple crud api route here, all native SSR and req/res. Simple todos! Whats a demo without todos? Using simple SSR and streaming with Suspense and server components! Just the mental model of server components that React suggests.
 - Hooked up to the cloudflare d1 database provided in the starter! Set up with miniflare to emulate cloudflare workers. It just works between dev and prod.
 
@@ -27,10 +30,7 @@
 
 ## Hydration/client-side rendering and server functions
 
-- Redwoodsdk uses server components as the default, similar to nextjs, and everything you might be used to there works with the same mental model in redwoodsdk.
-- Add a layout() around the user route using server components.
-- What happens on the user page without hydration?
-- Enable client side hydration by adding the script tag and adding initClient to client.tsx!
+- Add a regular Document enabling client side hydration with adding the script tag. Add initClient to client.tsx.
 - Login page is a client component to get a nice interactive spinner and execute our passkey login. Showcase, showcase interupptors.
 - Using the context from our app context to access the user.
 - We can use React 19 as its best suited. UseActionState and server functions. It just works.
