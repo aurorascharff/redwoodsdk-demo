@@ -11,26 +11,22 @@
 - So, in redwood, every route is just a function. I have a simple response and also a jsx component returned here. Notice we can use the native Request and Response here. Ownership request and response.
 - Notice the different routes return simple Response and our JSX.
 - This is just functions, which means we have max flexibility.
-- For our routes, we can render the NOJSDocument. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering. Showcase network.
-- We can colocate our logic and our ui, for example I can bring in a bunch of route handlers for a user page.
+- For our routes, we can render the NOJSDocument. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering. Showcase network. Route 'simple-todos'.
 
 ## React Server Components and api routes, d1 database
 
 - Redwoodsdk uses server components as the default, similar to nextjs, and everything you might be used to there works with the same mental model in redwoodsdk.
-- Add a layout() around the user route using server components.
-- Render a JSDocument for our other routes.
 - Add a simple crud api route here, all native SSR and req/res. Simple todos! Whats a demo without todos? Using simple SSR and streaming with Suspense and server components! Just the mental model of server components that React suggests.
 - Hooked up to the cloudflare d1 database provided in the starter! Set up with miniflare to emulate cloudflare workers. It just works between dev and prod.
-
-## user/routes.ts co-locate data and UI
-
-- Further up we also have some middleware, we can add some session logic, and adding the user to our app context which will be passed to our components. Using cloudflare durable objects for session management.
-- I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route handlers with a 302 redirect response. Built in web standards.
-- Now, let's say I want to protect my routes. This is where interruptors come in! Let's return arrays here instead with an authenticated and a redirect interruptor! Just reusable functions.
 
 ## Hydration/client-side rendering and server functions
 
 - Add a regular Document enabling client side hydration with adding the script tag. Add initClient to client.tsx.
+- Add an layout() applayout and index() home route. Wrap another layout() mainlayout.
+- We can colocate our logic and our ui, for example I can bring in a bunch of route handlers for a user page.
+- Further up we also have some middleware, we can add some session logic, and adding the user to our app context which will be passed to our components. Using cloudflare durable objects for session management.
+- I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route handlers with a 302 redirect response. Built in web standards.
+- Now, let's say I want to protect my routes. This is where interruptors come in! Let's return arrays here instead with an authenticated and a redirect interruptor! Just reusable functions.
 - Login page is a client component to get a nice interactive spinner and execute our passkey login. Showcase, showcase interupptors.
 - Using the context from our app context to access the user.
 - We can use React 19 as its best suited. UseActionState and server functions. It just works.
