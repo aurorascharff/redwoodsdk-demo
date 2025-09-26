@@ -2,8 +2,10 @@
 
 import { db } from '@/db';
 import type { Todo, TodoAction } from '@/types/todo';
+import { slow } from '@/utils/slow';
 
 export async function createTodo(todo: Omit<Todo, 'createdAt'>): Promise<Todo> {
+  await slow();
   const newTodo = await db.todo.create({
     data: {
       done: todo.done,
@@ -15,6 +17,7 @@ export async function createTodo(todo: Omit<Todo, 'createdAt'>): Promise<Todo> {
 }
 
 export async function updateTodo(id: string, updatedTodo: Partial<Todo>): Promise<Todo> {
+  await slow();
   const updated = await db.todo.update({
     data: updatedTodo,
     where: { id },
@@ -23,6 +26,7 @@ export async function updateTodo(id: string, updatedTodo: Partial<Todo>): Promis
 }
 
 export async function deleteTodo(id: string): Promise<string> {
+  await slow();
   await db.todo.delete({
     where: { id },
   });
@@ -53,31 +57,4 @@ export async function todosReducer(state: Todo[], action: TodoAction): Promise<T
     default:
       throw new Error('Invalid action type');
   }
-}
-
-export async function addTodoAction(formData: FormData) {
-  const title = formData.get('title') as string;
-
-  if (!title || title.trim() === '') {
-    return;
-  }
-
-  await createTodo({
-    done: false,
-    id: crypto.randomUUID(),
-    title: title.trim(),
-  });
-}
-
-export async function toggleTodoAction(formData: FormData) {
-  const id = formData.get('id') as string;
-  const done = formData.get('done') === 'true';
-
-  await updateTodo(id, { done: !done });
-}
-
-export async function deleteTodoAction(formData: FormData) {
-  const id = formData.get('id') as string;
-
-  await deleteTodo(id);
 }

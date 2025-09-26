@@ -34,8 +34,7 @@ export default function Todos({ todosPromise }: Props) {
     formRef.current?.reset();
   };
 
-  const statusChangeAction = (formData: FormData, todo: Todo) => {
-    const done = formData.get('done') === 'true';
+  const statusChangeAction = (done: boolean, todo: Todo) => {
     const payload = { id: todo.id, updatedTodo: { ...todo, done } };
     setOptimisticTodos((prev: Todo[]) => {
       return prev.map(item => {
@@ -45,11 +44,11 @@ export default function Todos({ todosPromise }: Props) {
     dispatch({ payload, type: 'edit' });
   };
 
-  const deleteAction = (todo: Todo) => {
-    const payload = { id: todo.id };
+  const deleteAction = (todoId: string) => {
+    const payload = { id: todoId };
     setOptimisticTodos((prev: Todo[]) => {
       return prev.filter(item => {
-        return item.id !== todo.id;
+        return item.id !== todoId;
       });
     });
     dispatch({ payload, type: 'delete' });
@@ -84,12 +83,13 @@ export default function Todos({ todosPromise }: Props) {
             return (
               <ViewTransition key={todo.id}>
                 <TodoItem
+                  key={todo.id}
                   done={todo.done}
-                  statusChangeAction={formData => {
-                    return statusChangeAction(formData, todo);
+                  statusChangeAction={done => {
+                    statusChangeAction(done, todo);
                   }}
                   deleteAction={() => {
-                    return deleteAction(todo);
+                    deleteAction(todo.id);
                   }}
                 >
                   {todo.title}
@@ -124,7 +124,7 @@ function SortButton({
   sortOrder,
   setSortOrder,
 }: {
-  sortOrderAction?: (order: SortOrder) => void;
+  sortOrderAction?: (order: SortOrder) => Promise<void> | void;
   setSortOrder?: (order: SortOrder) => void;
   sortOrder: SortOrder;
 }) {
@@ -136,8 +136,8 @@ function SortButton({
         onClick={() => {
           const newSortOrder = getNextSortOrder(sortOrder);
           setSortOrder?.(newSortOrder);
-          startTransition(() => {
-            sortOrderAction?.(newSortOrder);
+          startTransition(async () => {
+            await sortOrderAction?.(newSortOrder);
           });
         }}
         className="text-sm"

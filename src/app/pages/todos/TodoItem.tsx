@@ -1,12 +1,10 @@
 import { useTransition } from 'react';
-
-import Button from '@/app/components/ui/Button';
 import { cn } from '@/utils/cn';
 
 type Props = {
   done: boolean;
-  statusChangeAction: (formData: FormData) => void;
-  deleteAction: () => void;
+  statusChangeAction: (done: boolean) => Promise<void> | void;
+  deleteAction: () => Promise<void> | void;
   children: React.ReactNode;
 };
 
@@ -15,21 +13,17 @@ export function TodoItem({ done, statusChangeAction, deleteAction, children = fa
 
   return (
     <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex items-center gap-3 rounded-lg border p-3 transition-colors">
-      <form action={statusChangeAction}>
-        <input
-          type="checkbox"
-          name="done"
-          checked={done}
-          onChange={e => {
-            startTransition(() => {
-              const formData = new FormData();
-              formData.set('done', e.target.checked.toString());
-              statusChangeAction(formData);
-            });
-          }}
-          className="h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 disabled:cursor-not-allowed disabled:opacity-50"
-        />
-      </form>
+      <input
+        type="checkbox"
+        name="done"
+        checked={done}
+        onChange={e => {
+          startTransition(async () => {
+            await statusChangeAction(e.target.checked);
+          });
+        }}
+        className="h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 disabled:cursor-not-allowed disabled:opacity-50"
+      />
       <span
         className={cn(
           'flex-1 transition-all',
@@ -40,13 +34,18 @@ export function TodoItem({ done, statusChangeAction, deleteAction, children = fa
         {children}
       </span>
       <form action={deleteAction}>
-        <Button
+        <button
           type="submit"
-          variant="secondary"
-          className="h-8 w-8 p-0 text-red-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20"
+          className={cn(
+            'flex h-8 w-8 items-center justify-center rounded-full p-0 text-lg font-bold text-red-500',
+            'transition-colors hover:bg-red-100 hover:text-red-700 dark:hover:bg-red-900/30',
+            'focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2',
+            'active:scale-95',
+          )}
+          aria-label="Delete todo"
         >
           ×
-        </Button>
+        </button>
       </form>
     </div>
   );

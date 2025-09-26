@@ -1,3 +1,5 @@
+// @ts-expect-error - unstable API but works in React 19
+import { unstable_ViewTransition as ViewTransition } from 'react';
 import { link } from '@/app/shared/links';
 import type { AppContext } from '@/worker';
 import Button from '../components/ui/Button';
@@ -50,11 +52,13 @@ export function Home({ ctx }: { ctx: AppContext }) {
               Simple Todos
             </Button>
           </a>
-          <a href={link('/todos')}>
-            <Button type="button" variant="secondary">
-              Todos
-            </Button>
-          </a>
+          <ViewTransition name="todos">
+            <a href={link('/todos')}>
+              <Button type="button" variant="secondary">
+                Todos
+              </Button>
+            </a>
+          </ViewTransition>
         </div>
         <div className="mt-8 text-center">
           <a
