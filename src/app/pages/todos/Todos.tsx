@@ -4,6 +4,7 @@ import { useActionState, useOptimistic, use, useRef, useState, startTransition }
 // @ts-expect-error - unstable API but works in React 19
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import Button from '@/app/components/ui/Button';
+import SpinnerIcon from '@/app/components/ui/icons/SpinnerIcon';
 import type { Todo } from '@/types/todo';
 import { getSortedTodos, getSortOrderLabel, getNextSortOrder, type SortOrder } from '@/utils/todoSort';
 import { TodoItem } from './TodoItem';
@@ -15,7 +16,7 @@ type Props = {
 
 export default function Todos({ todosPromise }: Props) {
   const initialTodos = use(todosPromise);
-  const [todos, dispatch] = useActionState(todosReducer, initialTodos);
+  const [todos, dispatch, isPending] = useActionState(todosReducer, initialTodos);
   const [optimisticTodos, setOptimisticTodos] = useOptimistic(todos);
   const [sortOrder, setSortOrder] = useState<SortOrder>('newest');
   const formRef = useRef<HTMLFormElement>(null);
@@ -114,6 +115,14 @@ export default function Todos({ todosPromise }: Props) {
             }).length
           }
         </p>
+        {isPending && (
+          <div className="mt-2 animate-pulse text-xs font-medium text-orange-600" aria-live="polite">
+            <span className="inline-flex items-center gap-1">
+              <SpinnerIcon className="h-3 w-3" />
+              Syncing to server…
+            </span>
+          </div>
+        )}
       </div>
     </>
   );
