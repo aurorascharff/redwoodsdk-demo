@@ -16,7 +16,7 @@
 ## React Server Components and api routes, d1 database
 
 - Redwoodsdk uses server components as the default, similar to nextjs, and everything you might be used to there works with the same mental model in redwoodsdk.
-- Add a simple crud api route here, all native SSR and req/res. Simple todos! Whats a demo without todos? Using simple SSR and streaming with Suspense and server components! Just the mental model of server components that React suggests.
+- Add a simple crud api route here, all native SSR and req/res. Simple todos! Whats a demo without todos? Using simple SSR and streaming with Suspense and server components! Just the mental model of server components that React suggests. Web standard form actions.
 - Hooked up to the cloudflare d1 database provided in the starter! Set up with miniflare to emulate cloudflare workers. It just works between dev and prod.
 
 ## Hydration/client-side rendering and server functions
@@ -62,4 +62,4 @@
 
 ## Conclusion
 
-- While they send reactions: We built this all on web standard request response, with complete control of the document. We can use our all the newest React features in a way that feels intentional, with server components as the base. server functions and other React 19 hooks like useActionState, transitions and useOptimistic complete the interactive picture. We can even use viewtrans with redwoods client side nav! And finally, we can just like that initialize a realtime route and stream RSCs using websockets.
+- While they send reactions: We built this all on web standard request response, with complete control of the document. We have a simple SSR form action todo app, no client side js. But we have fancy todos and passkey auth. We can use our all the newest React features in a way that feels intentional, with server components as the base. Server functions and other React 19 hooks like useActionState, transitions and useOptimistic complete the interactive picture. We can even use viewtrans with redwoods client side nav! And finally, we can just like that initialize a realtime route and stream RSCs using websockets. Everything in the same app!
