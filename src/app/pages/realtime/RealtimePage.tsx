@@ -1,5 +1,6 @@
 import Card from '@/app/components/ui/Card';
 import type { Theme } from '@/types/reaction';
+import { cn } from '@/utils/cn';
 import { EmojiPicker } from './EmojiPicker';
 import Reactions from './Reactions';
 import { getThemeState } from './functions';
@@ -27,7 +28,7 @@ export async function RealtimePage() {
     <>
       <div className="relative flex h-screen flex-col">
         <div
-          className={`fixed inset-0 bg-gradient-to-br ${currentThemeData.colors} animate-pulse opacity-5`}
+          className={cn('fixed inset-0 animate-pulse bg-gradient-to-br opacity-5', currentThemeData.colors)}
           style={{
             animationDuration: '4s',
             background: `linear-gradient(45deg, ${currentThemeData.colors.replace('from-', '').replace('via-', ', ').replace('to-', ', ')})`,
@@ -42,7 +43,7 @@ export async function RealtimePage() {
           <Card className="relative flex flex-1 flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:px-12 md:py-16">
             <div className="mb-8 text-center">
               <h1 className="mb-4 font-serif tracking-tight sm:text-4xl md:text-5xl">
-                <span className={`bg-gradient-to-r ${currentThemeData.colors} bg-clip-text text-transparent`}>
+                <span className={cn('bg-gradient-to-r bg-clip-text text-transparent', currentThemeData.colors)}>
                   ✨ Live Reactions ✨
                 </span>
               </h1>
