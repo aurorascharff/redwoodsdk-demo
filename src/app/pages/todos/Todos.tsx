@@ -121,7 +121,7 @@ function SortButton({
   sortOrder,
   setSortOrder,
 }: {
-  sortOrderAction?: (order: SortOrder) => void;
+  sortOrderAction?: (order: SortOrder) => Promise<void>;
   setSortOrder?: (order: SortOrder) => void;
   sortOrder: SortOrder;
 }) {
@@ -133,8 +133,8 @@ function SortButton({
         onClick={() => {
           const newSortOrder = getNextSortOrder(sortOrder);
           setSortOrder?.(newSortOrder);
-          startTransition(() => {
-            sortOrderAction?.(newSortOrder);
+          startTransition(async () => {
+            await sortOrderAction?.(newSortOrder);
           });
         }}
         className="text-sm"
