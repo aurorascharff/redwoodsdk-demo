@@ -45,6 +45,11 @@ export function Home({ ctx }: { ctx: AppContext }) {
               Realtime
             </Button>
           </a>
+          <a href={link('/todos/simple')}>
+            <Button type="button" variant="secondary">
+              Simple Todos
+            </Button>
+          </a>
           <a href={link('/todos')}>
             <Button type="button" variant="secondary">
               Todos
