@@ -1,8 +1,6 @@
 'use client';
 
 import { useActionState, useOptimistic, use, useRef, useState, startTransition } from 'react';
-// @ts-expect-error - unstable API but works in React 19
-import { unstable_ViewTransition as ViewTransition } from 'react';
 import Button from '@/app/components/ui/Button';
 import type { Todo } from '@/types/todo';
 import { getSortedTodos, getSortOrderLabel, getNextSortOrder, type SortOrder } from '@/utils/todoSort';
@@ -55,12 +53,6 @@ export default function Todos({ todosPromise }: Props) {
     dispatch({ payload, type: 'delete' });
   };
 
-  const cycleSortOrderAction = () => {
-    startTransition(() => {
-      setSortOrder(getNextSortOrder(sortOrder));
-    });
-  };
-
   const sortedTodos = getSortedTodos(optimisticTodos, sortOrder);
 
   return (
@@ -79,13 +71,7 @@ export default function Todos({ todosPromise }: Props) {
           </Button>
         </div>
       </form>
-      {optimisticTodos.length > 0 && (
-        <div className="mb-4 flex justify-end">
-          <Button type="button" variant="secondary" onClick={cycleSortOrderAction} className="text-sm">
-            {getSortOrderLabel(sortOrder)}
-          </Button>
-        </div>
-      )}
+      {optimisticTodos.length > 0 && <SortButton setSortOrder={setSortOrder} sortOrder={sortOrder} />}
       <div className="space-y-2">
         {optimisticTodos.length === 0 ? (
           <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark rounded-lg border p-8 text-center">
@@ -94,19 +80,18 @@ export default function Todos({ todosPromise }: Props) {
         ) : (
           sortedTodos.map(todo => {
             return (
-              <ViewTransition key={todo.id}>
-                <TodoItem
-                  done={todo.done}
-                  statusChangeAction={formData => {
-                    return statusChangeAction(formData, todo);
-                  }}
-                  deleteAction={() => {
-                    return deleteAction(todo);
-                  }}
-                >
-                  {todo.title}
-                </TodoItem>
-              </ViewTransition>
+              <TodoItem
+                key={todo.id}
+                done={todo.done}
+                statusChangeAction={formData => {
+                  return statusChangeAction(formData, todo);
+                }}
+                deleteAction={() => {
+                  return deleteAction(todo);
+                }}
+              >
+                {todo.title}
+              </TodoItem>
             );
           })
         )}
@@ -128,6 +113,35 @@ export default function Todos({ todosPromise }: Props) {
         </p>
       </div>
     </>
+  );
+}
+
+function SortButton({
+  sortOrderAction,
+  sortOrder,
+  setSortOrder,
+}: {
+  sortOrderAction?: (order: SortOrder) => void;
+  setSortOrder?: (order: SortOrder) => void;
+  sortOrder: SortOrder;
+}) {
+  return (
+    <div className="mb-4 flex justify-end">
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={() => {
+          const newSortOrder = getNextSortOrder(sortOrder);
+          setSortOrder?.(newSortOrder);
+          startTransition(() => {
+            sortOrderAction?.(newSortOrder);
+          });
+        }}
+        className="text-sm"
+      >
+        {getSortOrderLabel(sortOrder)}
+      </Button>
+    </div>
   );
 }
 
