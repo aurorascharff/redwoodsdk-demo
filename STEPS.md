@@ -8,15 +8,16 @@
 
 ## Worker.tsx every route is just a function
 
-- So, in redwood, every route is just a function. I have a simple response and also a jsx component returned here. The browser makes a request, and we respond with content. Notice we can use the native Request and Response here. Ownership request and response.
-- Notice the different routes return simple Response and our JSX. Colocate JSX adn api routes. Matcher can also match dynamic routes.
+- So, in redwood, every route is just a function. I have a simple response and also a jsx component returned here. The browser makes a request, we match a route, and we respond with content. Notice we can use the native Request and Response here. Ownership request and response.
+- Notice the different routes return simple Response and our JSX. Colocate JSX and api routes.
 - This is just functions, which means we have max flexibility.
 - Further up we also have some middleware, we can add some session logic, and then we can add getUserMiddleware the user to our app context which will be passed to our components. Mutable object thats passed to each request handler, interuptors, and server functions. Using cloudflare durable objects for session management.
-- For our routes, we can render the NOJSDocument. The document will be applied to all routes that are passed to it. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering. Showcase network. Route 'simple-todos'. Route matched, placed into that document. Notice no js network.
+- For our routes, we can render the NOJSDocument. The document will be applied to all routes that are passed to it. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering.
+- Return SimpleTodosPage. Route matched, placed into that document.
 
 ## React Server Components and api routes, d1 database
 
-- Add a simple crud api route here, all native SSR and req/res.
+- Add a simple crud api route here with api prefix(), all native SSR and req/res.
 - Redwoodsdk uses server components as the default, similar to nextjs, and everything you might be used to there works with the same mental model in redwoodsdk.
 - Enabling server-side fetching and composability without need for useEffect, with less boilerplate. It's streaming and suspense friendly, and ensures the fastest time to visible content.
 - Simple todos! Whats a demo without todos? Using simple SSR, no javascript! Just the mental model of server components that React suggests. Web standard form actions. RSC payload converted to html and streamed to browser, picked up by client side hydration.
@@ -40,13 +41,11 @@
 - Now we have our client side navs no browser spinner!
 - SSR false, we are in SPA mode! Or static marketing side with RSC payload false.
 
-## Fancy todos and wiew transitions
+## Fancy todos and view transitions
 
 - Since we have client side nav, redwoodsdk actually implements it using the suspense enabled router pattern, meaning it uses transitions under the hood, which means we can also add view transitions.
-- Let's say we want to animate across the navigation into a fancier todos route. Add fancy todos, shared element transition into this.
+- Let's say we want to animate across the navigation into a fancier todos route. Add viewtrans to fancy todos link, add it also on the destination route, shared element transition into this. And I also added them on the suspense.
 - This fancier todos uses useActionState sort of like an async reducer, so since our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Using the actions convention across all interactions! Works with useoptimistic to make it snappy. Also using server functions instead of API routes. Also forms. Also using use() to read a promise from the server in this client component and suspend with a fallback. Streaming with Suspense and server components.
-- Viewtrans our suspense loading state on enter exit. Default none.
-- Add viewtransition to our sort button, switch this for a action prop so we can handle the sort as a transition, activation the view transition, letting react automatically animate from the result of the transition into this new UI.
 
 ## Fetch based to stream based payload
 
