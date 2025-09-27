@@ -3,20 +3,21 @@
 ## Setup and starting point
 
 - I'm here in a app based on the RedwoodSDK standard starter, which includes the cloudflare setup, and also a db setup with prisma. It also includes an auth setup with passkeys.
-- RedwoodSDK is essentially just added as a vite plugin. It unlocks the ssr and server components and things like realtime features.
+- RedwoodSDK is essentially just added as a vite plugin. It unlocks the ssr and server components and things like realtime features, and a cloudflare locale dev environment with access to database,storage, queues.
 - We configure out app inside our worker.tsx file here, the entrypoint for our cloudflare worker.
 
 ## Worker.tsx every route is just a function
 
 - So, in redwood, every route is just a function. I have a simple response and also a jsx component returned here. Notice we can use the native Request and Response here. Ownership request and response.
-- Notice the different routes return simple Response and our JSX.
+- Notice the different routes return simple Response and our JSX. Colocate JSX adn api routes.
 - This is just functions, which means we have max flexibility.
-- For our routes, we can render the NOJSDocument. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering. Showcase network. Route 'simple-todos'.
+- For our routes, we can render the NOJSDocument. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering. Showcase network. Route 'simple-todos'. Route matched, placed into that document. Notice no js network.
 
 ## React Server Components and api routes, d1 database
 
 - Redwoodsdk uses server components as the default, similar to nextjs, and everything you might be used to there works with the same mental model in redwoodsdk.
-- Add a simple crud api route here, all native SSR and req/res. Simple todos! Whats a demo without todos? Using simple SSR and streaming with Suspense and server components! Just the mental model of server components that React suggests. Web standard form actions.
+- Enabling server-side fetching and composability without need for useEffect, with less boilerplate. It's streaming and suspense friendly, and ensures the fastest time to visible content.
+- Add a simple crud api route here, all native SSR and req/res. Simple todos! Whats a demo without todos? Using simple SSR and streaming with Suspense and server components! Just the mental model of server components that React suggests. Web standard form actions. RSC payload converted to html and streamed to browser, picked up by client side hydration.
 - Hooked up to the cloudflare d1 database provided in the starter! Set up with miniflare to emulate cloudflare workers. It just works between dev and prod.
 
 ## Hydration/client-side rendering and server functions, layouts, middleware, interruptors and auth
@@ -41,7 +42,7 @@
 
 - Since we have client side nav, redwoodsdk actually implements it using the suspense enabled router pattern, meaning it uses transitions under the hood, which means we can also add view transitions.
 - Let's say we want to animate across the navigation into a fancier todos route. Add fancy todos, shared element transition into this.
-- This fancier todos uses useActionState sort of like an async reducer, so since our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Using the actions convention across all interactions! Works with useoptimistic to make it snappy. Also using server functions instead of API routes. Also forms.
+- This fancier todos uses useActionState sort of like an async reducer, so since our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Using the actions convention across all interactions! Works with useoptimistic to make it snappy. Also using server functions instead of API routes. Also forms. Also using use() to read a promise from the server in this client component and suspend with a fallback.
 - Viewtrans our suspense loading state on enter exit. Default none.
 - Add viewtransition to our sort button, switch this for a action prop so we can handle the sort as a transition, activation the view transition, letting react automatically animate from the result of the transition into this new UI.
 
@@ -53,13 +54,15 @@
 - We can switch from InitClient -> InitRealtimeClient with a key that determines which group of clients should share updates, we'll just do the pathname.
 - Export the reltime durable object in worker.tsx, then wire up our worker route with realtimeRoute of a reactions durable object here.
 - Now, our page can update over websockets! Try it double tabs again.
+- Triggering server functions, client connected on the same key. Regenerate payload to all client on same key, client receive same RSC payload. Durable objects scale infinitely.
 
 ## Release to production
 
-- Pnpm release will push all this to production with ease. I already deployed this.
+- Pnpm release will push all this to production with ease. Upload website to cloudflare, create database assets, storage assets. Can also add --env=staging for multiple environments.
+- I already deployed this.
 - Open released version on realtime page. Let them scan.
 - See the realtime reactions streaming in. Hopefully they've seen it already.
 
 ## Conclusion
 
-- While they send reactions: We built this all on web standard request response, with complete control of the document. We have a simple SSR form action todo app, no client side js. But we have fancy todos and passkey auth. We can use our all the newest React features in a way that feels intentional, with server components as the base. Server functions and other React 19 hooks like useActionState, Action and useOptimistic complete the interactive picture. We can even use viewtrans with redwoods client side nav! And finally, we can just like that initialize a realtime route and stream RSCs using websockets. Everything in the same app!
+- While they send reactions: We built this all on web standard request response, with complete control of the document. We have a simple SSR form action todo app, no client side js. But we have fancy todos and passkey auth. We can use our all the newest React features in a way that feels intentional, with server components as the base. Server functions and other React 19 hooks like useActionState, Action and useOptimistic complete the interactive picture. We can even use viewtrans with redwoods client side nav! And finally, we can just like that initialize a realtime route and stream RSCs using websockets. Everything in the same app! Standard typescript, standard react, standard request response.
