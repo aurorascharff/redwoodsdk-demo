@@ -27,37 +27,42 @@ export async function RealtimePage() {
   return (
     <>
       <title>Realtime</title>
-      <div className="relative flex-col">
+      <div className="relative flex min-h-0 flex-1 flex-col">
         <div
           className={cn('fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5', currentThemeData.colors)}
           style={{
             animationDuration: '4s',
-            background: `linear-gradient(45deg, ${currentThemeData.colors.replace('from-', '').replace('via-', ', ').replace('to-', ', ')})`,
           }}
         />
-        <div className="absolute top-8 right-8 z-10 sm:top-12 sm:right-12">
-          <Card className="hidden h-16 w-16 items-center justify-center overflow-hidden rounded-xl sm:flex sm:h-32 sm:w-32">
+        <div className="absolute top-4 right-4 z-10 sm:top-8 sm:right-8">
+          <Card className="hidden h-12 w-12 items-center justify-center overflow-hidden rounded-xl sm:flex sm:h-24 sm:w-24 lg:h-32 lg:w-32">
             <img src="/images/QR.jpeg" alt="QR Code" className="h-full w-full object-cover" />
           </Card>
         </div>
-        <Card className="relative flex min-h-[500px] flex-1 flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:px-12 md:py-16">
-          <div className="mb-8 text-center">
-            <h1 className="mb-4 font-serif tracking-tight sm:text-4xl md:text-5xl">
-              <span className={cn('bg-gradient-to-r bg-clip-text text-transparent', currentThemeData.colors)}>
-                ✨ Live Reactions ✨
-              </span>
-            </h1>
-            <p className="text-text-muted text-sm font-medium sm:text-base">{currentThemeData.description}</p>
+        <div className="relative flex flex-1 flex-col">
+          <Card className="relative mx-4 mb-4 flex min-h-[70vh] flex-1 flex-col items-center justify-center px-4 py-6 sm:mx-0 sm:mb-6 sm:px-8 sm:py-8 lg:px-12 lg:py-12">
+            <div className="mb-6 text-center sm:mb-8">
+              <h1 className="mb-2 font-serif text-2xl tracking-tight sm:mb-4 sm:text-3xl md:text-4xl lg:text-5xl">
+                <span className={cn('bg-gradient-to-r bg-clip-text text-transparent', currentThemeData.colors)}>
+                  ✨ Live Reactions ✨
+                </span>
+              </h1>
+              <p className="text-text-muted text-sm font-medium sm:text-base lg:text-lg">
+                {currentThemeData.description}
+              </p>
+            </div>
+            <div className="flex w-full flex-1 items-center justify-center">
+              <Reactions />
+            </div>
+          </Card>
+          <div className="relative z-20 px-4 pb-4 sm:px-0 sm:pb-6">
+            <EmojiPicker
+              theme={themeState.currentTheme}
+              remainingCooldown={themeState.remainingCooldown || 0}
+              currentThemeData={currentThemeData}
+            />
           </div>
-          <Reactions />
-        </Card>
-      </div>
-      <div className="relative z-20 p-4 sm:p-8 sm:pt-0">
-        <EmojiPicker
-          theme={themeState.currentTheme}
-          remainingCooldown={themeState.remainingCooldown || 0}
-          currentThemeData={currentThemeData}
-        />
+        </div>
       </div>
     </>
   );
