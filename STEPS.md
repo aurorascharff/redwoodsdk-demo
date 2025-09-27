@@ -54,7 +54,7 @@
 - Double tabs, not working.
 - Now, let's try switching from a fetch-based RSC payload to a streamed-based RSC payload.
 - We can switch from InitClient -> InitRealtimeClient with a key that determines which group of clients should share updates, we'll just do the pathname. Same durable object instance.
-- Export the reltime durable object in worker.tsx, then wire up our worker route with realtimeRoute of a reactions durable object here, connecting the websocket route to the appropriate durable object.
+- Export the realtime durable object in worker.tsx, then wire up our worker route with realtimeRoute of a reactions durable object here, connecting the websocket route to the appropriate durable object.
 - Now, our page can update over websockets, persistent bidirectional connection! Try it double tabs again.
 - Triggering server functions, client connected on the same key. Regenerate payload to all client on same key, client receive same RSC payload. Durable objects scale infinitely.
 
@@ -67,4 +67,4 @@
 
 ## Conclusion
 
-- While they send reactions: We built this all on web standard request response, with complete control of the document. We have a simple SSR form action todo app, no client side js. But we have fancy todos and passkey auth. We can use our all the newest React features in a way that feels intentional, with server components as the base. Server functions and other React 19 hooks like useActionState, Action and useOptimistic complete the interactive picture. We can even use viewtrans with redwoods client side nav! And finally, we can just like that initialize a realtime route and stream RSCs using websockets. Everything in the same app! Standard typescript, standard react, standard request response.
+- While they send reactions: We built this all on web standard request response, with complete control of the document. We have a simple SSR form action todo app, no client side js. But we have fancy todos and passkey auth. We can use our all the newest React features in a way that feels intentional, with server components as the base. Server functions and other React 19 hooks like useActionState, Action and useOptimistic complete the interactive picture. We can even use viewtrans with redwoods client side nav! And finally, we can just like that initialize a realtime route and stream RSCs using websockets. Everything in the same app! Standard typescript, standard react, standard request response. Taking React and TS and CLoudflare, binding together as something that feels cohesive, but based on web standards.
