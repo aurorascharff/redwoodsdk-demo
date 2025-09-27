@@ -3,7 +3,7 @@ import type { LayoutProps } from 'rwsdk/router';
 
 export default function MainLayout({ children }: LayoutProps) {
   return (
-    <div className="relative my-16">
+    <div className="relative my-16 h-full">
       <div className="absolute top-4 left-4 z-10 sm:top-6 sm:left-6">
         <a
           href={link('/')}
