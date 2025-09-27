@@ -8,8 +8,8 @@
 
 ## Worker.tsx every route is just a function
 
-- So, in redwood, every route is just a function. I have a simple response and also a jsx component returned here. Notice we can use the native Request and Response here. Ownership request and response.
-- Notice the different routes return simple Response and our JSX. Colocate JSX adn api routes.
+- So, in redwood, every route is just a function. I have a simple response and also a jsx component returned here. The browser makes a request, and we respond with content. Notice we can use the native Request and Response here. Ownership request and response.
+- Notice the different routes return simple Response and our JSX. Colocate JSX adn api routes. Matcher can also match dynamic routes.
 - This is just functions, which means we have max flexibility.
 - For our routes, we can render the NOJSDocument. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering. Showcase network. Route 'simple-todos'. Route matched, placed into that document. Notice no js network.
 
@@ -25,9 +25,9 @@
 - Add a regular Document enabling client side hydration with adding the script tag. Add initClient to client.tsx.
 - Add an layout() applayout and index() home route. Wrap another layout() mainlayout.
 - We can colocate our logic and our ui, for example I can bring in a bunch of route handlers for a user page.
-- Further up we also have some middleware, we can add some session logic, and adding the user to our app context which will be passed to our components. Using cloudflare durable objects for session management.
+- Further up we also have some middleware, we can add some session logic, and adding the user to our app context which will be passed to our components. Mutable object thats passed to each request handler, interuptors, and server functions. Using cloudflare durable objects for session management.
 - I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route handlers with a 302 redirect response. Built in web standards.
-- Now, let's say I want to protect my routes. This is where interruptors come in! Let's return arrays here instead with an authenticated and a redirect interruptor! Just reusable functions.
+- Now, let's say I want to protect my routes. This is where interruptors come in! Let's return arrays here instead with an authenticated and a redirect interruptor! Just reusable functions, executed in sequence for each matched request.
 - Login page is a client component to get a nice interactive spinner and execute our passkey login. Showcase, showcase interupptors.
 - Using the context from our app context to access the user.
 - We can use React 19 as its best suited. UseActionState and server functions. It just works.
