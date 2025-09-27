@@ -17,7 +17,7 @@
 
 - Redwoodsdk uses server components as the default, similar to nextjs, and everything you might be used to there works with the same mental model in redwoodsdk.
 - Enabling server-side fetching and composability without need for useEffect, with less boilerplate. It's streaming and suspense friendly, and ensures the fastest time to visible content.
-- Add a simple crud api route here, all native SSR and req/res. Simple todos! Whats a demo without todos? Using simple SSR and streaming with Suspense and server components! Just the mental model of server components that React suggests. Web standard form actions. RSC payload converted to html and streamed to browser, picked up by client side hydration.
+- Add a simple crud api route here, all native SSR and req/res. Simple todos! Whats a demo without todos? Using simple SSR! Just the mental model of server components that React suggests. Web standard form actions. RSC payload converted to html and streamed to browser, picked up by client side hydration.
 - Hooked up to the cloudflare d1 database provided in the starter! Set up with miniflare to emulate cloudflare workers. It just works between dev and prod.
 
 ## Hydration/client-side rendering and server functions, layouts, middleware, interruptors and auth
@@ -42,7 +42,7 @@
 
 - Since we have client side nav, redwoodsdk actually implements it using the suspense enabled router pattern, meaning it uses transitions under the hood, which means we can also add view transitions.
 - Let's say we want to animate across the navigation into a fancier todos route. Add fancy todos, shared element transition into this.
-- This fancier todos uses useActionState sort of like an async reducer, so since our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Using the actions convention across all interactions! Works with useoptimistic to make it snappy. Also using server functions instead of API routes. Also forms. Also using use() to read a promise from the server in this client component and suspend with a fallback.
+- This fancier todos uses useActionState sort of like an async reducer, so since our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Using the actions convention across all interactions! Works with useoptimistic to make it snappy. Also using server functions instead of API routes. Also forms. Also using use() to read a promise from the server in this client component and suspend with a fallback. Streaming with Suspense and server components.
 - Viewtrans our suspense loading state on enter exit. Default none.
 - Add viewtransition to our sort button, switch this for a action prop so we can handle the sort as a transition, activation the view transition, letting react automatically animate from the result of the transition into this new UI.
 
