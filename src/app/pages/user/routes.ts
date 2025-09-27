@@ -26,13 +26,12 @@ const shouldRedirectHome = ({ ctx }: { ctx: AppContext }) => {
 export const userRoutes = [
   route('/login', [shouldRedirectHome, LoginPage]),
   route('/profile', [isAuthenticated, Profile]),
-  route('/logout', async function ({ request }) {
-    const headers = new Headers();
-    await sessions.remove(request, headers);
-    headers.set('Location', link('/'));
+  route('/logout', async function ({ request, response }) {
+    await sessions.remove(request, response.headers);
+    response.headers.set('Location', '/');
 
     return new Response(null, {
-      headers,
+      headers: response.headers,
       status: 302,
     });
   }),
