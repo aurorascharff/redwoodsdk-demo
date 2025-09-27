@@ -27,9 +27,9 @@ export async function RealtimePage() {
   return (
     <>
       <title>Realtime</title>
-      <div className="relative flex h-screen flex-col">
+      <div className="relative flex h-full flex-col">
         <div
-          className={cn('fixed inset-0 animate-pulse bg-gradient-to-br opacity-5', currentThemeData.colors)}
+          className={cn('fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5', currentThemeData.colors)}
           style={{
             animationDuration: '4s',
             background: `linear-gradient(45deg, ${currentThemeData.colors.replace('from-', '').replace('via-', ', ').replace('to-', ', ')})`,
