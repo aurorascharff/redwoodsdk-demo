@@ -43,8 +43,8 @@ export default async function SimpleTodosPage() {
                     className={cn(
                       'flex h-4 w-4 items-center justify-center rounded border-2 border-gray-300 text-orange-600 transition-colors focus:ring-orange-500',
                       todo.done
-                        ? 'border-green-500 bg-green-500'
-                        : 'border-border dark:border-border-dark hover:border-green-500',
+                        ? 'border-orange-500 bg-orange-500'
+                        : 'border-border dark:border-border-dark hover:border-orange-500',
                       'disabled:cursor-not-allowed disabled:opacity-50',
                     )}
                   >
