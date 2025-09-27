@@ -2,7 +2,7 @@
 
 ## Setup and starting point
 
-- I'm here in a app based on the RedwoodSDK standard starter, which includes the cloudflare setup, and also a db setup with prisma. It also includes an auth setup with passkeys.
+- I'm here in a app based on the RedwoodSDK standard starter, which includes the cloudflare setup, and also a db setup with prisma. It also includes an auth setup with passkeys. I added tailwind css.
 - RedwoodSDK is essentially just added as a vite plugin. It unlocks the ssr and server components and things like realtime features, and a cloudflare locale dev environment with access to database, storage, queues. Also hooked up to the compiler!
 - We configure out app inside our worker.tsx file here, the entrypoint for our cloudflare worker.
 
