@@ -6,7 +6,6 @@ import { Document } from '@/app/Document';
 import { setCommonHeaders } from '@/app/headers';
 import { Home } from '@/app/pages/Home';
 import { userRoutes } from '@/app/pages/user/routes';
-import { link } from '@/app/shared/links';
 import { type User, db, setupDb } from '@/db';
 import { NoJSDocument } from './app/NoJSDocument';
 import { apiRoutes } from './app/api/routes';
@@ -15,6 +14,7 @@ import MainLayout from './app/layouts/MainLayout';
 import { RealtimePage } from './app/pages/realtime/RealtimePage';
 import SimpleTodosPage from './app/pages/todos/SimpleTodosPage';
 import TodosPage from './app/pages/todos/TodosPage';
+import { link } from './app/shared/links';
 import { sessions, setupSessionStore } from './session/store';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
@@ -38,7 +38,6 @@ export default defineApp([
       if (error instanceof ErrorResponse && error.code === 401) {
         await sessions.remove(request, response.headers);
         response.headers.set('Location', link('/user/login'));
-
         return new Response(null, {
           headers: response.headers,
           status: 302,
