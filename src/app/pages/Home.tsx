@@ -21,13 +21,10 @@ export function Home({ ctx }: { ctx: AppContext }) {
               Web Standards Meet Full-Stack React
             </p>
           </div>
-
           <p className="text-text-muted dark:text-text-muted-dark mx-auto mb-16 max-w-3xl text-lg leading-relaxed sm:text-xl">
             A full-stack React framework that strips web development back to its essentials. TypeScript-only,
             composable, and built on web standards with native Request/Response access.
           </p>
-
-          {/* Feature Tags */}
           <div className="mb-16 flex flex-wrap justify-center gap-3 text-sm">
             <span className="border-primary/30 dark:border-primary-dark/30 text-primary/80 dark:text-primary-dark/80 rounded-full border px-4 py-2">
               Server Components
