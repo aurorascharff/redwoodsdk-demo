@@ -10,7 +10,7 @@ export default async function TodosPage() {
   return (
     <>
       <title>Todos</title>
-      <div className="mx-auto max-w-2xl p-6">
+      <div className="max-w-2xl">
         <div className="mb-8 text-center">
           <ViewTransition name="todos">
             <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Todos</h1>

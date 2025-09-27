@@ -5,7 +5,7 @@ import type { AppContext } from '@/worker';
 import Button from '../components/ui/Button';
 import GitHubIcon from '../components/ui/icons/GitHubIcon';
 
-export function Home({ ctx }: { ctx: AppContext }) {
+export function HomePage({ ctx }: { ctx: AppContext }) {
   return (
     <div className="bg-background dark:bg-background-dark min-h-screen">
       <div className="flex min-h-screen items-center justify-center px-4 py-8">

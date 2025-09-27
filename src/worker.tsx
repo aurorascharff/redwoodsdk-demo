@@ -3,7 +3,7 @@ import { route, render, prefix, index, layout } from 'rwsdk/router';
 import { defineApp } from 'rwsdk/worker';
 import { Document } from '@/app/Document';
 import { setCommonHeaders } from '@/app/headers';
-import { Home } from '@/app/pages/Home';
+import { HomePage } from '@/app/pages/HomePage';
 import { userRoutes } from '@/app/pages/user/routes';
 import { type User, db } from '@/db';
 import { NoJSDocument } from './app/NoJSDocument';
@@ -50,7 +50,7 @@ export default defineApp([
       return <div className="bg-primary m-4 w-fit rounded p-4"> Hello World!</div>;
     }),
     layout(AppLayout, [
-      index(Home),
+      index(HomePage),
       layout(MainLayout, [prefix('/user', userRoutes), route('/realtime', RealtimePage), route('/todos', TodosPage)]),
     ]),
   ]),
