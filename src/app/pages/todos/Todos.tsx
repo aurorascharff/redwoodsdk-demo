@@ -11,6 +11,7 @@ import type { Todo } from '@/types/todo';
 import { getSortedTodos, getSortOrderLabel, getNextSortOrder, type SortOrder } from '@/utils/todoSort';
 import { TodoItem } from './TodoItem';
 import { todosReducer } from './functions';
+
 type Props = {
   todosPromise: Promise<Todo[]>;
 };
