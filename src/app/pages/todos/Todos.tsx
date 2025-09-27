@@ -1,5 +1,9 @@
 'use client';
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable autofix/no-unused-vars */
+// @ts-expect-error - unstable API but works in React 19
+import { unstable_ViewTransition as ViewTransition } from 'react';
 import { useActionState, useOptimistic, use, useRef, useState, startTransition } from 'react';
 import Button from '@/app/components/ui/Button';
 import SpinnerIcon from '@/app/components/ui/icons/SpinnerIcon';
@@ -7,7 +11,6 @@ import type { Todo } from '@/types/todo';
 import { getSortedTodos, getSortOrderLabel, getNextSortOrder, type SortOrder } from '@/utils/todoSort';
 import { TodoItem } from './TodoItem';
 import { todosReducer } from './functions';
-
 type Props = {
   todosPromise: Promise<Todo[]>;
 };
