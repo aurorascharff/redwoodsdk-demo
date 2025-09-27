@@ -60,7 +60,7 @@
 
 ## Release to production
 
-- Pnpm release will push all this to production with ease. Upload website to cloudflare, create database assets, storage assets. Can also add --env=staging for multiple environments. I'll release to staging.
+- Pnpm release will push all this to production with ease. Upload website to cloudflare, create database assets, storage assets. Can also add --env=staging for multiple environments.
 - I already deployed this.
 - Open released version on realtime page. Let them scan.
 - See the realtime reactions streaming in. Hopefully they've seen it already.
