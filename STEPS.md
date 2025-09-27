@@ -24,7 +24,7 @@
 - Using the simplified React 19 metadata, so I can add this anywhere and it wil automatically be added to the head.
 - Hooked up to the cloudflare d1 database provided in the standard starter! Already set up with prisma. Uses miniflare to emulate cloudflare workers. It just works between dev and prod.
 
-## Hydrated Document, script, initClient. UserRoutes, protect profile, interupptor, interactive login with 'use client'.
+## Hydrated Document, script, initClient. UserRoutes, protect profile, interupptor, interactive login with 'use client'
 
 - Copy layout() applayout and index() home route, rename to simple todos.
 - Replace with regular Document enabling client side hydration with adding the script tag. Add initClient to client.tsx to init hydration of our rsc payload.
