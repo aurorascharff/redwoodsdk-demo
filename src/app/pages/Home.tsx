@@ -58,7 +58,7 @@ export function Home({ ctx }: { ctx: AppContext }) {
             <a href={link('/todos')} className="w-full sm:w-auto">
               <Button type="button" variant="secondary" className="w-full sm:w-auto">
                 <ViewTransition name="todos">
-                  <span>Todos</span>
+                  <span>Fancy Todos</span>
                 </ViewTransition>
               </Button>
             </a>
