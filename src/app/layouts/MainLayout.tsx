@@ -1,7 +1,7 @@
-import { type PropsWithChildren } from 'react';
 import { link } from '@/app/shared/links';
+import type { LayoutProps } from 'rwsdk/router';
 
-export default function MainLayout({ children }: PropsWithChildren) {
+export default function MainLayout({ children }: LayoutProps) {
   return (
     <div className="relative">
       <div className="absolute top-4 left-4 z-10 sm:top-6 sm:left-6">

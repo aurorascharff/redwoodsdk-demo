@@ -1,7 +1,7 @@
 import GitHubIcon from '../components/ui/icons/GitHubIcon';
-import type { PropsWithChildren } from 'react';
+import type { LayoutProps } from 'rwsdk/router';
 
-export default async function AppLayout({ children }: PropsWithChildren) {
+export default async function AppLayout({ children }: LayoutProps) {
   return (
     <div className="flex h-dvh flex-col justify-between px-4 xl:px-40 2xl:px-60">
       {children}
