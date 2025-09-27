@@ -7,6 +7,7 @@ import { type User } from '@/db';
 import { Document } from './app/Document';
 import { NoJSDocument } from './app/NoJSDocument';
 import { apiRoutes } from './app/api/routes';
+import { sessionMiddleware } from './session/sessionMiddleware';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
 export { ReactionsDurableObject } from './app/pages/realtime/reactionsDurableObject';
@@ -19,6 +20,7 @@ export type AppContext = {
 export default defineApp([
   // Middleware
   setCommonHeaders(),
+  sessionMiddleware,
   // Route handlers
   route('/ping', () => {
     return new Response('pong', { status: 200 });

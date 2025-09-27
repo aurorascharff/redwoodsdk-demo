@@ -11,7 +11,7 @@
 - So, in redwood, every route is just a function. I have a simple response and also a jsx component returned here. The browser makes a request, we match a route, and we respond with content. Notice we can use the native Request and Response here. Ownership request and response.
 - Notice the different routes return simple Response and our JSX. Colocate JSX and api routes.
 - This is just functions, which means we have max flexibility.
-- Further up we also have some middleware, we can add some session logic, and then we can add getUserMiddleware the user to our app context which will be passed to our components. Mutable object thats passed to each request handler, interuptors, and server functions. Using cloudflare durable objects for session management.
+- Further up we also have some middleware, common headers and session, and then we can add getUserMiddleware the user to our app context which will be passed to our components. Mutable object thats passed to each request handler, interuptors, and server functions. Using cloudflare durable objects for session management.
 - For our routes, we can render the NOJSDocument. The document will be applied to all routes that are passed to it. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering.
 - Return SimpleTodosPage wrapped in AppLayout. Route matched, placed into that document. Wrap another layout() mainlayout, enabling nested layouts. They also receive requestinfo.
 
