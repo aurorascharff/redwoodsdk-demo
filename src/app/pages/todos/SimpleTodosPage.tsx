@@ -8,7 +8,7 @@ export default async function SimpleTodosPage() {
   return (
     <>
       <title>Simple Todos</title>
-      <div className="mx-auto max-w-2xl p-6">
+      <div className="max-w-2xl">
         <div className="mb-8 text-center">
           <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Simple Todos</h1>
         </div>

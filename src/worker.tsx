@@ -1,7 +1,12 @@
+/* eslint-disable autofix/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { route } from 'rwsdk/router';
 import { defineApp } from 'rwsdk/worker';
 import { setCommonHeaders } from '@/app/headers';
 import { type User } from '@/db';
+import { Document } from './app/Document';
+import { NoJSDocument } from './app/NoJSDocument';
+import { apiRoutes } from './app/api/routes';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
 export { ReactionsDurableObject } from './app/pages/realtime/reactionsDurableObject';
