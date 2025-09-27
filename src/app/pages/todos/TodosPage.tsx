@@ -8,23 +8,26 @@ export default async function TodosPage() {
   const initialTodos = getTodos();
 
   return (
-    <div className="mx-auto max-w-2xl p-6">
-      <div className="mb-8 text-center">
-        <ViewTransition name="todos">
-          <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Todos</h1>
-        </ViewTransition>
-      </div>
-      <Suspense
-        fallback={
-          <ViewTransition exit="slide-down">
-            <TodosSkeleton />
+    <>
+      <title>Todos</title>
+      <div className="mx-auto max-w-2xl p-6">
+        <div className="mb-8 text-center">
+          <ViewTransition name="todos">
+            <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Todos</h1>
           </ViewTransition>
-        }
-      >
-        <ViewTransition enter="slide-up" default="none">
-          <Todos todosPromise={initialTodos} />
-        </ViewTransition>
-      </Suspense>
-    </div>
+        </div>
+        <Suspense
+          fallback={
+            <ViewTransition exit="slide-down">
+              <TodosSkeleton />
+            </ViewTransition>
+          }
+        >
+          <ViewTransition enter="slide-up" default="none">
+            <Todos todosPromise={initialTodos} />
+          </ViewTransition>
+        </Suspense>
+      </div>
+    </>
   );
 }
