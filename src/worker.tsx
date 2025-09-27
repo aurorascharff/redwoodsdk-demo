@@ -1,6 +1,5 @@
 import { route } from 'rwsdk/router';
 import { defineApp } from 'rwsdk/worker';
-
 import { setCommonHeaders } from '@/app/headers';
 import { type User } from '@/db';
 import type { Session } from './session/durableObject';
