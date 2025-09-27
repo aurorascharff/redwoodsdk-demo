@@ -27,7 +27,7 @@ export async function RealtimePage() {
   return (
     <>
       <title>Realtime</title>
-      <div className="relative flex h-full flex-col">
+      <div className="relative flex-col">
         <div
           className={cn('fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5', currentThemeData.colors)}
           style={{
@@ -40,26 +40,24 @@ export async function RealtimePage() {
             <img src="/images/QR.jpeg" alt="QR Code" className="h-full w-full object-cover" />
           </Card>
         </div>
-        <div className="flex flex-1 flex-col p-4 sm:p-8">
-          <Card className="relative flex flex-1 flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:px-12 md:py-16">
-            <div className="mb-8 text-center">
-              <h1 className="mb-4 font-serif tracking-tight sm:text-4xl md:text-5xl">
-                <span className={cn('bg-gradient-to-r bg-clip-text text-transparent', currentThemeData.colors)}>
-                  ✨ Live Reactions ✨
-                </span>
-              </h1>
-              <p className="text-text-muted text-sm font-medium sm:text-base">{currentThemeData.description}</p>
-            </div>
-            <Reactions />
-          </Card>
-        </div>
-        <div className="relative z-20 p-4 sm:p-8 sm:pt-0">
-          <EmojiPicker
-            theme={themeState.currentTheme}
-            remainingCooldown={themeState.remainingCooldown || 0}
-            currentThemeData={currentThemeData}
-          />
-        </div>
+        <Card className="relative flex min-h-[500px] flex-1 flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:px-12 md:py-16">
+          <div className="mb-8 text-center">
+            <h1 className="mb-4 font-serif tracking-tight sm:text-4xl md:text-5xl">
+              <span className={cn('bg-gradient-to-r bg-clip-text text-transparent', currentThemeData.colors)}>
+                ✨ Live Reactions ✨
+              </span>
+            </h1>
+            <p className="text-text-muted text-sm font-medium sm:text-base">{currentThemeData.description}</p>
+          </div>
+          <Reactions />
+        </Card>
+      </div>
+      <div className="relative z-20 p-4 sm:p-8 sm:pt-0">
+        <EmojiPicker
+          theme={themeState.currentTheme}
+          remainingCooldown={themeState.remainingCooldown || 0}
+          currentThemeData={currentThemeData}
+        />
       </div>
     </>
   );
