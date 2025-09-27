@@ -7,61 +7,63 @@ import GitHubIcon from '../components/ui/icons/GitHubIcon';
 
 export function Home({ ctx }: { ctx: AppContext }) {
   return (
-    <div className="bg-background dark:bg-background-dark h-full">
-      <div className="flex h-full items-center justify-center px-4">
-        <div className="max-w-4xl text-center">
-          <div className="mb-16">
-            <h1 className="text-primary dark:text-primary-dark mb-6 font-serif text-6xl font-bold tracking-tight sm:text-7xl md:text-8xl">
+    <div className="bg-background dark:bg-background-dark min-h-screen">
+      <div className="flex min-h-screen items-center justify-center px-4 py-8">
+        <div className="w-full max-w-4xl text-center">
+          <div className="mb-8 sm:mb-12 md:mb-16">
+            <h1 className="text-primary dark:text-primary-dark mb-4 font-serif text-4xl font-bold tracking-tight sm:mb-6 sm:text-6xl md:text-7xl lg:text-8xl">
               RedwoodSDK v1.0
             </h1>
-            <p className="text-text dark:text-text-dark text-xl font-medium sm:text-2xl md:text-3xl">
+            <p className="text-text dark:text-text-dark text-lg font-medium sm:text-xl md:text-2xl lg:text-3xl">
               Web Standards Meet Full-Stack React
             </p>
           </div>
-          <p className="text-text-muted dark:text-text-muted-dark mx-auto mb-16 max-w-2xl text-lg leading-relaxed">
+          <p className="text-text-muted dark:text-text-muted-dark mx-auto mb-8 max-w-2xl text-base leading-relaxed sm:mb-12 sm:text-lg md:mb-16">
             A full-stack React framework that strips web development back to its essentials. TypeScript-only,
             composable, and built on web standards.
           </p>
-          <div className="mb-16 flex flex-wrap justify-center gap-4 text-sm">
-            <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-4 py-2">
+          <div className="mb-8 flex flex-wrap justify-center gap-2 text-xs sm:mb-12 sm:gap-4 sm:text-sm md:mb-16">
+            <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2">
               Server Components
             </span>
-            <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-4 py-2">
+            <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2">
               Edge Optimized
             </span>
-            <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-4 py-2">
+            <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2">
               Web Standards
             </span>
-            <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-4 py-2">
+            <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2">
               Cloudflare Ready
             </span>
           </div>
-          <div className="mb-12 flex flex-wrap justify-center gap-4">
+          <div className="mb-8 flex flex-col flex-wrap justify-center gap-3 sm:mb-12 sm:flex-row sm:gap-4">
             {ctx.user ? (
-              <a href={link('/user/profile')}>
-                <Button type="button" variant="secondary">
+              <a href={link('/user/profile')} className="w-full sm:w-auto">
+                <Button type="button" variant="secondary" className="w-full sm:w-auto">
                   Profile
                 </Button>
               </a>
             ) : (
-              <a href={link('/user/login')}>
-                <Button type="submit">Login</Button>
+              <a href={link('/user/login')} className="w-full sm:w-auto">
+                <Button type="submit" className="w-full sm:w-auto">
+                  Login
+                </Button>
               </a>
             )}
-            <a href={link('/todos/simple')}>
-              <Button type="button" variant="secondary">
+            <a href={link('/todos/simple')} className="w-full sm:w-auto">
+              <Button type="button" variant="secondary" className="w-full sm:w-auto">
                 Simple Todos
               </Button>
             </a>
-            <a href={link('/todos')}>
-              <Button type="button" variant="secondary">
+            <a href={link('/todos')} className="w-full sm:w-auto">
+              <Button type="button" variant="secondary" className="w-full sm:w-auto">
                 <ViewTransition name="todos">
                   <span>Todos</span>
                 </ViewTransition>
               </Button>
             </a>
-            <a href={link('/realtime')}>
-              <Button type="button" variant="secondary">
+            <a href={link('/realtime')} className="w-full sm:w-auto">
+              <Button type="button" variant="secondary" className="w-full sm:w-auto">
                 Realtime
               </Button>
             </a>
