@@ -66,6 +66,7 @@ export function LoginPage() {
             <form action={formAction} className="space-y-3">
               <input
                 type="text"
+                minLength={3}
                 name="username"
                 placeholder="Username"
                 className="w-full rounded-md border p-3"
