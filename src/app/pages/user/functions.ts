@@ -3,6 +3,7 @@
 import { requestInfo } from 'rwsdk/worker';
 import { z } from 'zod';
 import { db } from '@/db';
+import { sessions } from '@/session/store';
 
 const usernameSchema = z.string().min(3, 'Username must be at least 3 characters');
 
@@ -26,7 +27,10 @@ export async function register(username: string) {
     },
   });
 
-  response.headers.set('Set-Cookie', `userId=${user.id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`);
+  await sessions.save(response.headers, {
+    userId: user.id,
+  });
+
   return true;
 }
 
@@ -44,6 +48,9 @@ export async function login(username: string) {
     return false;
   }
 
-  response.headers.set('Set-Cookie', `userId=${user.id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`);
+  await sessions.save(response.headers, {
+    userId: user.id,
+  });
+
   return true;
 }
