@@ -9,8 +9,7 @@ export const apiRoutes = [
 
       if (!title || title.trim() === '') {
         const url = new URL(request.url);
-        const referer = request.headers.get('referer') || url.origin;
-        return Response.redirect(referer);
+        return Response.redirect(`${url.origin}/todos/simple`);
       }
 
       await db.todo.create({
@@ -22,8 +21,7 @@ export const apiRoutes = [
       });
 
       const url = new URL(request.url);
-      const referer = request.headers.get('referer') || url.origin;
-      return Response.redirect(referer);
+      return Response.redirect(`${url.origin}/todos/simple`);
     }
   }),
   route('/todos/toggle', async ({ request }) => {
@@ -38,8 +36,7 @@ export const apiRoutes = [
       });
 
       const url = new URL(request.url);
-      const referer = request.headers.get('referer') || url.origin;
-      return Response.redirect(referer);
+      return Response.redirect(`${url.origin}/todos/simple`);
     }
   }),
   route('/todos/delete', async ({ request }) => {
@@ -52,8 +49,7 @@ export const apiRoutes = [
       });
 
       const url = new URL(request.url);
-      const referer = request.headers.get('referer') || url.origin;
-      return Response.redirect(referer);
+      return Response.redirect(`${url.origin}/todos/simple`);
     }
   }),
 ];
