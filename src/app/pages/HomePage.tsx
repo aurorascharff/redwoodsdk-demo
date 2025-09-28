@@ -11,7 +11,7 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
       <div className="w-full max-w-4xl text-center">
         <div className="mb-8 sm:mb-12 md:mb-16">
           <h1 className="text-primary dark:text-primary-dark mb-4 font-serif text-4xl font-bold tracking-tight sm:mb-6 sm:text-6xl md:text-7xl lg:text-8xl">
-            RedwoodSDK v1.0
+            RedwoodSDK
           </h1>
           <p className="text-text dark:text-text-dark text-lg font-medium sm:text-xl md:text-2xl lg:text-3xl">
             Web Standards Meet Full-Stack React
