@@ -51,15 +51,16 @@ export default defineApp([
     }),
     layout(AppLayout, [
       index(HomePage),
-      layout(MainLayout, [prefix('/user', userRoutes), route('/realtime', RealtimePage), route('/todos', TodosPage)]),
+      layout(MainLayout, [
+        prefix('/user', userRoutes),
+        route('/realtime', RealtimePage),
+        route('/todos', TodosPage)]),
     ]),
   ]),
   render(NoJSDocument, [
     layout(AppLayout, [
       layout(MainLayout, [
-        route('/todos/simple', async () => {
-          return <SimpleTodosPage />;
-        }),
+        route('/todos/simple', SimpleTodosPage)
       ]),
     ]),
   ]),
