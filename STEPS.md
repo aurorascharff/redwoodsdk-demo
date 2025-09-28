@@ -27,7 +27,7 @@
 
 ## Hydrated Document, script, initClient. UserRoutes, protect profile, interupptor, interactive login with 'use client'
 
-- Extract regular Document enabling client side hydration with adding the script tag. Add initClient to client.tsx to init hydration of our rsc payload. Then, init client nav as well. Internal links will now be intercepted by redwoodSDK, handle pushing the URL, fetch the new RSC payload, and then hydrate it on the client.
+- Extract regular Document enabling client side hydration with adding the script tag. Add initClient to client.tsx to init hydration of our rsc payload.
 - I can also bring in a bunch of route handlers for a user page.
 - I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route. We can colocate our logic and our ui. Handlers with a 302 redirect response. Built in web standards.
 - Showcase profile. Using the context from our app context to access the user.
