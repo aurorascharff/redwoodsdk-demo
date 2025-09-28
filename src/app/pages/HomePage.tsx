@@ -21,20 +21,6 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
           A full-stack React framework that strips web development back to its essentials. TypeScript-only, composable,
           and built on web standards.
         </p>
-        <div className="mb-8 flex flex-wrap justify-center gap-2 text-xs sm:mb-12 sm:gap-4 sm:text-sm md:mb-16">
-          <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2">
-            Server Components
-          </span>
-          <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2">
-            Edge Optimized
-          </span>
-          <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2">
-            Web Standards
-          </span>
-          <span className="text-text-muted dark:text-text-muted-dark border-text-muted/20 dark:border-text-muted-dark/20 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2">
-            Cloudflare Ready
-          </span>
-        </div>
         <div className="mb-8 flex flex-col flex-wrap justify-center gap-3 sm:mb-12 sm:flex-row sm:gap-4">
           {ctx.user ? (
             <a href={link('/user/profile')} className="w-full sm:w-auto">
