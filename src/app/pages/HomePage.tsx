@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable autofix/no-unused-vars */
 // @ts-expect-error - unstable API but works in React 19
-
+import { unstable_ViewTransition as ViewTransition } from 'react';
 import { link } from '@/app/shared/links';
 import type { AppContext } from '@/worker';
 import Button from '../components/ui/Button';
