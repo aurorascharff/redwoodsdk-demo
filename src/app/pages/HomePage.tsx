@@ -47,7 +47,7 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
               </a>
             ) : (
               <a href={link('/user/login')} className="w-full sm:w-auto">
-                <Button type="submit" className="w-full sm:w-auto">
+                <Button type="submit" variant="secondary" className="w-full sm:w-auto">
                   Login
                 </Button>
               </a>
