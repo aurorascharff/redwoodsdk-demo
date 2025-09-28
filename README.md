@@ -1,6 +1,6 @@
-# RedwoodSDK v1 Demo
+# RedwoodSDK Demo
 
-A demo application for RedwoodSDK v1 featuring real-time updates and React View Transitions, using Tailwind CSS and Prisma.
+A demo application for RedwoodSDK featuring real-time updates and React View Transitions, using Tailwind CSS and Prisma.
 
 Based on the "standard starter," the recommended implementation for RedwoodSDK is. You get a Typescript project with:
 
