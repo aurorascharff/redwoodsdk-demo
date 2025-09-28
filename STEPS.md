@@ -13,21 +13,21 @@
 - This is just functions, which means we have max flexibility.
 - Further up we also have some middleware, common headers and session, and then we can add getUserMiddleware the user to our app context which will be passed to our components. Mutable object thats passed to each request handler, interuptors, and server functions. Using cloudflare durable objects for session management.
 - For our routes, we can render the NOJSDocument. The document will be applied to all routes that are passed to it. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering.
-- Return SimpleTodosPage wrapped in AppLayout. Route matched, placed into that document. Wrap another layout() mainlayout, enabling nested layouts. They also receive requestinfo.
+- Return Home page wrapped in AppLayout. Route matched, placed into that document. Wrap another layout() mainlayout, enabling nested layouts. They also receive requestinfo.
 
 ## Api routes, server components TodosSimple, forms, react 19, d1 database
 
+- Add simple-todos route.
 - Add a simple crud api route here with api prefix(), all native SSR and req/res.
 - Redwoodsdk uses server components as the default, similar to nextjs, and everything you might be used to there works with the same mental model in redwoodsdk.
 - Enabling server-side fetching and composability without need for useEffect, with less boilerplate. It's streaming and suspense friendly, and ensures the fastest time to visible content.
 - Simple todos! Whats a demo without todos? Using simple SSR, no javascript! Just the mental model of server components that React suggests. Web standard form actions.
 - Using the simplified React 19 metadata, so I can add this anywhere and it wil automatically be added to the head.
-- Hooked up to the cloudflare d1 database provided in the standard starter! Already set up with prisma. Uses miniflare to emulate cloudflare workers. It just works between dev and prod.
+- Prisma Hooked up to the cloudflare d1 database! Uses miniflare to emulate cloudflare workers. It just works between dev and prod.
 
 ## Hydrated Document, script, initClient. UserRoutes, protect profile, interupptor, interactive login with 'use client'
 
-- Copy layout() applayout and index() home route, rename to simple todos.
-- Replace with regular Document enabling client side hydration with adding the script tag. Add initClient to client.tsx to init hydration of our rsc payload.
+- Extract regular Document enabling client side hydration with adding the script tag. Add initClient to client.tsx to init hydration of our rsc payload. Then, init client nav as well. Internal links will now be intercepted by redwoodSDK, handle pushing the URL, fetch the new RSC payload, and then hydrate it on the client.
 - I can also bring in a bunch of route handlers for a user page.
 - I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route. We can colocate our logic and our ui. Handlers with a 302 redirect response. Built in web standards.
 - Showcase profile. Using the context from our app context to access the user.

@@ -10,7 +10,7 @@ export default async function TodosPage() {
   return (
     <>
       <title>Todos</title>
-      <div className="max-w-2xl">
+      <div className="w-full md:w-[500px]">
         <div className="mb-8 text-center">
           <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Todos</h1>
         </div>
