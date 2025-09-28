@@ -27,7 +27,7 @@ export async function RealtimePage() {
   return (
     <>
       <title>Realtime</title>
-      <div className="relative flex-col">
+      <div className="relative w-full flex-col">
         <div
           className={cn('fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5', currentThemeData.colors)}
           style={{
