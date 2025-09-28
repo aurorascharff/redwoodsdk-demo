@@ -1,17 +1,11 @@
 'use client';
 
-import { startAuthentication, startRegistration } from '@simplewebauthn/browser';
 import { useActionState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import Button from '@/app/components/ui/Button';
 import Card from '@/app/components/ui/Card';
 import { link } from '@/app/shared/links';
-import {
-  finishPasskeyLogin,
-  finishPasskeyRegistration,
-  startPasskeyLogin,
-  startPasskeyRegistration,
-} from './functions';
+import { login, register } from './functions';
 
 type State = {
   error?: string;
@@ -21,24 +15,27 @@ type State = {
 export function LoginPage() {
   const [state, formAction] = useActionState(async (_prevState: State | undefined, formData: FormData) => {
     const action = formData.get('action') as string;
+    const username = formData.get('username') as string;
 
     if (action === 'login') {
-      const options = await startPasskeyLogin();
-      const login = await startAuthentication({ optionsJSON: options });
-      const success = await finishPasskeyLogin(login);
+      const success = await login(username);
       if (success) {
         window.location.href = link('/');
+        return { message: 'Login successful!' };
       }
-      return success ? { message: 'Login successful!' } : { error: 'Login failed' };
+      return { error: 'User not found' };
     }
 
     if (action === 'register') {
-      const username = formData.get('username') as string;
-      const options = await startPasskeyRegistration(username);
-      const registration = await startRegistration({ optionsJSON: options });
-      const success = await finishPasskeyRegistration(username, registration);
-      return success ? { message: 'Registration successful!' } : { error: 'Registration failed' };
+      const success = await register(username);
+      if (success) {
+        window.location.href = link('/');
+        return { message: 'Registration successful!' };
+      }
+      return { error: 'Username already exists' };
     }
+
+    return { error: 'Invalid action' };
   }, {} as State);
 
   return (
@@ -51,9 +48,17 @@ export function LoginPage() {
           </div>
           <ErrorBoundary fallbackRender={ErrorFallback}>
             <div className="space-y-6">
-              <form action={formAction}>
+              <form action={formAction} className="space-y-3">
+                <input
+                  type="text"
+                  minLength={3}
+                  name="username"
+                  placeholder="Username"
+                  className="w-full rounded-md border p-3"
+                  required
+                />
                 <Button name="action" value="login" className="w-full">
-                  Login with passkey
+                  Login
                 </Button>
               </form>
               <div className="relative">
@@ -74,7 +79,7 @@ export function LoginPage() {
                   required
                 />
                 <Button name="action" value="register" className="w-full">
-                  Register with passkey
+                  Register
                 </Button>
               </form>
             </div>

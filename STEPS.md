@@ -2,7 +2,7 @@
 
 ## Setup and starting point
 
-- I'm here in a app based on the RedwoodSDK standard starter, which includes the cloudflare setup, and also a db setup with prisma. It also includes an auth setup with passkeys.
+- I'm here in a app based on the RedwoodSDK standard starter, which includes the cloudflare setup.
 - RedwoodSDK is essentially just added as a vite plugin. It unlocks the ssr and server components and things like realtime features, and a cloudflare locale dev environment with access to database, storage, queues. Also hooked up to the compiler!
 - We configure our app inside our worker.tsx file here, the entrypoint for our cloudflare worker.
 
@@ -33,7 +33,7 @@
 - Showcase profile. Using the context from our app context to access the user.
 - Now, let's say I want to protect my routes. This is where interruptors come in! Let's return arrays here instead with an authenticated and a redirect interruptor! Just reusable functions, executed in sequence for each matched request.
 - Showcase protected profile route.
-- Login page is a client component to get a nice interactive spinner and execute our passkey login using the webauthN API included in the standard starter.
+- Login page is a client component to get a nice interactive spinner and execute our mock login just using a session durable object.
 - We can use React 19 as its best suited. UseActionState and server functions. It just works.
 - Showcase redirect on sign-in route.
 
@@ -68,4 +68,4 @@
 
 ## Conclusion
 
-- While they send reactions: We built this all on web standard request response, with complete control of the document. We have a simple SSR form action todo app, no client side js. But we have fancy todos and passkey auth. All in the same app! We can use our all the newest React features in a way that feels intentional, with server components as the base. Server functions and other React 19 hooks like useActionState, Action and useOptimistic complete the interactive picture. We can even use viewtrans with redwoods client side nav! And finally, we can just like that initialize a realtime route and stream RSCs using websockets. Taking React and TS and CLoudflare, binding together as something that feels cohesive, but based on web standards.
+- While they send reactions: We built this all on web standard request response, with complete control of the document. We have a simple SSR form action todo app, no client side js. We can use our all the newest React features in a way that feels intentional, with server components as the base. Server functions and other React 19 hooks like useActionState, Action and useOptimistic complete the interactive picture. We can even use viewtrans with redwoods client side nav! And finally, we can just like that initialize a realtime route and stream RSCs using websockets. All in the same app! Taking React and TS and CLoudflare, binding together as something that feels cohesive, but based on web standards.
