@@ -9,7 +9,7 @@ export const Document = ({ children }: { children: ReactNode }) => {
         <link rel="stylesheet" href={styles} />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>RedwoodSDK v1.0</title>
+        <title>RedwoodSDK</title>
       </head>
       <body>
         <div id="root">{children}</div>
