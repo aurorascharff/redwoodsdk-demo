@@ -1,4 +1,4 @@
-if (window.location.pathname.startsWith('/user')) {
+if (!window.location.pathname.startsWith('/realtime')) {
   import('rwsdk/client').then(({ initClient }) => {
     initClient();
   });
