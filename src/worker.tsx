@@ -11,8 +11,8 @@ import { apiRoutes } from './app/api/routes';
 import AppLayout from './app/layouts/AppLayout';
 import MainLayout from './app/layouts/MainLayout';
 import { RealtimePage } from './app/pages/realtime/RealtimePage';
+import FancyTodosPage from './app/pages/todos/FancyTodosPage';
 import SimpleTodosPage from './app/pages/todos/SimpleTodosPage';
-import TodosPage from './app/pages/todos/TodosPage';
 import { sessionMiddleware } from './session/sessionMiddleware';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
@@ -54,7 +54,7 @@ export default defineApp([
       layout(MainLayout, [
         prefix('/user', userRoutes),
         route('/realtime', RealtimePage),
-        route('/todos', TodosPage)]),
+        route('/todos', FancyTodosPage)]),
     ]),
   ]),
   render(NoJSDocument, [

@@ -4,16 +4,16 @@ import { unstable_ViewTransition as ViewTransition } from 'react';
 import Todos, { TodosSkeleton } from './Todos';
 import { getTodos } from './queries';
 
-export default async function TodosPage() {
+export default async function FancyTodosPage() {
   const initialTodos = getTodos();
 
   return (
     <>
-      <title>Todos</title>
+      <title>Fancy Todos</title>
       <div className="w-full md:w-[500px]">
         <div className="mb-8 text-center">
           <ViewTransition name="todos">
-            <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Todos</h1>
+            <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Fancy Todos</h1>
           </ViewTransition>
         </div>
         <Suspense
