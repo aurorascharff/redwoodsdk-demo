@@ -7,42 +7,39 @@ export default function Profile({ ctx }: { ctx: AppContext }) {
   return (
     <>
       <title>Profile: {ctx.user?.username}</title>
-      <div className="bg-background dark:bg-background-dark flex justify-center py-2 backdrop-blur-md sm:py-8">
-        <Card className="mx-4 flex w-full max-w-2xl flex-col items-center px-4 py-6 sm:px-8 sm:py-12 md:px-12 md:py-16">
-          <div className="mb-8 text-center">
-            <h1 className="text-primary dark:text-primary-dark mb-4 font-serif text-2xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-              Profile
-            </h1>
-            <p className="text-text-muted dark:text-text-muted-dark text-sm sm:text-base">Your account information</p>
+      <div className="flex justify-center py-12">
+        <Card className="w-full max-w-md space-y-6 px-6 py-8">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold">Profile</h1>
           </div>
-          <div className="w-full max-w-lg justify-items-center space-y-8">
-            <div className="bg-surface dark:bg-surface-dark border-border dark:border-border-dark rounded-lg border p-6">
-              <h2 className="text-text dark:text-text-dark mb-6 text-lg font-semibold">Account Information</h2>
-              <div className="space-y-6">
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                  <div className="flex flex-col">
-                    <label className="text-text-muted dark:text-text-muted-dark text-sm font-medium">Username</label>
-                    <span className="text-text dark:text-text-dark mt-1 text-lg font-semibold">
-                      {ctx.user?.username}
-                    </span>
-                  </div>
-                </div>
-                <div className="border-border dark:border-border-dark border-t" />
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                  <div className="flex flex-col">
-                    <label className="text-text-muted dark:text-text-muted-dark text-sm font-medium">User ID</label>
-                    <span className="text-text dark:text-text-dark mt-1 font-mono text-sm break-all">
-                      {ctx.user?.id}
-                    </span>
-                  </div>
-                </div>
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <div className="flex min-h-[2.5rem] items-center justify-between py-2">
+                <span className="text-text-muted dark:text-text-muted-dark text-sm font-medium">Username</span>
+                <span className="text-text dark:text-text-dark ml-4 text-right font-semibold">
+                  {ctx.user?.username}
+                </span>
+              </div>
+              <div className="border-border dark:border-border-dark border-t" />
+              <div className="flex min-h-[2.5rem] items-center justify-between py-2">
+                <span className="text-text-muted dark:text-text-muted-dark text-sm font-medium">User ID</span>
+                <span className="text-text dark:text-text-dark ml-4 text-right font-mono text-sm break-all">
+                  {ctx.user?.id}
+                </span>
               </div>
             </div>
-            <form action={link('/user/logout')}>
-              <Button type="submit" variant="secondary">
-                Logout
-              </Button>
-            </form>
+            <div className="space-y-3">
+              <form action={link('/user/logout')}>
+                <Button type="submit" variant="secondary" className="h-10 w-full">
+                  Logout
+                </Button>
+              </form>
+              <a href={link('/')} className="block">
+                <Button type="button" className="h-10 w-full">
+                  Back to Home
+                </Button>
+              </a>
+            </div>
           </div>
         </Card>
       </div>
