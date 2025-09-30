@@ -15,23 +15,34 @@ export default function Profile({ ctx }: { ctx: AppContext }) {
             </h1>
             <p className="text-text-muted dark:text-text-muted-dark text-sm sm:text-base">Your account information</p>
           </div>
-          <div className="w-full max-w-md space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between py-3">
-                <span className="text-text-muted dark:text-text-muted-dark text-sm font-medium">Username</span>
-                <span className="text-text dark:text-text-dark font-semibold">{ctx.user?.username}</span>
-              </div>
-              <div className="border-border dark:border-border-dark border-t" />
-              <div className="flex items-center justify-between py-3">
-                <span className="text-text-muted dark:text-text-muted-dark text-sm font-medium">User ID</span>
-                <span className="text-text dark:text-text-dark font-mono text-sm">{ctx.user?.id}</span>
+          <div className="w-full max-w-lg justify-items-center space-y-8">
+            <div className="bg-surface dark:bg-surface-dark border-border dark:border-border-dark rounded-lg border p-6">
+              <h2 className="text-text dark:text-text-dark mb-6 text-lg font-semibold">Account Information</h2>
+              <div className="space-y-6">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                  <div className="flex flex-col">
+                    <label className="text-text-muted dark:text-text-muted-dark text-sm font-medium">Username</label>
+                    <span className="text-text dark:text-text-dark mt-1 text-lg font-semibold">
+                      {ctx.user?.username}
+                    </span>
+                  </div>
+                </div>
+                <div className="border-border dark:border-border-dark border-t" />
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                  <div className="flex flex-col">
+                    <label className="text-text-muted dark:text-text-muted-dark text-sm font-medium">User ID</label>
+                    <span className="text-text dark:text-text-dark mt-1 font-mono text-sm break-all">
+                      {ctx.user?.id}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="flex justify-center pt-4">
-              <form action={link('/user/logout')}>
-                <Button type="submit">Logout</Button>
-              </form>
-            </div>
+            <form action={link('/user/logout')}>
+              <Button type="submit" variant="secondary">
+                Logout
+              </Button>
+            </form>
           </div>
         </Card>
       </div>
