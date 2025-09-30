@@ -78,7 +78,7 @@ export function LoginPage() {
                   className="w-full rounded-md border p-3"
                   required
                 />
-                <Button name="action" value="register" className="h-10 w-full min-w-[140px]">
+                <Button variant="secondary" name="action" value="register" className="h-10 w-full min-w-[140px]">
                   Register
                 </Button>
               </form>
