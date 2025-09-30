@@ -26,9 +26,6 @@
       },
     ],
   },
-  "vars": {
-    "WEBAUTHN_APP_NAME": "redwoodsdk-v1-demo",
-  },
   "migrations": [
     {
       "tag": "v1",

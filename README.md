@@ -2,14 +2,6 @@
 
 A demo application for RedwoodSDK featuring real-time updates and React View Transitions, using Tailwind CSS and Prisma.
 
-Based on the "standard starter," the recommended implementation for RedwoodSDK is. You get a Typescript project with:
-
-- Vite
-- database (Prisma via D1)
-- Session Management (via DurableObjects)
-- Passkey authentication (Webauthn)
-- Storage (via R2)
-
 ## Creating your project
 
 ```shell
