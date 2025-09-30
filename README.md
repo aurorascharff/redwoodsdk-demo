@@ -1,6 +1,6 @@
 # RedwoodSDK v1 Demo
 
-A demo application for RedwoodSDK v1 featuring real-time updates and React View Transitions, using Tailwind CSS and Prisma.
+A full-stack React application built with RedwoodSDK showcasing SSR, real-time features, React 19 View Transitions, and Cloudflare edge infrastructure.
 
 ## Creating your project
 
