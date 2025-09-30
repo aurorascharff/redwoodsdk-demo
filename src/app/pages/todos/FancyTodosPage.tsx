@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 import Todos, { TodosSkeleton } from './Todos';
 import { getTodos } from './queries';
 
-export default async function TodosPage() {
+export default async function FancyTodosPage() {
   const initialTodos = getTodos();
 
   return (
