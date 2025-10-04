@@ -24,6 +24,11 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
           and built on web standards.
         </p>
         <div className="mb-8 flex flex-col flex-wrap justify-center gap-3 sm:mb-12 sm:flex-row sm:gap-4">
+          <a href={link('/todos/simple')} className="w-full sm:w-auto">
+            <Button type="button" variant="secondary" className="w-full sm:w-auto">
+              Simple Todos
+            </Button>
+          </a>
           {ctx.user ? (
             <a href={link('/user/profile')} className="w-full sm:w-auto">
               <Button type="button" variant="secondary" className="w-full sm:w-auto">
@@ -37,11 +42,6 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
               </Button>
             </a>
           )}
-          <a href={link('/todos/simple')} className="w-full sm:w-auto">
-            <Button type="button" variant="secondary" className="w-full sm:w-auto">
-              Simple Todos
-            </Button>
-          </a>
           <a href={link('/todos')} className="w-full sm:w-auto">
             <Button type="button" variant="secondary" className="w-full sm:w-auto">
               <span>Fancy Todos</span>
