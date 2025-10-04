@@ -17,16 +17,6 @@ export default async function AppLayout({ children }: LayoutProps) {
               <GitHubIcon className="h-4 w-4" />
               <span>RedwoodSDK</span>
             </a>
-            <span className="hidden opacity-30 sm:inline">•</span>
-            <a
-              href="https://github.com/aurorascharff/redwoodsdk-v1-demo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-link"
-            >
-              <GitHubIcon className="h-4 w-4" />
-              <span>Demo Code</span>
-            </a>
           </div>
           <div className="text-xs opacity-50">Built with RedwoodSDK</div>
         </div>

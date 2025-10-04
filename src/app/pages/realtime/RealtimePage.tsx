@@ -1,3 +1,4 @@
+import HomeButton from '@/app/components/HomeButton';
 import Card from '@/app/components/ui/Card';
 import type { Theme } from '@/types/reaction';
 import { cn } from '@/utils/cn';
@@ -25,9 +26,9 @@ export async function RealtimePage() {
   const currentThemeData = themes[themeState.currentTheme as Theme];
 
   return (
-    <>
+    <div className="py-4">
       <title>Realtime</title>
-      <div className="relative w-full flex-col">
+      <div className="relative mt-4 w-full flex-col">
         <div
           className={cn('fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5', currentThemeData.colors)}
           style={{
@@ -35,12 +36,10 @@ export async function RealtimePage() {
             background: `linear-gradient(45deg, ${currentThemeData.colors.replace('from-', '').replace('via-', ', ').replace('to-', ', ')})`,
           }}
         />
-        <div className="absolute top-8 right-8 z-10 sm:top-12 sm:right-12">
-          <Card className="hidden h-16 w-16 items-center justify-center overflow-hidden rounded-xl sm:flex sm:h-32 sm:w-32">
-            <img src="/images/QR.jpeg" alt="QR Code" className="h-full w-full object-cover" />
-          </Card>
-        </div>
         <Card className="relative flex h-[500px] grow flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:h-[70vh] md:px-12 md:py-16">
+          <div className="absolute top-2 left-2 sm:top-4 sm:left-4">
+            <HomeButton />
+          </div>
           <div className="mb-8 text-center">
             <h1 className="mb-4 font-serif tracking-tight sm:text-4xl md:text-5xl">
               <span className={cn('bg-gradient-to-r bg-clip-text text-transparent', currentThemeData.colors)}>
@@ -59,6 +58,6 @@ export async function RealtimePage() {
           currentThemeData={currentThemeData}
         />
       </div>
-    </>
+    </div>
   );
 }

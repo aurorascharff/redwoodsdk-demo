@@ -41,61 +41,59 @@ export function LoginPage() {
   return (
     <>
       <title>Login</title>
-      <div className="flex justify-center py-12">
-        <Card className="w-full max-w-md space-y-6 px-6 py-8">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold">Login</h1>
-          </div>
-          <ErrorBoundary fallbackRender={ErrorFallback}>
-            <div className="space-y-6">
-              <form action={formAction} className="space-y-3">
-                <input
-                  type="text"
-                  minLength={3}
-                  name="username"
-                  placeholder="Username"
-                  className="w-full rounded-md border p-3"
-                  required
-                />
-                <Button name="action" value="login" className="h-10 w-full min-w-[120px]">
-                  Login
-                </Button>
-              </form>
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="bg-background text-text-muted px-2">or</span>
-                </div>
+      <Card className="w-full max-w-md space-y-6 px-6 py-8">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold">Login</h1>
+        </div>
+        <ErrorBoundary fallbackRender={ErrorFallback}>
+          <div className="space-y-6">
+            <form action={formAction} className="space-y-3">
+              <input
+                type="text"
+                minLength={3}
+                name="username"
+                placeholder="Username"
+                className="w-full rounded-md border p-3"
+                required
+              />
+              <Button name="action" value="login" className="h-10 w-full min-w-[120px]">
+                Login
+              </Button>
+            </form>
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
               </div>
-              <form action={formAction} className="space-y-3">
-                <input
-                  type="text"
-                  minLength={3}
-                  name="username"
-                  placeholder="Username"
-                  className="w-full rounded-md border p-3"
-                  required
-                />
-                <Button variant="secondary" name="action" value="register" className="h-10 w-full min-w-[140px]">
-                  Register
-                </Button>
-              </form>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-background text-text-muted px-2">or</span>
+              </div>
             </div>
-          </ErrorBoundary>
-          {state?.error && (
-            <div className="rounded-md border border-red-200 bg-red-50 p-3 text-center text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200">
-              {state.error}
-            </div>
-          )}
-          {state?.message && (
-            <div className="rounded-md border border-green-200 bg-green-50 p-3 text-center text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-200">
-              {state.message}
-            </div>
-          )}
-        </Card>
-      </div>
+            <form action={formAction} className="space-y-3">
+              <input
+                type="text"
+                minLength={3}
+                name="username"
+                placeholder="Username"
+                className="w-full rounded-md border p-3"
+                required
+              />
+              <Button variant="secondary" name="action" value="register" className="h-10 w-full min-w-[140px]">
+                Register
+              </Button>
+            </form>
+          </div>
+        </ErrorBoundary>
+        {state?.error && (
+          <div className="rounded-md border border-red-200 bg-red-50 p-3 text-center text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200">
+            {state.error}
+          </div>
+        )}
+        {state?.message && (
+          <div className="rounded-md border border-green-200 bg-green-50 p-3 text-center text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-200">
+            {state.message}
+          </div>
+        )}
+      </Card>
     </>
   );
 }

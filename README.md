@@ -1,6 +1,6 @@
 # RedwoodSDK Demo
 
-A full-stack React application built with RedwoodSDK showcasing SSR, real-time features, React 19 View Transitions, and Cloudflare edge infrastructure.
+A full-stack React application built with RedwoodSDK showcasing SSR, real-time features, React 19 features, View Transitions, and Cloudflare edge infrastructure.
 
 ## Creating your project
 
