@@ -53,9 +53,9 @@ export default defineApp([
       index(HomePage),
       layout(MainLayout, [
         prefix('/user', userRoutes),
-        route('/realtime', RealtimePage),
         route('/todos', FancyTodosPage)]),
-    ]),
+      ]),
+      route('/realtime', RealtimePage),
   ]),
   render(NoJSDocument, [
     layout(AppLayout, [
