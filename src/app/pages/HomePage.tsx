@@ -27,18 +27,6 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
               Simple Todos
             </Button>
           </a>
-          <a href={link('/todos')} className="w-full sm:w-auto">
-            <Button type="button" variant="secondary" className="w-full sm:w-auto">
-              <ViewTransition name="todos">
-                <span>Fancy Todos</span>
-              </ViewTransition>
-            </Button>
-          </a>
-          <a href={link('/realtime')} className="w-full sm:w-auto">
-            <Button type="button" variant="secondary" className="w-full sm:w-auto">
-              Realtime
-            </Button>
-          </a>
           {ctx.user ? (
             <a href={link('/user/profile')} className="w-full sm:w-auto">
               <Button type="button" variant="secondary" className="w-full sm:w-auto">
@@ -52,6 +40,18 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
               </Button>
             </a>
           )}
+          <a href={link('/todos')} className="w-full sm:w-auto">
+            <Button type="button" variant="secondary" className="w-full sm:w-auto">
+              <ViewTransition name="todos">
+                <span>Fancy Todos</span>
+              </ViewTransition>
+            </Button>
+          </a>
+          <a href={link('/realtime')} className="w-full sm:w-auto">
+            <Button type="button" variant="secondary" className="w-full sm:w-auto">
+              Realtime
+            </Button>
+          </a>
         </div>
         <div className="text-center">
           <a
