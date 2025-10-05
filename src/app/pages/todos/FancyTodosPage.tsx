@@ -12,7 +12,7 @@ export default async function FancyTodosPage() {
       <title>Fancy Todos</title>
       <div className="w-full sm:w-[500px]">
         <div className="mb-8 text-center">
-          <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Fancy Todos</h1>
+          <h1 className="mb-2 text-3xl font-bold">Fancy Todos</h1>
         </div>
         <Suspense
           fallback={
