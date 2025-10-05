@@ -24,6 +24,11 @@
     "prefix": "route",
     "body": ["route('/', $1)"],
   },
+  "layout": {
+    "scope": "typescriptreact",
+    "prefix": "layout",
+    "body": ["layout('/', [$1])"],
+  },
   "initRealtimeClient": {
     "scope": "typescriptreact",
     "prefix": "initRealtimeClient",
