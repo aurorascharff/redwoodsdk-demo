@@ -1,14 +1,10 @@
 # DEMO STEPS
 
-## Setup and starting point
-
-- I'm here in a app based on the RedwoodSDK starter, which includes the cloudflare setup.
-- RedwoodSDK is essentially just added as a vite plugin. It unlocks the ssr and server components and things like realtime features, and a cloudflare locale dev environment with access to database, storage, queues.
-- We configure our app inside our worker.tsx file here, the entrypoint for our cloudflare worker.
-
 ## Worker.tsx routes and functions, middleware, documents
 
-- Imagine a simple world. A react framework, where every route is just a function. I have a simple response and also a jsx component returned here. The browser makes a request, we match a route, and we respond with content. They also receive requestinfo (unwrap argument).
+- Here in worker.tsx, the entrypoint for our cloudflare worker.
+- Imagine a simple world. A react framework, where every route is just a function.
+- I have a simple response and also a jsx component returned here. The browser makes a request, we match a route, and we respond with content. They also receive requestinfo (unwrap argument).
 - Just using the native Request and Response here. This is just functions, which means we have max flexibility, and ownership of request and response.
 - However, we also have some middleware further up, common headers and session. Using cloudflare durable objects for session management. We can actually run middleware freely by adding more functions before or after here, and our request will run through all of this sequentially. Add getUserMiddleware.
 - App context is a mutable object thats passed to each request handler, interruptors, and server functions, and components. See type.
