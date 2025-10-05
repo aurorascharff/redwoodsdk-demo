@@ -33,7 +33,7 @@
 - Copy paste regular Document. Move home there. Enabling client side hydration with adding the script tag, client,tsx. Containing initClient to init hydration of our rsc payload.
 - I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route. We can colocate our logic and our ui. Logout with a 302 redirect response. Built in web standards.
 - Login page is a client component, using useActionState and server functions. Get a nice interactive spinner and execute our mock login using a session durable object.
-- We can simply use React 19 as its best suited. UseActionState and server functions. It just works.
+- We can simply use React 19 as its best suited. UseActionState and server functions that access request response. It just works.
 - Showcase profile. Actually using the context from our app context to access the user.
 - Now, let's say I want to protect my routes. This is where interruptors come in! Let's return arrays here instead with an authenticated and a redirect interruptor! Just reusable functions, executed in sequence for each matched request.
 - Showcase redirect on sign-in route if logged in.
