@@ -10,7 +10,7 @@
 
 - Imagine a simple world. A react framework, where every route is just a function. I have a simple response and also a jsx component returned here. The browser makes a request, we match a route, and we respond with content. They also receive requestinfo (unwrap argument).
 - Just using the native Request and Response here. This is just functions, which means we have max flexibility, and ownership of request and response.
-- However, we also have some middleware further up, common headers and session. Using cloudflare durable objects for session management. We can actually run middleware freely by adding more functions here, and our request will run through all of this sequentially. Add getUserMiddleware.
+- However, we also have some middleware further up, common headers and session. Using cloudflare durable objects for session management. We can actually run middleware freely by adding more functions before or after here, and our request will run through all of this sequentially. Add getUserMiddleware.
 - App context is a mutable object thats passed to each request handler, interruptors, and server functions, and components.
 - Adds the user to our app context which can be used anywhere.
 - For our routes, we can simply render the NOJSDocument. The document will be applied to all routes that are passed to it.

@@ -1,0 +1,43 @@
+{
+  "getUserMiddleware": {
+    "scope": "typescriptreact",
+    "prefix": "getUserMiddleware",
+    "body": [
+      "async function getUserMiddleware({ ctx }) {",
+      "  if (ctx.session?.userId) {",
+      "    ctx.user = await db.user.findUnique({",
+      "      where: {",
+      "        id: ctx.session.userId,",
+      "      },",
+      "    });",
+      "  }",
+      "},",
+    ],
+  },
+  "route": {
+    "scope": "typescriptreact",
+    "prefix": "route",
+    "body": ["route('/', $1)"],
+  },
+  "prefix": {
+    "scope": "typescriptreact",
+    "prefix": "route",
+    "body": ["route('/', $1)"],
+  },
+  "initRealtimeClient": {
+    "scope": "typescriptreact",
+    "prefix": "initRealtimeClient",
+    "body": [
+      "const { handleResponse } = initClientNavigation();",
+      "initRealtimeClient({",
+      "  handleResponse,",
+      "  key: window.location.pathname,",
+      "});",
+    ],
+  },
+  "importInitRealtimeClient": {
+    "scope": "typescriptreact",
+    "prefix": "importInitRealtimeClient",
+    "body": ["import { initRealtimeClient } from \"rwsdk/realtime/client\";"],
+  },
+}
