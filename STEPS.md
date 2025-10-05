@@ -16,7 +16,7 @@
 
 ## Api routes, server components TodosSimple, forms, react 19, d1 database
 
-- Let's move a bit further, let's say need some dynamic data using a databases and api routes. Whats a demo without todos?
+- Let's move a bit further, let's say need some dynamic data using a databases and api routes. Whats a demo without todos? Go to todos.
 - Add a simple crud api route here with api prefix(), all native req/res.
 - Wrap another layout() mainlayout, enabling nested layouts. Match the 'simple-todos' page.
 - Prisma Hooked up to the cloudflare d1 database! (Locally, it uses miniflare to emulate cloudflare workers. It just works between dev and prod.)
@@ -28,12 +28,12 @@
 ## Hydrated Document, script, initClient. UserRoutes, protect profile, interupptor, interactive login with 'use client'
 
 - Let's jump forward, to the current state of React.
-- What if we DO want hydration after all for some routes to add interactivity? Let's jump ahead, to the current state of React.
+- What if we DO want hydration after all for some routes to add interactivity? For the login route. Go to route.
 - Copy paste regular Document. Move Home there. Enabling client side hydration with adding the script tag, client,tsx. Containing initClient to init hydration of our rsc payload.
 - I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route. We can colocate our logic and our ui. Logout with a 302 redirect response. Built in web standards.
 - Login page is a client component, using useActionState and server functions. Get a nice interactive spinner and execute our mock login using a session durable object.
 - We can simply use React 19 as its best suited. UseActionState and server functions that access request response. It just works.
-- Showcase profile. Actually using the context from our app context to access the user.
+- Showcase profile. Actually using the context from our app context added in middleware to access the user.
 - Now, let's say I want to protect my routes. This is where interruptors come in! Let's return arrays here instead with an authenticated and a redirect interruptor! Just reusable functions, executed in sequence for each matched request.
 - Showcase redirect on sign-in route if logged in.
 - Log out. Showcase protected profile route if logged out.
@@ -55,12 +55,12 @@
 - Add it also on the destination route, same name, shared element transition into this.
 - Also using use() to read a promise from the server in this client component and suspend with a fallback.
 - And I also added VT on the suspense. Execute navigation. Streaming with Suspense and server components, animating.
-- This fancier todos uses useActionState sort of like an async reducer, because our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Also using server functions instead of API routes. Using forms and actions with the Action naming convention across all transitions! And I added a View transition to the sort feature. Works with useoptimistic to make it snappy while syncing to the server.
-- We can use all regular and modern React in a predictable way!
+- Since modern React. This fancier todos uses useActionState sort of like an async reducer, because our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Also using server functions instead of API routes. Using forms and actions with the Action naming convention across all transitions! And I added a View transition to the sort feature. Works with useoptimistic to make it snappy while syncing to the server.
+- We can use all regular and modern React in a natural way!
 
 ## Fetch based to stream based payload
 
-- We can actually move beyond that. Redwood provides realtime functionality. I have a third route here, a realtime reactions page. Add it to worker outside mainlayout.
+- We can actually move beyond this. Redwood provides realtime functionality. I have a third route here, a realtime reactions page. Add it to worker outside mainlayout.
 - Getting the theme and reactions from a durable object, using server components.
 - Mutation with an emoji picker client component and server functions.
 - Double tabs, working as expected here.

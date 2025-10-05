@@ -19,15 +19,20 @@
     "prefix": "route",
     "body": ["route('/', $1)"],
   },
+  "userRoutes": {
+    "scope": "typescriptreact",
+    "prefix": "userRoutes",
+    "body": ["prefix('/user', userRoutes),"],
+  },
   "prefix": {
     "scope": "typescriptreact",
     "prefix": "prefix",
-    "body": ["route('/', $1)"],
+    "body": ["prefix('/$1',),"],
   },
   "layout": {
     "scope": "typescriptreact",
     "prefix": "layout",
-    "body": ["layout('/', [$1])"],
+    "body": ["layout('/', [$1]),"],
   },
   "initRealtimeClient": {
     "scope": "typescriptreact",
@@ -54,5 +59,10 @@
     "scope": "typescriptreact",
     "prefix": "returnJsx",
     "body": ["route('/', () => {", "  return <h1>Hello World!</h1>;", "}),"],
+  },
+  "simpleTodos": {
+    "scope": "typescriptreact",
+    "prefix": "simpleTodos",
+    "body": ["layout(MainLayout, [", "route('/todos/simple', SimpleTodosPage)", "])"],
   },
 }
