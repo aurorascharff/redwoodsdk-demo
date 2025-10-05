@@ -55,7 +55,7 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
         </div>
         <div className="text-center">
           <a
-            href="https://github.com/aurorascharff/redwoodsdk-v1-demo"
+            href="https://github.com/aurorascharff/redwoodsdk-demo"
             target="_blank"
             rel="noopener noreferrer"
             className="external-link"
