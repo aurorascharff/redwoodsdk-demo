@@ -50,4 +50,9 @@
     "prefix": "realtimeRoute",
     "body": ["realtimeRoute(env => {", "  return env.REALTIME_DURABLE_OBJECT;", "}),"],
   },
+  "returnJsx": {
+    "scope": "typescriptreact",
+    "prefix": "returnJsx",
+    "body": ["route('/', () => {", "  return <h1>Hello World!</h1>;", "}),"],
+  },
 }

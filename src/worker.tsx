@@ -23,14 +23,11 @@ export default defineApp([
   setCommonHeaders(),
   sessionMiddleware,
   // Route handlers
-  route('/ping', () => {
+  route('/', () => {
     return new Response('pong', { status: 200 });
   }),
-  route('/hello/:name', ({params}) => {
-    const {name} = params;
+  route('/hello/:name', (requestInfo) => {
+    const {name} = requestInfo.params;
     return new Response(`Hello ${name}`, { status: 200 });
-  }),
-  route('/', () => {
-    return <h1>Hello World!</h1>;
   }),
 ]);

@@ -4,8 +4,9 @@
 
 - Here in worker.tsx, the entrypoint for our cloudflare worker.
 - Imagine a simple world. A react framework, where every route is just a function.
-- I have a simple response and also a jsx component returned here. The browser makes a request, we match a route, and we respond with content. They also receive requestinfo (unwrap argument).
 - Just using the native Request and Response here. This is just functions, which means we have max flexibility, and ownership of request and response.
+- I have a few simple responses here for a few routes. The browser makes a request, we match a route, and we respond with content. They also receive requestinfo (unwrap argument).
+- We can also return jsx! Returnjsx snippet.
 - However, we also have some middleware further up, common headers and session. Using cloudflare durable objects for session management. We can actually run middleware freely by adding more functions before or after here, and our request will run through all of this sequentially. Add getUserMiddleware.
 - App context is a mutable object thats passed to each request handler, interruptors, and server functions, and components. See type.
 - Adds the user to our app context which can be used anywhere.
