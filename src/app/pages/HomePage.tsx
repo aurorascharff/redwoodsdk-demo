@@ -9,7 +9,7 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
   return (
     <div className="bg-background dark:bg-background-dark flex h-full w-full items-center justify-center justify-items-center px-4 py-8">
       <div className="w-full max-w-4xl text-center">
-        <div className="mb-8 sm:mb-12 md:mb-16">
+        <div className="my-8 sm:my-12 md:my-16">
           <h1 className="text-primary dark:text-primary-dark mb-4 font-serif text-4xl font-bold tracking-tight sm:mb-6 sm:text-6xl md:text-7xl lg:text-8xl">
             RedwoodSDK
           </h1>

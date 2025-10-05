@@ -14,13 +14,7 @@ export default async function SimpleTodosPage() {
         </div>
         <form action="/api/todos/add" method="POST" className="mb-6">
           <div className="flex gap-2">
-            <input
-              type="text"
-              name="title"
-              placeholder="Add a new todo..."
-              className="bg-background border-border text-text dark:bg-background-dark dark:border-border-dark dark:text-text-dark flex-1 rounded-lg border px-3 py-2 transition-colors focus:ring-2 focus:ring-orange-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-              required
-            />
+            <input type="text" name="title" placeholder="Add a new todo..." className="flex-1" required />
             <Button type="submit">Add Todo</Button>
           </div>
         </form>

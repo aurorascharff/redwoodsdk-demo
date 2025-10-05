@@ -10,7 +10,7 @@
 
 - Imagine a simple world. A react framework, where every route is just a function. I have a simple response and also a jsx component returned here. The browser makes a request, we match a route, and we respond with content. They also receive requestinfo (unwrap argument).
 - Just using the native Request and Response here. This is just functions, which means we have max flexibility, and ownership of request and response.
-- However, we also have some middleware further up, common headers and session. Using cloudflare durable objects for session management. We can actually run middleware freely by adding more functions here, and our request will run through all of this sequentially. Add getUserMiddleware.
+- However, we also have some middleware further up, common headers and session. Using cloudflare durable objects for session management. We can actually run middleware freely by adding more functions before or after here, and our request will run through all of this sequentially. Add getUserMiddleware.
 - App context is a mutable object thats passed to each request handler, interruptors, and server functions, and components.
 - Adds the user to our app context which can be used anywhere.
 - For our routes, we can simply render the NOJSDocument. The document will be applied to all routes that are passed to it.
@@ -18,7 +18,7 @@
 
 ## Api routes, server components TodosSimple, forms, react 19, d1 database
 
-- Let's move a bit further, to databases and api routes. Let's say we want some simple todos! Whats a demo without todos?
+- Let's move a bit further, let's say need some dynamic data using a databases and api routes. Let's say we want some simple todos! Whats a demo without todos?
 - Wrap another layout() mainlayout, enabling nested layouts. Match the 'simple-todos' page.
 - Add a simple crud api route here with api prefix(), all native SSR and req/res.
 - Prisma Hooked up to the cloudflare d1 database! Locally, it uses miniflare to emulate cloudflare workers. It just works between dev and prod.
@@ -57,11 +57,11 @@
 - Also using use() to read a promise from the server in this client component and suspend with a fallback. Streaming with Suspense and server components. All of the latest in and greatest in React.
 - And I also added them on the suspense.
 - This fancier todos uses useActionState sort of like an async reducer, so since our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Also using server functions instead of API routes. Using forms and actions with the Action naming convention across all interactions! Works with useoptimistic to make it snappy while syncing to the server.
-- We can use all the latest and greatest in React in a predictable way!
+- We can use all regular and modern React in a predictable way!
 
 ## Fetch based to stream based payload
 
-- Finally, redwood actually provides realtime functionality. I have a third route here, a realtime reactions page. Add it to worker outside mainlayout.
+- We can actually move beyond that. Redwood actually provides realtime functionality. I have a third route here, a realtime reactions page. Add it to worker outside mainlayout.
 - Getting the theme and reactions from a durable object, using server components.
 - Mutation with an emoji picker client component and server functions.
 - Double tabs, working as expected here.
@@ -81,4 +81,4 @@
 ## Conclusion
 
 - While they send reactions
-- We built this all on web standard request response, with complete control of the document. We created a simple SSR form action todo app, no client side js, with server components as the base. But we could also use our all the newest React features in a way that feels intentional. Like server functions and Actions, and  other React 19 hooks like useActionState and useOptimistic to complete the interactive picture. We can even use viewtrans with redwoods client side nav! And finally, we can just like that initialize a realtime route and stream RSCs using websockets. All in the same app! RedwoodSDK takes React and TS and Cloudflare, and binds it together as something that feels cohesive, but still web standard.
+- We built this all on web standard request response, with complete control of the document. We created a simple SSR form action todo app, no client side js, with server components as the base. Hooked up to Cloudflare durable objects and databases. But we could also hook up hydration, use our all the newest React features in a way that feels natural. Like server functions and Actions, and  other React 19 hooks like useActionState and useOptimistic to complete the interactive picture. And add client side navigation, that works with the new viewtrans! And beyond, we can just like that initialize a realtime route and stream RSCs using websockets. All in the same app! RedwoodSDK takes React and TS and Cloudflare, and binds it together as something that feels cohesive, but still web standard.
