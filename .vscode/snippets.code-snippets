@@ -21,7 +21,7 @@
   },
   "prefix": {
     "scope": "typescriptreact",
-    "prefix": "route",
+    "prefix": "prefix",
     "body": ["route('/', $1)"],
   },
   "layout": {
