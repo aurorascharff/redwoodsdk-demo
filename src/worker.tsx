@@ -31,6 +31,6 @@ export default defineApp([
     return new Response(`Hello ${name}`, { status: 200 });
   }),
   route('/', () => {
-    return <div>Hello World!</div>;
+    return <h1>Hello World!</h1>;
   }),
 ]);
