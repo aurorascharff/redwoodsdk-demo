@@ -40,4 +40,9 @@
     "prefix": "importInitRealtimeClient",
     "body": ["import { initRealtimeClient } from \"rwsdk/realtime/client\";"],
   },
+  "realtimeRoute": {
+    "scope": "typescriptreact",
+    "prefix": "realtimeRoute",
+    "body": ["realtimeRoute(env => {", "  return env.REALTIME_DURABLE_OBJECT;", "}),"],
+  },
 }

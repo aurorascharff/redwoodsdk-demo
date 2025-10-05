@@ -11,6 +11,7 @@ import { sessionMiddleware } from './session/sessionMiddleware';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
 export { ReactionsDurableObject } from './app/pages/realtime/reactionsDurableObject';
+export { RealtimeDurableObject } from 'rwsdk/realtime/durableObject';
 
 export type AppContext = {
   session: Session | null;
