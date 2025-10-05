@@ -1,6 +1,6 @@
 /* eslint-disable autofix/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { route } from 'rwsdk/router';
+import { index, route } from 'rwsdk/router';
 import { defineApp } from 'rwsdk/worker';
 import { setCommonHeaders } from '@/app/headers';
 import { type User } from '@/db';
@@ -23,7 +23,7 @@ export default defineApp([
   setCommonHeaders(),
   sessionMiddleware,
   // Route handlers
-  route('/', () => {
+  index(() => {
     return new Response('pong', { status: 200 });
   }),
   route('/hello/:name', requestInfo => {
