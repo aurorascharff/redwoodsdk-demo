@@ -45,10 +45,14 @@ export default defineApp([
   route('/ping', () => {
     return new Response('pong', { status: 200 });
   }),
+  route('/hello/:name', ({params}) => {
+    const {name} = params;
+    return new Response(`Hello ${name}`, { status: 200 });
+  }),
+  route('/hello', () => {
+    return <h1>Hello World!</h1>;
+  }),
   render(Document, [
-    route('/hello', () => {
-      return <div className="bg-primary m-4 w-fit rounded p-4"> Hello World!</div>;
-    }),
     layout(AppLayout, [
       index(HomePage),
       layout(MainLayout, [
