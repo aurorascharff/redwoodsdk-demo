@@ -27,8 +27,9 @@
 
 ## Hydrated Document, script, initClient. UserRoutes, protect profile, interupptor, interactive login with 'use client'
 
-- Ok, let's continue with some enhancements. What if we DO want hydration after all for some routes?
-- Copy paste regular Document. Move home there. Enabling client side hydration with adding the script tag, client,tsx. Containing initClient to init hydration of our rsc payload.
+- Let's jump forward, to the current state of React.
+- What if we DO want hydration after all for some routes to add interactivity? Let's jump ahead, to the current state of React.
+- Copy paste regular Document. Move Home there. Enabling client side hydration with adding the script tag, client,tsx. Containing initClient to init hydration of our rsc payload.
 - I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route. We can colocate our logic and our ui. Logout with a 302 redirect response. Built in web standards.
 - Login page is a client component, using useActionState and server functions. Get a nice interactive spinner and execute our mock login using a session durable object.
 - We can simply use React 19 as its best suited. UseActionState and server functions that access request response. It just works.
@@ -46,7 +47,7 @@
 
 ## Fancy todos and view transitions
 
-- Let's jump ahead, from our simple world to the current state of React.
+- Let's jump further, to some modern React and new features.
 - Since we have client side nav, redwoodsdk actually implements it using the suspense enabled router pattern, meaning it uses transitions under the hood, which means we can also add view transitions.
 - Let's say we want to animate across the navigation into a fancier todos route.
 - Add fancy todos page as snippet to worker.
