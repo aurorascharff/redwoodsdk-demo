@@ -17,7 +17,7 @@
   "route": {
     "scope": "typescriptreact",
     "prefix": "route",
-    "body": ["route('/', $1)"],
+    "body": ["route('/$1', )"],
   },
   "userRoutes": {
     "scope": "typescriptreact",
@@ -58,11 +58,24 @@
   "returnJsx": {
     "scope": "typescriptreact",
     "prefix": "returnJsx",
-    "body": ["route('/', () => {", "  return <h1>Hello World!</h1>;", "}),"],
+    "body": ["index(() => {", "  return <h1>Hello World!</h1>;", "}),"],
   },
   "simpleTodos": {
     "scope": "typescriptreact",
     "prefix": "simpleTodos",
     "body": ["layout(MainLayout, [", "route('/todos/simple', SimpleTodosPage)", "])"],
+  },
+  "regularDocument": {
+    "scope": "typescriptreact",
+    "prefix": "regularDocument",
+    "body": [
+      "render(Document, [",
+      "  layout(AppLayout, [",
+      "    layout(MainLayout, [",
+      "      index(HomePage)",
+      "    ])",
+      "  ]),",
+      "]),",
+    ],
   },
 }
