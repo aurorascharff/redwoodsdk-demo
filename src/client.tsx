@@ -1,17 +1,4 @@
-if (!window.location.pathname.startsWith('/realtime')) {
-  import('rwsdk/client').then(({ initClient }) => {
-    initClient();
-  });
-} else {
-  const [{ initClientNavigation }, { initRealtimeClient }] = await Promise.all([
-    import('rwsdk/client'),
-    import('rwsdk/realtime/client'),
-  ]);
-  const { handleResponse } = initClientNavigation();
-  initRealtimeClient({
-    handleResponse,
-    key: window.location.pathname,
-  });
-}
+import { initClient, initClientNavigation } from 'rwsdk/client';
 
-export {};
+initClientNavigation();
+initClient();

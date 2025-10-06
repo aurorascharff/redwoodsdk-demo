@@ -7,6 +7,7 @@ import { HomePage } from '@/app/pages/HomePage';
 import { userRoutes } from '@/app/pages/user/routes';
 import { type User, db } from '@/db';
 import { NoJSDocument } from './app/NoJSDocument';
+import { RealtimeDocument } from './app/RealtimeDocument';
 import { apiRoutes } from './app/api/routes';
 import AppLayout from './app/layouts/AppLayout';
 import MainLayout from './app/layouts/MainLayout';
@@ -58,8 +59,12 @@ export default defineApp([
       layout(MainLayout, [
         prefix('/user', userRoutes),
         route('/todos', FancyTodosPage)]),
-      route('/realtime', RealtimePage),
     ]),
+  ]),
+  render(RealtimeDocument, [
+    layout(AppLayout, [
+      route('/realtime', RealtimePage),
+    ])
   ]),
   render(NoJSDocument, [
     layout(AppLayout, [
