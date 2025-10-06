@@ -45,8 +45,8 @@ export default defineApp([
   route('/ping', () => {
     return new Response('pong', { status: 200 });
   }),
-  route('/hello/:name', ({ params }) => {
-    const { name } = params;
+  route('/hello/:name', requestInfo => {
+    const { name } = requestInfo.params;
     return new Response(`Hello ${name}`, { status: 200 });
   }),
   route('/hello', () => {

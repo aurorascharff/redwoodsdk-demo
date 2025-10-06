@@ -78,7 +78,6 @@ export default function Todos({ todosPromise }: Props) {
             return (
               <ViewTransition key={todo.id}>
                 <TodoItem
-                  key={todo.id}
                   done={todo.done}
                   statusChangeAction={done => {
                     statusChangeAction(done, todo);
