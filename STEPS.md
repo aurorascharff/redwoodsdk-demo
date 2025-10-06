@@ -5,6 +5,7 @@
 - Here in worker.tsx, the entrypoint for our cloudflare worker.
 - In redwood, every route is just a function.
 - I have a few simple responses here for a few routes. Just using the native Request and Response here. We have max flexibility, and ownership of request and response.
+- Prefix for a set of routes, extracted.
 - We can also return jsx! Snippet.
 - The browser makes a request, we match a route, and we respond with content.
 - We can also have some middleware further up, common headers and session. Using cloudflare durable objects for session management. We can actually run middleware freely by adding more functions before or after here, and our request will run through all of this sequentially. Add getUserMiddleware.
@@ -17,7 +18,7 @@
 ## Api routes, server components TodosSimple, forms, react 19, d1 database
 
 - Let's move a bit further, let's say need some dynamic data using a databases and api routes. Whats a demo without todos? Go to todos.
-- Add a simple crud api route here with api prefix(), all native req/res.
+- Check out the simple crud api route here with api prefix(), all native req/res.
 - Wrap another layout() mainlayout, enabling nested layouts. Match the 'simple-todos' page.
 - Prisma Hooked up to the cloudflare d1 database! (Locally, it uses miniflare to emulate cloudflare workers. It just works between dev and prod.)
 - Redwoodsdk uses server components as the default, and everything you might be used to in a framework like next.js works with the same mental model in redwoodsdk.
