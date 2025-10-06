@@ -5,6 +5,9 @@ import { cloudflare } from '@cloudflare/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  optimizeDeps: {
+    include: ['zod'],
+  },
   plugins: [
     react({
       babel: {
