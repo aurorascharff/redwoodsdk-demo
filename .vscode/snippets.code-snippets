@@ -32,7 +32,7 @@
   "layout": {
     "scope": "typescriptreact",
     "prefix": "layout",
-    "body": ["layout('/', [$1]),"],
+    "body": ["layout($1, []),"],
   },
   "initRealtimeClient": {
     "scope": "typescriptreact",
@@ -71,9 +71,12 @@
     "body": [
       "render(Document, [",
       "  layout(AppLayout, [",
+      "    index(HomePage),",
       "    layout(MainLayout, [",
-      "      index(HomePage)",
-      "    ])",
+      "      prefix('/user', userRoutes),",
+      "      route('/todos', FancyTodosPage),",
+      "    ]),",
+      "    route('/realtime', RealtimePage),",
       "  ]),",
       "]),",
     ],
