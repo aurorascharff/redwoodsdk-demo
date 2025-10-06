@@ -59,5 +59,11 @@ export default defineApp([
       route('/realtime', RealtimePage),
     ]),
   ]),
-  render(NoJSDocument, [layout(AppLayout, [layout(MainLayout, [route('/todos/simple', SimpleTodosPage)])])]),
+  render(NoJSDocument, [
+    layout(AppLayout, [
+      layout(MainLayout, [
+        route('/todos/simple', SimpleTodosPage)
+      ])
+    ])
+  ]),
 ]);
