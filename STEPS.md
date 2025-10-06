@@ -34,7 +34,7 @@
 - Login page is a client component, using useActionState and server functions. Get a nice interactive spinner and execute our mock login using a session durable object.
 - We can simply use React 19 as its best suited. UseActionState and server functions that access request response. It just works.
 - Showcase profile. Actually using the context from our app context added in middleware to access the user.
-- Now, let's say I want to protect my routes. This is where interruptors come in! Let's return arrays here instead with an authenticated and a redirect interruptor! Just reusable functions, executed in sequence for each matched request.
+- Now, let's say I want to protect my routes. This is where interruptors come in! Return arrays here with an authenticated and a redirect interruptor! Just reusable functions, executed in sequence for each matched request.
 - Showcase redirect on sign-in route if logged in.
 - Log out. Showcase protected profile route if logged out.
 
@@ -50,9 +50,8 @@
 - Let's jump further, to some modern React patterns and new stuff.
 - Since we have client side nav, redwoodsdk actually implements it using the suspense enabled router pattern, meaning it uses transitions under the hood, which means we can also add view transitions.
 - Let's say we want to animate across the navigation into a fancier todos route.
-- Add fancy todos page as snippet to worker.
-- Add viewtrans to fancy todos link, unique name.
-- Add it also on the destination route, same name, shared element transition into this.
+- Add fancy todos page as snippet to worker. Showcase viewtransition.
+- Showcase also on the destination route, same name, shared element transition into this.
 - And I also added VT on the suspense. Execute navigation. Streaming with Suspense and server components, animating.
 - Todos, lots of modern, fancy stuff, using use() to read a promise from the server in this client component and suspend with a fallback.
 - Since modern React. This fancier todos uses useActionState sort of like an async reducer, because our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Also using server functions instead of API routes. Works with useoptimistic to make it snappy while syncing to the server! Using forms and actions with the Action naming convention across all transitions! And I added a View transition to the sort feature.

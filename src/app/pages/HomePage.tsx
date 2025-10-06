@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable autofix/no-unused-vars */
 // @ts-expect-error - unstable API but works in React 19
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import { link } from '@/app/shared/links';
@@ -44,7 +42,9 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
           )}
           <a href={link('/todos')} className="w-full sm:w-auto">
             <Button type="button" variant="secondary" className="w-full sm:w-auto">
-              <span>Fancy Todos</span>
+              <ViewTransition name="fancy-todos">
+                <span>Fancy Todos</span>
+              </ViewTransition>
             </Button>
           </a>
           <a href={link('/realtime')} className="w-full sm:w-auto">
