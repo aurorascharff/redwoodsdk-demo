@@ -13,7 +13,7 @@ export default async function FancyTodosPage() {
       <div className="w-full sm:w-[500px]">
         <div className="mb-8 text-center">
           <ViewTransition name="todos">
-            <h1 className="mb-2 bg-gradient-to-r bg-clip-text text-3xl font-bold">Fancy Todos</h1>
+            <h1 className="mb-2 text-3xl font-bold">Fancy Todos</h1>
           </ViewTransition>
         </div>
         <Suspense

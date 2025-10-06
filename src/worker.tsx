@@ -45,8 +45,8 @@ export default defineApp([
   route('/ping', () => {
     return new Response('pong', { status: 200 });
   }),
-  route('/hello/:name', ({params}) => {
-    const {name} = params;
+  route('/hello/:name', ({ params }) => {
+    const { name } = params;
     return new Response(`Hello ${name}`, { status: 200 });
   }),
   route('/hello', () => {
@@ -55,18 +55,9 @@ export default defineApp([
   render(Document, [
     layout(AppLayout, [
       index(HomePage),
-      layout(MainLayout, [
-        prefix('/user', userRoutes),
-        route('/todos', FancyTodosPage)
-      ]),
+      layout(MainLayout, [prefix('/user', userRoutes), route('/todos', FancyTodosPage)]),
       route('/realtime', RealtimePage),
-      ]),
-  ]),
-  render(NoJSDocument, [
-    layout(AppLayout, [
-      layout(MainLayout, [
-        route('/todos/simple', SimpleTodosPage)
-      ]),
     ]),
   ]),
+  render(NoJSDocument, [layout(AppLayout, [layout(MainLayout, [route('/todos/simple', SimpleTodosPage)])])]),
 ]);
