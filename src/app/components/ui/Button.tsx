@@ -35,8 +35,8 @@ export default function Button({
       className={cn(
         'focus-visible:outline-primary rounded-lg border px-4 py-2 font-medium -outline-offset-1 transition-colors focus-visible:outline-2',
         variant === 'primary'
-          ? 'bg-primary border-primary enabled:hover:bg-primary-dark text-white disabled:cursor-not-allowed disabled:opacity-60'
-          : 'border-border bg-surface dark:bg-surface-dark text-text dark:text-text-dark enabled:hover:border-gray-300 enabled:hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60 dark:enabled:hover:border-gray-600 dark:enabled:hover:bg-gray-800',
+          ? 'bg-primary border-primary enabled:hover:bg-primary-dark disabled:bg-primary-darker text-white'
+          : 'border-border bg-surface dark:bg-surface-dark enabled:hover:bg-surface-elevated dark:enabled:hover:bg-surface-elevated-dark enabled:hover:border-text-muted dark:enabled:hover:border-text-muted-dark text-text dark:text-text-dark disabled:opacity-60',
         className,
       )}
       {...otherProps}
