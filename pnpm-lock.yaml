@@ -42,8 +42,8 @@ importers:
         specifier: 19.0.0-rc.1
         version: 19.0.0-rc.1(react-dom@0.0.0-experimental-d415fd3e-20250919(react@0.0.0-experimental-d415fd3e-20250919))(react@0.0.0-experimental-d415fd3e-20250919)(webpack@5.102.0)
       rwsdk:
-        specifier: 1.0.0-beta.9
-        version: 1.0.0-beta.9(@cloudflare/vite-plugin@1.13.7(vite@7.1.6(@types/node@24.5.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(workerd@1.20250924.0)(wrangler@4.40.2(@cloudflare/workers-types@4.20250927.0)))(react-dom@0.0.0-experimental-d415fd3e-20250919(react@0.0.0-experimental-d415fd3e-20250919))(react-server-dom-webpack@19.0.0-rc.1(react-dom@0.0.0-experimental-d415fd3e-20250919(react@0.0.0-experimental-d415fd3e-20250919))(react@0.0.0-experimental-d415fd3e-20250919)(webpack@5.102.0))(react@0.0.0-experimental-d415fd3e-20250919)(typescript@5.8.3)(vite@7.1.6(@types/node@24.5.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(wrangler@4.40.2(@cloudflare/workers-types@4.20250927.0))
+        specifier: 1.0.0-beta.9-test.20251006190822
+        version: 1.0.0-beta.9-test.20251006190822(@cloudflare/vite-plugin@1.13.7(vite@7.1.6(@types/node@24.5.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(workerd@1.20250924.0)(wrangler@4.40.2(@cloudflare/workers-types@4.20250927.0)))(react-dom@0.0.0-experimental-d415fd3e-20250919(react@0.0.0-experimental-d415fd3e-20250919))(react-server-dom-webpack@19.0.0-rc.1(react-dom@0.0.0-experimental-d415fd3e-20250919(react@0.0.0-experimental-d415fd3e-20250919))(react@0.0.0-experimental-d415fd3e-20250919)(webpack@5.102.0))(react@0.0.0-experimental-d415fd3e-20250919)(typescript@5.8.3)(vite@7.1.6(@types/node@24.5.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(wrangler@4.40.2(@cloudflare/workers-types@4.20250927.0))
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -1265,6 +1265,9 @@ packages:
   '@types/fs-extra@11.0.4':
     resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
 
+  '@types/glob@8.1.0':
+    resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
+
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
 
@@ -1282,6 +1285,9 @@ packages:
 
   '@types/mdx@2.0.13':
     resolution: {integrity: sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==}
+
+  '@types/minimatch@5.1.2':
+    resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
 
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
@@ -3519,8 +3525,8 @@ packages:
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
 
-  rwsdk@1.0.0-beta.9:
-    resolution: {integrity: sha512-2zfkIt/OLL88RdYAhksOLYx3il0ZhldNHmCHab+nQvFW0Vq30l326bkgSMTKE2M1mMoD+87EZ24VvKg+E9ZSZg==}
+  rwsdk@1.0.0-beta.9-test.20251006190822:
+    resolution: {integrity: sha512-PCs80CPnbHcDzngTjbTPJ+sU3FFhUCHkQAG0zWgpLU4oa5dvoCRycGJ3EmAI2/ax9qFs3J3zbES+THvRvGGAug==}
     hasBin: true
     peerDependencies:
       '@cloudflare/vite-plugin': ^1.12.4
@@ -5136,6 +5142,11 @@ snapshots:
       '@types/jsonfile': 6.1.4
       '@types/node': 24.5.2
 
+  '@types/glob@8.1.0':
+    dependencies:
+      '@types/minimatch': 5.1.2
+      '@types/node': 24.5.2
+
   '@types/hast@3.0.4':
     dependencies:
       '@types/unist': 3.0.3
@@ -5153,6 +5164,8 @@ snapshots:
       '@types/unist': 3.0.3
 
   '@types/mdx@2.0.13': {}
+
+  '@types/minimatch@5.1.2': {}
 
   '@types/ms@2.1.0': {}
 
@@ -7853,7 +7866,7 @@ snapshots:
     dependencies:
       queue-microtask: 1.2.3
 
-  rwsdk@1.0.0-beta.9(@cloudflare/vite-plugin@1.13.7(vite@7.1.6(@types/node@24.5.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(workerd@1.20250924.0)(wrangler@4.40.2(@cloudflare/workers-types@4.20250927.0)))(react-dom@0.0.0-experimental-d415fd3e-20250919(react@0.0.0-experimental-d415fd3e-20250919))(react-server-dom-webpack@19.0.0-rc.1(react-dom@0.0.0-experimental-d415fd3e-20250919(react@0.0.0-experimental-d415fd3e-20250919))(react@0.0.0-experimental-d415fd3e-20250919)(webpack@5.102.0))(react@0.0.0-experimental-d415fd3e-20250919)(typescript@5.8.3)(vite@7.1.6(@types/node@24.5.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(wrangler@4.40.2(@cloudflare/workers-types@4.20250927.0)):
+  rwsdk@1.0.0-beta.9-test.20251006190822(@cloudflare/vite-plugin@1.13.7(vite@7.1.6(@types/node@24.5.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(workerd@1.20250924.0)(wrangler@4.40.2(@cloudflare/workers-types@4.20250927.0)))(react-dom@0.0.0-experimental-d415fd3e-20250919(react@0.0.0-experimental-d415fd3e-20250919))(react-server-dom-webpack@19.0.0-rc.1(react-dom@0.0.0-experimental-d415fd3e-20250919(react@0.0.0-experimental-d415fd3e-20250919))(react@0.0.0-experimental-d415fd3e-20250919)(webpack@5.102.0))(react@0.0.0-experimental-d415fd3e-20250919)(typescript@5.8.3)(vite@7.1.6(@types/node@24.5.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(wrangler@4.40.2(@cloudflare/workers-types@4.20250927.0)):
     dependencies:
       '@ast-grep/napi': 0.39.5
       '@cloudflare/vite-plugin': 1.13.7(vite@7.1.6(@types/node@24.5.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(workerd@1.20250924.0)(wrangler@4.40.2(@cloudflare/workers-types@4.20250927.0))
@@ -7862,6 +7875,7 @@ snapshots:
       '@puppeteer/browsers': 2.10.10
       '@types/decompress': 4.2.7
       '@types/fs-extra': 11.0.4
+      '@types/glob': 8.1.0
       '@types/react': 19.1.2
       '@types/react-dom': 19.1.2(@types/react@19.1.2)
       '@types/react-is': 19.0.0
