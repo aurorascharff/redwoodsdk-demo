@@ -38,6 +38,8 @@
     "scope": "typescriptreact",
     "prefix": "initRealtimeClient",
     "body": [
+      "import { initRealtimeClient } from 'rwsdk/realtime/client';",
+      "",
       "const { handleResponse } = initClientNavigation();",
       "initRealtimeClient({",
       "  handleResponse,",
@@ -63,7 +65,7 @@
   "simpleTodos": {
     "scope": "typescriptreact",
     "prefix": "simpleTodos",
-    "body": ["layout(MainLayout, [", "route('/todos/simple', SimpleTodosPage)", "])"],
+    "body": ["layout(MainLayout, [", "  route('/todos/simple', SimpleTodosPage)", "])"],
   },
   "regularDocument": {
     "scope": "typescriptreact",
