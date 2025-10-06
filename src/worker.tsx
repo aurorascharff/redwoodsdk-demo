@@ -1,5 +1,6 @@
 /* eslint-disable autofix/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { realtimeRoute } from 'rwsdk/realtime/worker';
 import { index, prefix, route } from 'rwsdk/router';
 import { defineApp } from 'rwsdk/worker';
 import { setCommonHeaders } from '@/app/headers';
