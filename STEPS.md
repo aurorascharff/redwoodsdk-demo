@@ -44,14 +44,12 @@
 - What else might we want? Well, client side navigation. Doing full page reload.
 - Let's init client side navigation as well here. Internal links will now be intercepted by redwoodSDK, handle pushing the URL, fetch the new RSC payload, and then hydrate it on the client.
 - Now we have our client side navs no browser spinner in our hydrated document.
+- Wait, what was that? I actually have a view transition on the Home page, so we can see the view transition working with client side nav of redwoodsdk! Enter exit.
 - (SSR false, we are in SPA mode! Or static marketing side with RSC payload false).
 
 ## Fancy todos and View transitions
 
 - Let's jump further, to some modern React patterns and new stuff.
-- Since we have client side nav, redwoodsdk actually uses transitions under the hood, which means we can also add view transitions.
-- Let's say we want to animate the pages.
-- Added viewtrans to HomePage. Animate on enter exit.
 - And I also added VT on the suspense. Execute navigation. Streaming with Suspense and server components, animating.
 - Todos, lots of modern, fancy stuff, using use() to read a promise from the server in this client component and suspend with a fallback.
 - Since modern React. This fancier todos uses useActionState sort of like an async reducer, because our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Also using server functions instead of API routes. Works with useoptimistic to make it snappy while syncing to the server! Using forms and actions with the Action naming convention across all transitions! And I added a View transition to the sort feature for animated reordering.
