@@ -1,5 +1,4 @@
 // @ts-expect-error - unstable API but works in React 19
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, autofix/no-unused-vars
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import { link } from '@/app/shared/links';
 import type { AppContext } from '@/worker';
