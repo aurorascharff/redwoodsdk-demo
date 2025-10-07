@@ -39,6 +39,7 @@
     "prefix": "initRealtimeClient",
     "body": [
       "import { initRealtimeClient } from 'rwsdk/realtime/client';",
+      "import { initClientNavigation } from 'rwsdk/client';",
       "",
       "const { handleResponse } = initClientNavigation();",
       "initRealtimeClient({",
@@ -46,11 +47,6 @@
       "  key: window.location.pathname,",
       "});",
     ],
-  },
-  "importInitRealtimeClient": {
-    "scope": "typescriptreact",
-    "prefix": "importInitRealtimeClient",
-    "body": ["import { initRealtimeClient } from \"rwsdk/realtime/client\";"],
   },
   "realtimeRoute": {
     "scope": "typescriptreact",
