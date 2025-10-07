@@ -49,7 +49,7 @@
 ## Fancy todos and view transitions
 
 - Let's jump further, to some modern React patterns and new stuff.
-- Since we have client side nav, redwoodsdk actually implements it using the suspense enabled router pattern, meaning it uses transitions under the hood, which means we can also add view transitions.
+- Since we have client side nav, redwoodsdk actually uses transitions under the hood, which means we can also add view transitions.
 - Let's say we want to animate across the navigation into a fancier todos route.
 - Add fancy todos page as snippet to worker. Showcase viewtransition.
 - Showcase also on the destination route, same name, shared element transition into this.
