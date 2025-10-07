@@ -8,7 +8,7 @@ import GitHubIcon from '../components/ui/icons/GitHubIcon';
 
 export function HomePage({ ctx }: { ctx: AppContext }) {
   return (
-    <ViewTransition exit="slide-out" enter="slide-out">
+    <ViewTransition exit="slide-out" enter="slide-out" default="none">
       <div className="page-container">
         <div className="w-full max-w-4xl text-center">
           <div className="my-8 sm:my-12 md:my-16">
