@@ -70,6 +70,106 @@
   a.external-link {
     @apply text-text-muted dark:text-text-muted-dark hover:text-primary dark:hover:text-primary-dark inline-flex items-center gap-2 text-sm transition-colors duration-200;
   }
+
+  .surface-card {
+    @apply bg-surface border-border dark:bg-surface-dark dark:border-border-dark rounded-lg border;
+  }
+
+  .surface-card-padded {
+    @apply bg-surface border-border dark:bg-surface-dark dark:border-border-dark rounded-lg border p-8 text-center;
+  }
+
+  .todo-item-container {
+    @apply bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex items-center gap-3 rounded-lg border p-3 transition-colors;
+  }
+
+  .page-container {
+    @apply bg-background dark:bg-background-dark flex h-full w-full items-center justify-center justify-items-center px-4 py-8;
+  }
+
+  .hero-title {
+    @apply text-primary dark:text-primary-dark mb-4 font-serif text-4xl font-bold tracking-tight sm:mb-6 sm:text-6xl md:text-7xl lg:text-8xl;
+  }
+
+  .hero-subtitle {
+    @apply text-text dark:text-text-dark text-lg font-medium sm:text-xl md:text-2xl lg:text-3xl;
+  }
+
+  .hero-description {
+    @apply text-text-muted dark:text-text-muted-dark mx-auto mb-8 max-w-2xl text-base leading-relaxed sm:mb-12 sm:text-lg md:mb-16;
+  }
+
+  .button-grid {
+    @apply mb-8 flex flex-col flex-wrap justify-center gap-3 sm:mb-12 sm:flex-row sm:gap-4;
+  }
+
+  .reactions-container {
+    @apply relative flex w-full max-w-4xl flex-1 items-center justify-center overflow-hidden rounded-2xl text-2xl sm:text-4xl;
+  }
+
+  .realtime-card-main {
+    @apply relative flex h-[500px] grow flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:h-[70vh] md:px-12 md:py-16;
+  }
+
+  .qr-card {
+    @apply hidden h-12 w-12 items-center justify-center overflow-hidden rounded-xl sm:flex sm:h-24 sm:w-24 lg:h-32 lg:w-32;
+  }
+
+  .theme-selector-container {
+    @apply bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex flex-wrap items-center justify-center gap-2 rounded-full border px-3 py-2 sm:gap-4 sm:px-6;
+  }
+
+  .theme-kbd {
+    @apply text-text-muted bg-background border-border dark:bg-background-dark dark:border-border-dark rounded border px-1.5 py-0.5 text-xs sm:px-2 sm:py-1;
+  }
+
+  .delete-button {
+    @apply flex h-8 w-8 items-center justify-center rounded-full p-0 text-lg font-bold text-red-500 transition-colors hover:bg-red-100 hover:text-red-700 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 active:scale-95 dark:hover:bg-red-900/30;
+  }
+
+  .todo-checkbox {
+    @apply h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .error-message {
+    @apply rounded-md border border-red-200 bg-red-50 p-3 text-center text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200;
+  }
+
+  .success-message {
+    @apply rounded-md border border-green-200 bg-green-50 p-3 text-center text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-200;
+  }
+
+  .info-card {
+    @apply border-border bg-surface dark:border-border-dark dark:bg-surface-dark rounded-md border p-3 text-center;
+  }
+
+  .field-label {
+    @apply text-text-muted dark:text-text-muted-dark text-sm font-medium;
+  }
+
+  .field-value {
+    @apply text-text dark:text-text-dark ml-4 text-right font-mono text-sm break-all;
+  }
+
+  .emoji-grid-container {
+    @apply relative w-full overflow-visible rounded-xl bg-gradient-to-r p-0.5 transition-all duration-300 sm:flex sm:w-fit sm:items-center sm:justify-center sm:rounded-2xl sm:p-1;
+  }
+
+  .emoji-grid-inner {
+    @apply dark:bg-surface-dark/85 border-border/20 dark:border-border-dark/20 w-full rounded-lg border bg-white px-3 py-3 shadow-md backdrop-blur-sm transition-all duration-300 sm:rounded-xl sm:px-6 sm:py-4;
+  }
+
+  .emoji-button {
+    @apply bg-background/80 hover:bg-background/90 dark:bg-background-dark/60 dark:hover:bg-background-dark/80 disabled:hover:bg-background/80 disabled:dark:hover:bg-background-dark/60 flex aspect-square items-center justify-center rounded-lg py-4 text-2xl transition-all hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100;
+  }
+
+  .emoji-number-label {
+    @apply bg-text/70 text-background mt-1 rounded px-1.5 py-0.5 text-xs;
+  }
+
+  .emoji-button-desktop {
+    @apply group relative flex flex-col items-center text-4xl transition-transform hover:scale-125 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100;
+  }
 }
 
 @keyframes floatUp {

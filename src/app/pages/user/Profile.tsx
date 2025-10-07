@@ -15,17 +15,15 @@ export default function Profile({ ctx }: { ctx: AppContext }) {
           <div className="space-y-6">
             <div className="space-y-4">
               <div className="flex min-h-[2.5rem] items-center justify-between py-2">
-                <span className="text-text-muted dark:text-text-muted-dark text-sm font-medium">Username</span>
+                <span className="field-label">Username</span>
                 <span className="text-text dark:text-text-dark ml-4 text-right font-semibold">
                   {ctx.user?.username}
                 </span>
               </div>
               <div className="border-border dark:border-border-dark border-t" />
               <div className="flex min-h-[2.5rem] items-center justify-between py-2">
-                <span className="text-text-muted dark:text-text-muted-dark text-sm font-medium">User ID</span>
-                <span className="text-text dark:text-text-dark ml-4 text-right font-mono text-sm break-all">
-                  {ctx.user?.id}
-                </span>
+                <span className="field-label">User ID</span>
+                <span className="field-value">{ctx.user?.id}</span>
               </div>
             </div>
             <div className="space-y-3">

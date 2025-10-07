@@ -74,7 +74,7 @@ export default function Todos({ todosPromise }: Props) {
       {optimisticTodos.length > 0 && <SortButton sortOrderAction={setSortOrder} sortOrder={sortOrder} />}
       <div className="space-y-2">
         {optimisticTodos.length === 0 ? (
-          <div className="bg-surface border-border dark:bg-surface-dark dark:border-border-dark rounded-lg border p-8 text-center">
+          <div className="surface-card-padded">
             <p className="text-text-muted">No todos yet. Add your first todo above! 🎯</p>
           </div>
         ) : (
