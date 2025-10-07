@@ -168,7 +168,7 @@
   }
 
   .emoji-button-desktop {
-    @apply group relative flex flex-col items-center text-4xl transition-transform hover:scale-125 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100;
+    @apply relative flex flex-col items-center text-4xl transition-transform hover:scale-125 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100;
   }
 }
 
