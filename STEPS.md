@@ -11,7 +11,7 @@
 - We can also have some middleware further up, common headers and session. Using cloudflare durable objects for session management. We can actually run middleware freely by adding more functions before or after here, and our request will run through all of this sequentially. Add getUserMiddleware.
 - Adds the user to our app context which can be used anywhere.
 - With App context, we get a mutable object thats passed to each request handler, interruptors, and server functions, and components. See type.
-- For our routes, we can simply render the NOJSDocument. The document will be applied to all routes that are passed to it. Move JSX inside. Then Home page.
+- For our routes, we can simply render the NOJSDocument. The document will be applied to all routes that are passed to it. Move JSX inside. Then static Home page.
 - Layouts: wrapped in AppLayout.
 - Route matched, placed into that document. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering.
 
@@ -63,11 +63,11 @@
 - We can actually move beyond this. Redwood provides realtime functionality, utilizing websockets and cloudflare durable objects. I have a third route here, a realtime reactions page. Add it to worker outside mainlayout. 
 - Getting the theme and reactions from a durable object, using server components.
 - Mutation with an emoji picker client component and server functions.
-- Double tabs, working as expected here.
+- (Double tabs, working as expected here).
 - Now, let's try switching from a fetch-based RSC payload to a streamed-based RSC payload.
 - We can switch from InitClient -> InitRealtimeClient with a key that determines which group of clients should share updates, we'll just do the pathname. Same durable object instance.
 - Exported the realtime durable object in worker.tsx, then wire up our worker route with realtimeRoute of a reactions durable object here, connecting the websocket to the appropriate durable object.
-- Now, our page can update over websockets, persistent bidirectional connection! Try it double tabs again.
+- Now, our page can update over websockets, persistent bidirectional connection! (Try it double tabs again).
 - Triggering server functions, client connected on the same key. Regenerate payload to all client on same key, client receive same RSC payload. Durable objects scale infinitely.
 
 ## Release to production
