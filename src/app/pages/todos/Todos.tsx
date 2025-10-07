@@ -21,18 +21,22 @@ export default function Todos({ todosPromise }: Props) {
   const [sortOrder, setSortOrder] = useState<SortOrder>('newest');
   const formRef = useRef<HTMLFormElement>(null);
 
-  const addTodoAction = (formData: FormData) => {
-    const title = formData.get('title')?.toString();
-    if (!title?.trim()) return;
-    const id = crypto.randomUUID();
-    const createdAt = new Date();
-    const todo = { createdAt, done: false, id, title: title.trim() };
+  const addTodoAction = (e: React.FormEvent) => {
+    e.preventDefault();
+    startTransition(() => {
+      const formData = new FormData(formRef.current!);
+      const title = formData.get('title')?.toString();
+      if (!title?.trim()) return;
+      const id = crypto.randomUUID();
+      const createdAt = new Date();
+      const todo = { createdAt, done: false, id, title: title.trim() };
 
-    setOptimisticTodos((prev: Todo[]) => {
-      return [todo, ...prev];
+      setOptimisticTodos((prev: Todo[]) => {
+        return [todo, ...prev];
+      });
+      dispatch({ payload: { todo: { done: false, id, title: title.trim() } }, type: 'add' });
+      formRef.current?.reset();
     });
-    dispatch({ payload: { todo: { done: false, id, title: title.trim() } }, type: 'add' });
-    formRef.current?.reset();
   };
 
   const statusChangeAction = (done: boolean, todo: Todo) => {
@@ -59,7 +63,7 @@ export default function Todos({ todosPromise }: Props) {
 
   return (
     <>
-      <form ref={formRef} action={addTodoAction} className="mb-6">
+      <form ref={formRef} onSubmit={addTodoAction} className="mb-6">
         <div className="flex gap-2">
           <input type="text" name="title" placeholder="Add a new todo..." className="flex-1" required />
           <Button hideSpinner type="submit">
