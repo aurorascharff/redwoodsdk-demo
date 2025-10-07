@@ -56,7 +56,7 @@
   "returnJsx": {
     "scope": "typescriptreact",
     "prefix": "returnJsx",
-    "body": ["index(() => {", "  return <h1>Hello World!</h1>;", "}),"],
+    "body": ["  index(() => {", "    return <h1>Hello World!</h1>;", "  }),"],
   },
   "simpleTodos": {
     "scope": "typescriptreact",
