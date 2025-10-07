@@ -1,8 +1,11 @@
 import { PrismaClient } from '@generated/prisma';
 import { PrismaD1 } from '@prisma/adapter-d1';
+import { defineRequestState } from 'rwsdk/worker';
 export type * from '@generated/prisma';
 
-export let db: PrismaClient;
+// context(justinvdm, 2025-10-06): Use request-scoped state to prevent cross-request
+// state corruption in Prisma client
+export const [db, setDb] = defineRequestState<PrismaClient>();
 
 // context(justinvdm, 21-05-2025): We need to instantiate the client via a
 // function rather that at the module level for several reasons:
@@ -12,7 +15,7 @@ export let db: PrismaClient;
 // * So that we can encapsulate workarounds, e.g. see `SELECT 1` workaround
 //   below
 export const setupDb = async (env: Env) => {
-  db = new PrismaClient({
+  const client = new PrismaClient({
     // context(justinvdm, 21-05-2025): prisma-client generated type appears to
     // consider D1 adapter incompatible, though in runtime (dev and production)
     // it works
@@ -21,5 +24,8 @@ export const setupDb = async (env: Env) => {
   });
 
   // context(justinvdm, 21-05-2025): https://github.com/cloudflare/workers-sdk/pull/8283
-  await db.$queryRaw`SELECT 1`;
+  await client.$queryRaw`SELECT 1`;
+
+  // Set the client in the current request context
+  setDb(client);
 };
