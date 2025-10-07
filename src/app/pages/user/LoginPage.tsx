@@ -83,16 +83,8 @@ export function LoginPage() {
             </form>
           </div>
         </ErrorBoundary>
-        {state?.error && (
-          <div className="rounded-md border border-red-200 bg-red-50 p-3 text-center text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200">
-            {state.error}
-          </div>
-        )}
-        {state?.message && (
-          <div className="rounded-md border border-green-200 bg-green-50 p-3 text-center text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-200">
-            {state.message}
-          </div>
-        )}
+        {state?.error && <div className="error-message">{state.error}</div>}
+        {state?.message && <div className="success-message">{state.message}</div>}
       </Card>
     </>
   );
@@ -100,7 +92,7 @@ export function LoginPage() {
 
 function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
   return (
-    <div className="border-border bg-surface dark:border-border-dark dark:bg-surface-dark rounded-md border p-3 text-center">
+    <div className="info-card">
       <p className="mb-2">Something went wrong</p>
       <p className="mb-3 text-sm">{error?.message}</p>
       <Button type="button" onClick={resetErrorBoundary}>

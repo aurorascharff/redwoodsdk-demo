@@ -41,7 +41,7 @@ export async function RealtimePage() {
             <img src="/images/QR.jpeg" alt="QR Code" className="h-full w-full object-cover" />
           </Card>
         </div>
-        <Card className="relative flex h-[500px] grow flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:h-[70vh] md:px-12 md:py-16">
+        <Card className="realtime-card-main">
           <div className="absolute top-2 left-2 sm:top-4 sm:left-4">
             <HomeButton />
           </div>
