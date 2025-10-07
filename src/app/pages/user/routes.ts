@@ -24,8 +24,8 @@ const shouldRedirectHome = ({ ctx }: { ctx: AppContext }) => {
 };
 
 export const userRoutes = [
-  route('/login', [shouldRedirectHome, LoginPage]),
-  route('/profile', [isAuthenticated, Profile]),
+  route('/login', LoginPage),
+  route('/profile', Profile),
   route('/logout', async function ({ request, response }) {
     await sessions.remove(request, response.headers);
     response.headers.set('Location', '/');
