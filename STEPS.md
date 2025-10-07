@@ -51,8 +51,7 @@
 - Let's jump further, to some modern React patterns and new stuff.
 - Since we have client side nav, redwoodsdk actually uses transitions under the hood, which means we can also add view transitions.
 - Let's say we want to animate across the navigation into a fancier todos route.
-- Add fancy todos page as snippet to worker. Showcase viewtransition.
-- Showcase also on the destination route, same name, shared element transition into this.
+- Add fancy todos page as snippet to worker. Showcase viewtransition. Add viewtrans to HomePage.
 - And I also added VT on the suspense. Execute navigation. Streaming with Suspense and server components, animating.
 - Todos, lots of modern, fancy stuff, using use() to read a promise from the server in this client component and suspend with a fallback.
 - Since modern React. This fancier todos uses useActionState sort of like an async reducer, because our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Also using server functions instead of API routes. Works with useoptimistic to make it snappy while syncing to the server! Using forms and actions with the Action naming convention across all transitions! And I added a View transition to the sort feature for animated reordering.
