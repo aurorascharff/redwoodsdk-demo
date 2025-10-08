@@ -1,18 +1,15 @@
 import { route } from 'rwsdk/router';
-import { getDb } from '@/db';
+import { db } from '@/db';
 
 export const apiRoutes = [
   route('/stress-test', async () => {
     try {
-      const db = getDb();
       const result = await db.$transaction(async tx => {
         // 1. Create a dummy todo to simulate a write operation.
         const newTodo = await tx.todo.create({
           data: {
             // Use a random title to avoid unique constraint issues if any.
             title: `stress-test-todo-${crypto.randomUUID()}`,
-            // The seed script creates a user with id '1'.
-            userId: '1',
           },
         });
 
