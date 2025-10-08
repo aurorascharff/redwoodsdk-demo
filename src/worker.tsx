@@ -30,32 +30,16 @@ export default defineApp([
   // Middleware
   setCommonHeaders(),
   sessionMiddleware,
-  async function stressTestMiddleware() {
-    // Fire-and-forget the database operations. We don't await this IIFE.
-    // This allows the request to continue immediately, while the DB work
-    // happens in the background. This is a deliberate attempt to trigger
-    // the cross-request promise resolution error.
-    (async () => {
-      try {
-        // This raw SQL query uses a recursive Common Table Expression (CTE) to
-        // force the database to perform a computationally expensive task,
-        // effectively creating a slow query. This simulates a long-running
-        // database operation without needing a `sleep` function, which SQLite
-        // does not have. The LIMIT can be adjusted to control the delay.
-        await db.$queryRaw`
-          WITH RECURSIVE cnt(x) AS (
-            SELECT 1
-            UNION ALL
-            SELECT x+1 FROM cnt
-            LIMIT 2000000
-          )
-          SELECT count(*) FROM cnt
-        `;
-        console.log('Fire-and-forget stress test completed');
-      } catch (error) {
-        console.error('Fire-and-forget stress test failed:', error);
-      }
-    })();
+  function stressTestMiddleware() {
+    db.$queryRaw`
+      WITH RECURSIVE cnt(x) AS (
+        SELECT 1
+        UNION ALL
+        SELECT x+1 FROM cnt
+        LIMIT 2000000
+      )
+      SELECT count(*) FROM cnt
+    `;
   },
   async function getUserMiddleware({ ctx }) {
     if (ctx.session?.userId) {

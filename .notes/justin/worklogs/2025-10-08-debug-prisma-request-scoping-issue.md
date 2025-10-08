@@ -221,3 +221,15 @@ Given the time-critical nature of the situation, the decision was made to pursue
 ## 14. New Investigation: Reproducing the Issue Without HMR
 
 With the SDK's most obvious deferred promise removed, the focus now shifts to proving that the underlying race condition with Prisma can still occur. The hypothesis is that HMR is just a chaotic amplifier of a more fundamental problem: a long-running, "fire-and-forget" promise from one request resolving after its context has been replaced by a subsequent request. The next step is to devise an experiment to trigger this deliberately, without HMR.
+
+## 15. The Definitive Experiment: A "Slow" D1 Adapter
+
+To create a definitive test without HMR, a new strategy was devised to simulate a slow database query from within Prisma's own world. Instead of patching Prisma's source code, the `@prisma/adapter-d1` will be wrapped in a proxy that artificially delays its responses.
+
+-   **Implementation:**
+    1.  A proxy wrapper will be created for the `PrismaD1` adapter.
+    2.  This wrapper will intercept all method calls (like `queryRaw`, `executeRaw`).
+    3.  Inside the intercepted methods, it will introduce a 500ms `setTimeout` delay before calling the corresponding method on the *real* D1 adapter.
+    4.  The `PrismaClient` in `src/db.ts` will be instantiated with this "slow" adapter proxy instead of the real one.
+
+-   **Expected Outcome:** This will make every database query appear to take at least 500ms from the perspective of Prisma's query engine. When combined with the "fire-and-forget" stress test middleware, this will create a perfect scenario to reproduce the race condition. A request will fire off a query, its handler will complete, and well before the 500ms delay is over, another request will have established a new context. When the delayed query finally resolves, it will do so in the wrong context, definitively proving the vulnerability and providing the final justification for a `waitUntil`-based solution.
