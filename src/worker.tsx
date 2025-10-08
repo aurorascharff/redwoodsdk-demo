@@ -51,6 +51,7 @@ export default defineApp([
           )
           SELECT count(*) FROM cnt
         `;
+        console.log('Fire-and-forget stress test completed');
       } catch (error) {
         console.error('Fire-and-forget stress test failed:', error);
       }
