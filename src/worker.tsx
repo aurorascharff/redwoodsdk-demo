@@ -5,7 +5,7 @@ import { Document } from '@/app/Document';
 import { setCommonHeaders } from '@/app/headers';
 import { HomePage } from '@/app/pages/HomePage';
 import { userRoutes } from '@/app/pages/user/routes';
-import { type User, db } from '@/db';
+import { type User, type PrismaClient, getDb } from '@/db';
 import { NoJSDocument } from './app/NoJSDocument';
 import { RealtimeDocument } from './app/RealtimeDocument';
 import { apiRoutes } from './app/api/routes';
@@ -21,6 +21,7 @@ export { ReactionsDurableObject } from './app/pages/realtime/reactionsDurableObj
 export { RealtimeDurableObject } from 'rwsdk/realtime/durableObject';
 
 export type AppContext = {
+  db: PrismaClient;
   session: Session | null;
   user: User | null;
 };
@@ -31,7 +32,7 @@ export default defineApp([
   sessionMiddleware,
   async function getUserMiddleware({ ctx }) {
     if (ctx.session?.userId) {
-      ctx.user = await db.user.findUnique({
+      ctx.user = await getDb().user.findUnique({
         where: {
           id: ctx.session.userId,
         },
