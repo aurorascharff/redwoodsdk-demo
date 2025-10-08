@@ -1,7 +1,5 @@
 import GitHubIcon from '../components/ui/icons/GitHubIcon';
-import Header from '../components/Header';
 import type { LayoutProps } from 'rwsdk/router';
-import type { AppContext } from '@/worker';
 
 export default async function AppLayout({ children }: LayoutProps) {
   return (

@@ -1,7 +1,6 @@
 import HomeButton from '@/app/components/HomeButton';
 import Card from '@/app/components/ui/Card';
 import type { Theme } from '@/types/reaction';
-import type { AppContext } from '@/worker';
 import { cn } from '@/utils/cn';
 import { EmojiPicker } from './EmojiPicker';
 import Reactions from './Reactions';

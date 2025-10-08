@@ -1,9 +1,9 @@
 'use server';
 
+import { requestInfo } from 'rwsdk/worker';
 import { getDb } from '@/db';
 import type { Todo, TodoAction, OptimisticTodo } from '@/types/todo';
 import { slow } from '@/utils/slow';
-import { requestInfo } from 'rwsdk/worker';
 
 export async function createTodo(todo: Omit<OptimisticTodo, 'createdAt'>): Promise<Todo> {
   await slow();

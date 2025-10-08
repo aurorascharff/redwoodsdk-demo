@@ -50,16 +50,18 @@ export function EmojiPicker({
     <div className="flex flex-col items-center gap-3 sm:gap-4">
       <div className="theme-selector-container">
         <span className="text-text-muted text-xs sm:text-sm">Theme:</span>
-        {Object.entries(themes).map(([key, theme]) => (
-          <ThemeButton
-            key={key}
-            themeKey={key as Theme}
-            theme={theme}
-            isActive={optimisticTheme === key}
-            isDisabled={remainingCooldown > 0 || isPending}
-            onThemeChange={changeThemeAction}
-          />
-        ))}
+        {Object.entries(themes).map(([key, theme]) => {
+          return (
+            <ThemeButton
+              key={key}
+              themeKey={key as Theme}
+              theme={theme}
+              isActive={optimisticTheme === key}
+              isDisabled={remainingCooldown > 0 || isPending}
+              onThemeChange={changeThemeAction}
+            />
+          );
+        })}
         <kbd className="theme-kbd">T{remainingCooldown > 0 ? ` (${remainingCooldown}s)` : ''}</kbd>
       </div>
       <div className={cn('emoji-grid-container', currentThemeData.colors, isPending && 'opacity-60 saturate-50')}>
