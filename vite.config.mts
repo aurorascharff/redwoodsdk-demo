@@ -8,6 +8,13 @@ export default defineConfig({
   optimizeDeps: {
     include: ['zod'],
   },
+  environments: {
+    worker: {
+      optimizeDeps: {
+        include: ['zod'],
+      },
+    },
+  },
   plugins: [
     react({
       babel: {
