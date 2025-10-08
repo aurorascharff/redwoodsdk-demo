@@ -1,12 +1,12 @@
 'use server';
 
-import { getDb } from '@/db';
+import { db } from '@/db';
 import type { Todo, TodoAction } from '@/types/todo';
 import { slow } from '@/utils/slow';
 
 export async function createTodo(todo: Omit<Todo, 'createdAt'>): Promise<Todo> {
   await slow();
-  const newTodo = await getDb().todo.create({
+  const newTodo = await db.todo.create({
     data: {
       done: todo.done,
       id: todo.id,
@@ -18,7 +18,7 @@ export async function createTodo(todo: Omit<Todo, 'createdAt'>): Promise<Todo> {
 
 export async function updateTodo(id: string, updatedTodo: Partial<Todo>): Promise<Todo> {
   await slow();
-  const updated = await getDb().todo.update({
+  const updated = await db.todo.update({
     data: updatedTodo,
     where: { id },
   });
@@ -27,7 +27,7 @@ export async function updateTodo(id: string, updatedTodo: Partial<Todo>): Promis
 
 export async function deleteTodo(id: string): Promise<string> {
   await slow();
-  await getDb().todo.delete({
+  await db.todo.delete({
     where: { id },
   });
   return id;
