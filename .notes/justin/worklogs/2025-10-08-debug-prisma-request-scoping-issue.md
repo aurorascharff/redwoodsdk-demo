@@ -246,36 +246,25 @@ Even with the `requestInfoDeferred` promise removed from the SDK, a final, criti
 
 -   **Outcome:** This change makes the framework robust against the HMR race condition. Instead of crashing, the server now identifies and gracefully terminates orphaned requests, ensuring development stability. This fix, combined with the removal of the original `requestInfoDeferred` promise, was included in a new test release of the SDK.
 
----
 
-## PR for Demo App Update
+## 17. Finding: The "Stolen Reference" and Dependency Injection
 
-### Title:
-chore: Update to latest rwsdk test release for HMR stability
+The `StaleHmrRequestError` solution, while preventing crashes, was a symptom-fix. The root cause was more subtle and was discovered through careful debugging.
 
-### Description:
+-   **Problem:** It was observed that `requestInfo.ctx` was valid at the beginning of the router's `handle` function, but would become `undefined` *inside* an `async` middleware, specifically after an `await` statement.
 
-Hi Aurora o/
+-   **Root Cause Analysis (The "Stolen Reference"):** This was the final piece of the puzzle. The problem wasn't `AsyncLocalStorage` itself, but the interaction between HMR and module-level singletons.
+    1.  Middleware like `sessionMiddleware` would import the `requestInfo` object. This gave it a reference to a module-level singleton.
+    2.  An `await` would occur inside the middleware.
+    3.  During that `await`, HMR could reload the `requestInfo/worker.ts` module. This created a **new `requestInfo` singleton**.
+    4.  When the original middleware resumed, it was still holding a reference to the **old, orphaned `requestInfo` object**. Its connection to the live `AsyncLocalStorage` was severed. Any attempt to access properties on it would fail.
 
-This PR upgrades to the latest `rwsdk` test release.
+-   **The Definitive Solution: Dependency Injection:** The solution was to stop relying on the unstable module-level import within the request lifecycle. Instead, we switched to a dependency injection pattern.
+    1.  The router, at the very start of a request, creates a stable snapshot of the request's context (`ctx`).
+    2.  This stable `ctx` object is passed as an argument to each middleware.
+    3.  Middleware functions (like `sessionMiddleware`) were refactored to **only** use the `ctx` object passed in as an argument.
+    4.  This `ctx` object is then passed down to any subsequent functions that need it, like `setupDb`.
+    5.  `setupDb` was changed to accept `ctx` and attach the `PrismaClient` instance directly to `ctx.db`.
+    6.  All other application code (server functions, etc.) was standardized to use a safe `getDb()` function, which reads from the now-stable `requestInfo.ctx.db`.
 
-*   **What it fixes:** This new release is purpose-built to solve the HMR race condition and make the dev server stable. It contains two key changes:
-    1.  **Removal of an Internal Leaky Promise:** We found a specific promise inside the SDK's request handling that was being orphaned during HMR, causing instability. It has been removed.
-    2.  **Graceful HMR Handling:** The SDK now detects when a request has been orphaned by an HMR update. Instead of crashing, it now gracefully terminates that broken request, logs a warning, and keeps the server running.
-
-This should make the development experience completely stable, even with the stress test running and frequent file changes.
-
-#### ⚠️ **Important: How to Test**
-
-To avoid any "ghost" caching issues from Vite or `node_modules` and make sure you're running with a completely fresh environment, please follow these steps exactly:
-
-1.  **Shut down** any `pnpm dev` processes you have running and close their terminal windows/tabs.
-2.  Then, in your project directory, run the following commands to start fresh:
-
-```sh
-rm -rf node_modules
-pnpm install
-pnpm dev
-```
-
-Let me know how it goes!
+-   **Outcome:** This pattern completely resolves the HMR race condition. By explicitly passing the stable context object through the call stack, the application is no longer vulnerable to module reloads destroying its state mid-request. This is the architecturally correct and robust solution.

@@ -6,7 +6,7 @@ import { setupSessionStore, sessions } from './store';
 import type { RouteMiddleware } from 'rwsdk/router';
 
 export const sessionMiddleware: RouteMiddleware = async ({ request, response, ctx }) => {
-  await setupDb(env);
+  await setupDb(env, ctx);
   setupSessionStore(env);
   try {
     ctx.session = await sessions.load(request);
