@@ -2,7 +2,7 @@
 
 import { requestInfo } from 'rwsdk/worker';
 import { z } from 'zod';
-import { db } from '@/db';
+import { getDb } from '@/db';
 import { sessions } from '@/session/store';
 import { slow } from '@/utils/slow';
 
@@ -14,7 +14,7 @@ export async function register(username: string) {
 
   await slow();
 
-  const existingUser = await db.user.findFirst({
+  const existingUser = await getDb().user.findFirst({
     where: {
       username: validatedUsername,
     },
@@ -24,7 +24,7 @@ export async function register(username: string) {
     return false;
   }
 
-  const user = await db.user.create({
+  const user = await getDb().user.create({
     data: {
       username: validatedUsername,
     },
@@ -43,7 +43,7 @@ export async function login(username: string) {
 
   await slow();
 
-  const user = await db.user.findFirst({
+  const user = await getDb().user.findFirst({
     where: {
       username: validatedUsername,
     },
