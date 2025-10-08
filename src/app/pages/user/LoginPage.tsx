@@ -47,7 +47,7 @@ export function LoginPage() {
       <div className="w-full sm:w-[500px]">
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-3xl font-bold tracking-tight">Sign In</h1>
-          <p className="text-gray-600 dark:text-gray-300">Welcome to TodoApp</p>
+          <p className="text-gray-600 dark:text-gray-300">Welcome to RedwoodSDK Todos</p>
         </div>
         <ErrorBoundary fallbackRender={ErrorFallback}>
           <div className="space-y-6">
