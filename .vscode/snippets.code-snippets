@@ -69,7 +69,6 @@
     "body": [
       "render(Document, [",
       "  layout(AppLayout, [",
-      "    index(HomePage),",
       "    prefix('/user', userRoutes),",
       "    route('/todos', FancyTodosPage),",
       "    route('/realtime', RealtimePage),",

@@ -33,7 +33,7 @@
 ## Hydrated Document, script, initClient. UserRoutes, protect profile, interupptor, interactive login with 'use client'
 
 - What if we DO want hydration after all for some routes to add interactivity?
-- Snippet regularDocument. Remove Home from noJS. More routes. Enabling client side hydration with adding the script tag, client,tsx. Containing initClient to init hydration of our rsc payload.
+- Snippet regularDocument. More routes. Enabling client side hydration with adding the script tag, client,tsx. Containing initClient to init hydration of our rsc payload.
 - Log out first to see the login.
 - Interactive login. Go to login. I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route. We can colocate our logic and our ui. Logout with a 302 redirect response. Built in web standards.
 - Login page is a client component, using useActionState and server functions. Get a nice interactive spinner and execute our mock login using a session durable object.
