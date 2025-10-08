@@ -69,6 +69,7 @@
     "body": [
       "render(Document, [",
       "  layout(AppLayout, [",
+      "    index(HomePage),",
       "    prefix('/user', userRoutes),",
       "    route('/todos', FancyTodosPage),",
       "    route('/realtime', RealtimePage),",
@@ -87,7 +88,7 @@
     "body": [
       "{ctx.user?.id && (",
       "  <Suspense fallback={<TodoStatsSkeleton />}>",
-      "    <TodoStats userId={ctx.user?.id} />",
+      "    <TodoStats />",
       "  </Suspense>",
       ")}",
     ],
