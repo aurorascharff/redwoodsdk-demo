@@ -2,12 +2,11 @@ import { Suspense } from 'react';
 // @ts-expect-error - unstable API but works in React 19
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import HomeButton from '@/app/components/HomeButton';
-import type { AppContext } from '@/worker';
 import Todos, { TodosSkeleton } from './Todos';
 import { getTodos } from './queries';
 
-export default async function FancyTodosPage({ ctx }: { ctx: AppContext }) {
-  const initialTodos = getTodos(ctx.user!.id);
+export default function FancyTodosPage() {
+  const initialTodos = getTodos();
 
   return (
     <>

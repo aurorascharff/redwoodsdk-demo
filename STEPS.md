@@ -34,6 +34,7 @@
 
 - What if we DO want hydration after all for some routes to add interactivity?
 - Snippet regularDocument. Remove Home from noJS. More routes. Enabling client side hydration with adding the script tag, client,tsx. Containing initClient to init hydration of our rsc payload.
+- Log out first to see the login.
 - Interactive login. Go to login. I extracted a section of my route handlers here to a set of userRoutes with a couple of user pages and a logout route. We can colocate our logic and our ui. Logout with a 302 redirect response. Built in web standards.
 - Login page is a client component, using useActionState and server functions. Get a nice interactive spinner and execute our mock login using a session durable object.
 - We can simply use React 19 as its best suited. UseActionState and server functions that access request response. It just works.
@@ -42,15 +43,14 @@
 ## Client side navigation
 
 - What else might we want? Well, client side navigation. Doing full page reload.
+- For example we want to add page transitions with view transitions. Add a view transition on the Home page, so we can see the view transition working with client side nav of redwoodsdk! Enter exit. Not working!
 - Let's init client side navigation as well here. Internal links will now be intercepted by redwoodSDK, handle pushing the URL, fetch the new RSC payload, and then hydrate it on the client.
 - Now we have our client side navs no browser spinner in our hydrated document.
-- Wait, what was that? I actually have a view transition on the Home page, so we can see the view transition working with client side nav of redwoodsdk! Enter exit.
 - (SSR false, we are in SPA mode! Or static marketing side with RSC payload false).
 
 ## Fancy todos
 
-- Let's jump further, to some modern React patterns and new stuff.
-- I tried to build something with react 19 and new stuff in redwood.
+- I tried to build something with some modern React patterns and react 19 and new stuff in redwood.
 - And I also added VT on the suspense. Execute navigation. Streaming with Suspense and server components, animating.
 - Todos, lots of modern, fancy stuff, using use() to read a promise from the server in this client component and suspend with a fallback.
 - Since modern React. This fancier todos uses useActionState sort of like an async reducer, because our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Also using server functions instead of API routes. Works with useoptimistic to make it snappy while syncing to the server! Using forms and actions with the Action naming convention across all transitions! And I added a View transition to the sort feature for animated reordering.

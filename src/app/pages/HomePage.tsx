@@ -6,7 +6,7 @@ import Button from '../components/ui/Button';
 import GitHubIcon from '../components/ui/icons/GitHubIcon';
 import { TodoStats, TodoStatsSkeleton } from './TodoStats';
 
-export async function HomePage({ ctx }: { ctx: AppContext }) {
+export function HomePage({ ctx }: { ctx: AppContext }) {
   return (
     <ViewTransition exit="slide-out" enter="slide-out" default="none">
       <div className="w-full sm:w-[500px]">

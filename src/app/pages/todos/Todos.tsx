@@ -29,7 +29,7 @@ export default function Todos({ todosPromise }: Props) {
       if (!title?.trim()) return;
       const id = crypto.randomUUID();
       const createdAt = new Date();
-      const todo = { createdAt, done: false, id, title: title.trim() };
+      const todo: Todo = { createdAt, done: false, id, title: title.trim(), userId: '' };
 
       setOptimisticTodos((prev: Todo[]) => {
         return [todo, ...prev];
