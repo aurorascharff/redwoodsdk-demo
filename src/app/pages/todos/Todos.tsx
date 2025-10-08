@@ -134,6 +134,8 @@ function SortButton({
   setSortOrder?: (order: SortOrder) => void;
   sortOrder: SortOrder;
 }) {
+  const [optimisticSortOrder, setOptimisticSortOrder] = useOptimistic(sortOrder);
+
   return (
     <div className="mb-4 flex justify-end">
       <Button
@@ -143,12 +145,13 @@ function SortButton({
           const newSortOrder = getNextSortOrder(sortOrder);
           setSortOrder?.(newSortOrder);
           startTransition(async () => {
+            setOptimisticSortOrder(newSortOrder);
             await sortOrderAction?.(newSortOrder);
           });
         }}
         className="text-sm"
       >
-        {getSortOrderLabel(sortOrder)}
+        {getSortOrderLabel(optimisticSortOrder)}
       </Button>
     </div>
   );
