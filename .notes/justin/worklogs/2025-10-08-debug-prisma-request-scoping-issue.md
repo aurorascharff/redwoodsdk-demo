@@ -1,0 +1,46 @@
+# Work Log: 2025-10-08 - Debugging Prisma Request Scoping in Cloudflare Workers
+
+## 1. Problem Definition & Goal
+
+The initial problem was a critical failure in the demo application where the Cloudflare Worker would hang indefinitely. This was accompanied by a Miniflare warning in the console: "A promise was resolved or rejected from a different request context than the one it was created in."
+
+The primary hypothesis was that a single, module-level `PrismaClient` instance was being shared across multiple concurrent requests. In a serverless environment like Cloudflare Workers, this is an anti-pattern that can lead to state leakage and race conditions, as I/O objects (like a database connection) are not supposed to be shared between different request contexts.
+
+The goal was to refactor the database access pattern to ensure that each incoming request uses its own isolated `PrismaClient` instance, thereby preventing any cross-request state contamination and resolving the worker hanging issue.
+
+## 2. Investigation
+
+The issue was reminiscent of a problem solved previously in the SDK's internal `rwsdk/db` (Durable Object-based) implementation, which had used a request-scoped pattern. A review of the `rwsdk/db` git history (specifically commit `0e85b4a6`) confirmed that its request-scoped caching mechanism (`RwContext.databases`) had been intentionally removed to address issues with queue handlers. The new implementation created a fresh `Kysely` instance on every call to `createDb`.
+
+This historical context validated the hypothesis. It showed that request-scoping was a known and necessary pattern for database clients in the SDK, and that the demo app's current Prisma implementation (a module-level singleton) was the likely cause of the problem.
+
+## 3. Attempt #1: Proxy-Based Request-Scoped State (`defineRequestState`)
+
+The first solution was to create a generic, SDK-level utility to manage request-scoped state for any object, not just database clients.
+
+-   **Implementation:** A new `defineRequestState` function was added to the SDK (`rwsdk/requestState`). This function leveraged the SDK's existing `requestInfo` mechanism, which is built on `AsyncLocalStorage`. It returned a `Proxy` object. Any interaction with the proxy would be delegated to an object instance stored on `requestInfo.__userContext` (a new property added for this purpose), ensuring that the correct instance was used for the active request. The demo app's `db.ts` was refactored to use this new utility, and `sessionMiddleware` was updated to create and set a new `PrismaClient` instance for each request.
+
+-   **Challenges & Refinements:**
+    -   **`crypto.randomUUID` in global scope:** The initial implementation used `crypto.randomUUID()` to generate unique keys for state variables. This caused a deployment error in Cloudflare Workers ("Asynchronous IO... not allowed within global scope"). This was fixed by replacing it with a simple module-level `stateCounter`.
+    -   **"Sticky State" Heisenbug:** Despite seeming to work locally, the issue persisted intermittently for another team member. The proxy-based abstraction was suspected of hiding a subtle "sticky state" bug, where state was not being properly isolated between requests under certain hard-to-reproduce conditions. This made further debugging difficult.
+
+## 4. Attempt #2: Direct Context Attachment and Stress Testing
+
+Due to the persistent, hard-to-reproduce nature of the bug with the proxy-based solution, the decision was made to switch to a more explicit and transparent pattern.
+
+-   **Implementation:** The `defineRequestState` API was deprecated and removed from the demo app. The `PrismaClient` instance is now attached directly to `requestInfo.ctx.db` within the `sessionMiddleware` at the start of each request. A simple `getDb()` function (`export const getDb = () => requestInfo.ctx.db;`) was created to provide access to the request-scoped client. All parts of the demo application were refactored to import and use `getDb()` instead of the module-level `db` object.
+
+-   **Validation via Stress Testing:** To validate this new approach and attempt to reproduce the original issue, an aggressive stress test was added.
+    -   An API endpoint (`/api/stress-test`) was created that performs a simple database query and includes artificial `setTimeout` delays to increase the duration and overlap of concurrent requests.
+    -   A client component (`StressTest.tsx`) was added to the main application layout. It uses a `setInterval` loop to fire 5 new concurrent `fetch` requests to the API endpoint every 100ms, creating a high-concurrency environment where dozens of requests can be in-flight simultaneously.
+
+## 5. Current Status
+
+The current implementation with direct context attachment (`getDb()`) appears stable and correct according to best practices for state management in serverless workers.
+
+However, the situation remains unresolved:
+
+-   Despite extensive local testing—running the aggressive stress test while simultaneously making code changes to trigger HMR (following the steps in `STEPS.md`)—the original worker hanging and cross-request promise resolution issue **cannot be reproduced**.
+-   The issue reportedly persists intermittently for another team member. This strongly suggests the root cause might be environmental (e.g., a caching issue, different Node/pnpm versions, OS-specific behavior) rather than a flaw in the current code logic.
+
+The path forward is unclear. The inability to reproduce the issue locally is a significant blocker to further investigation.
