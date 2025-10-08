@@ -4,7 +4,6 @@ import { link } from '@/app/shared/links';
 import type { AppContext } from '@/worker';
 import Button from '../components/ui/Button';
 import GitHubIcon from '../components/ui/icons/GitHubIcon';
-import { getTodos } from './todos/queries';
 
 export async function HomePage({ ctx }: { ctx: AppContext }) {
   let todoStats = {
