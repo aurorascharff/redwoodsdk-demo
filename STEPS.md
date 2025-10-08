@@ -11,7 +11,7 @@
 - Adds the user to our app context which can be used anywhere.
 - With App context, we get a mutable object thats passed to each request handler, interruptors, and server functions, and components. See type.
 - For our routes, we can simply render the NOJSDocument. The document will be applied to all routes that are passed to it. Move JSX inside.
-- Layouts: wrapped in AppLayout. Add Home page. What's a demo app without todos!
+- Layouts: wrapped in AppLayout. Add Home page. Whats the best way to learn a framework than building a todo app!
 - Route matched, placed into that document. Right now, this is just a plain document and theres no client side hydration here, plain server-side rendering.
 
 ## Server components, App context
@@ -49,6 +49,7 @@
 ## Fancy todos
 
 - Let's jump further, to some modern React patterns and new stuff.
+- I tried to build something with react 19 and new stuff in redwood.
 - And I also added VT on the suspense. Execute navigation. Streaming with Suspense and server components, animating.
 - Todos, lots of modern, fancy stuff, using use() to read a promise from the server in this client component and suspend with a fallback.
 - Since modern React. This fancier todos uses useActionState sort of like an async reducer, because our state depends on the previous state and its also async, and we want ordering, this is a perfect use case. Also using server functions instead of API routes. Works with useoptimistic to make it snappy while syncing to the server! Using forms and actions with the Action naming convention across all transitions! And I added a View transition to the sort feature for animated reordering.
