@@ -139,3 +139,31 @@ The new strategy is to create a similar high-concurrency load, but without using
 ### 7a. Sub-Attempt: Maximizing Request Turnover
 
 As a final tweak to the `Promise.all` strategy, the 50ms artificial delay was removed from the `noOp` server function. The goal is to make the request handler itself complete as quickly as possible, creating the largest possible time window between the request context being torn down and the background "fire-and-forget" database promises resolving.
+
+## 8. Breakthrough: Reproducing the HMR Race Condition
+
+**Success.** The issue has been reliably reproduced.
+
+-   **Reproduction Steps:**
+    1.  Start the dev server (`pnpm dev`).
+    2.  Load the application in the browser. The stress test begins automatically.
+    3.  Open `src/app/shared/functions.ts` and save it repeatedly (e.g., by adding and removing a space).
+    4.  Within a few saves, the `TypeError: Cannot set properties of undefined (setting '__requestState_0')` error appears in the Vite server logs, followed by the "cross-request promise resolution" warning.
+
+-   **Root Cause Analysis:**
+    The reproduction method confirms that the root cause is a race condition between Vite's Hot Module Replacement (HMR) and in-flight requests. The `defineRequestState` proxy, while functional for isolated requests, is not resilient to HMR.
+
+    1.  When a file like `db.ts` or any of its dependencies is saved, Vite re-executes the module.
+    2.  This re-execution calls `defineRequestState()` again, creating a *new* proxy object and a *new* `setDb` function with a different internal key (e.g., `__requestState_1`, then `__requestState_2`).
+    3.  If a request from the stress test is in-flight when HMR occurs, it holds a reference to the *old* `setDb` function.
+    4.  The HMR process can tear down the `AsyncLocalStorage` context associated with that in-flight request.
+    5.  When the original request finally calls its old `setDb` function, `requestInfo.__userContext` is `undefined`, causing the `TypeError`.
+
+-   **Next Steps: Reverting the Revert**
+    The proxy abstraction has proven to be the source of the HMR-related instability. The proposed solution is to abandon it and revert to the more direct and robust pattern of attaching the database client directly to the request context. This involves:
+    1.  Removing the `defineRequestState` API from the SDK.
+    2.  Modifying `setupDb` to set `requestInfo.ctx.db = client`.
+    3.  Creating a `getDb()` function to access `requestInfo.ctx.db`.
+    4.  Refactoring the demo application to use `getDb()` instead of the proxy.
+
+    This approach decouples the database instance from the module's lifecycle, making it resilient to HMR. The user will now manually test this refactor.
