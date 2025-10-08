@@ -27,9 +27,9 @@ export async function RealtimePage({ ctx }: { ctx: AppContext }) {
   const currentThemeData = themes[themeState.currentTheme as Theme];
 
   return (
-    <div className="mx-4 py-4 xl:mx-40 2xl:mx-60">
+    <div className="mx-4 xl:mx-40 2xl:mx-60">
       <title>Realtime</title>
-      <div className="relative mt-4 w-full flex-col">
+      <div className="relative w-full flex-col">
         <div
           className={cn('fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5', currentThemeData.colors)}
           style={{
