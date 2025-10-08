@@ -61,7 +61,7 @@
   "simpleTodos": {
     "scope": "typescriptreact",
     "prefix": "simpleTodos",
-    "body": ["layout(MainLayout, [", "  route('/todos/simple', SimpleTodosPage)", "])"],
+    "body": ["  route('/todos/simple', SimpleTodosPage)"],
   },
   "regularDocument": {
     "scope": "typescriptreact",
@@ -70,10 +70,8 @@
       "render(Document, [",
       "  layout(AppLayout, [",
       "    index(HomePage),",
-      "    layout(MainLayout, [",
-      "      prefix('/user', userRoutes),",
-      "      route('/todos', FancyTodosPage),",
-      "    ]),",
+      "    prefix('/user', userRoutes),",
+      "    route('/todos', FancyTodosPage),",
       "    route('/realtime', RealtimePage),",
       "  ]),",
       "]),",
