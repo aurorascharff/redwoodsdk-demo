@@ -51,7 +51,7 @@ export function LoginPage() {
         </div>
         <ErrorBoundary fallbackRender={ErrorFallback}>
           <div className="space-y-6">
-            <form action={formAction} className="space-y-3">
+            <form autoComplete="off" action={formAction} className="space-y-3">
               <input
                 type="text"
                 minLength={3}
