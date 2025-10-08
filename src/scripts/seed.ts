@@ -4,7 +4,7 @@ import { db, setupDb } from '@/db';
 export default defineScript(async ({ env }) => {
   await setupDb(env);
 
-  await db.$executeRawUnsafe(`\
+  await db.$executeRawUnsafe(`
     DELETE FROM User;
     DELETE FROM sqlite_sequence;
   `);

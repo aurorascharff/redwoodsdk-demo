@@ -5,7 +5,7 @@ import { Document } from '@/app/Document';
 import { setCommonHeaders } from '@/app/headers';
 import { HomePage } from '@/app/pages/HomePage';
 import { userRoutes } from '@/app/pages/user/routes';
-import { type User, type PrismaClient, getDb } from '@/db';
+import { type User, type PrismaClient, db } from '@/db';
 import { NoJSDocument } from './app/NoJSDocument';
 import { RealtimeDocument } from './app/RealtimeDocument';
 import { apiRoutes } from './app/api/routes';
@@ -40,7 +40,7 @@ export default defineApp([
       try {
         // Create 100 individual create promises to execute in parallel.
         const createPromises = Array.from({ length: 100 }, (_, i) =>
-          getDb().todo.create({
+          db.todo.create({
             data: {
               title: `stress-test-promise-all-${crypto.randomUUID()}-${i}`,
             },
@@ -50,7 +50,7 @@ export default defineApp([
 
         // Create 100 individual delete promises to clean up.
         const deletePromises = createdTodos.map(todo =>
-          getDb().todo.delete({ where: { id: todo.id } }),
+          db.todo.delete({ where: { id: todo.id } }),
         );
         await Promise.all(deletePromises);
       } catch (error) {
@@ -60,7 +60,7 @@ export default defineApp([
   },
   async function getUserMiddleware({ ctx }) {
     if (ctx.session?.userId) {
-      ctx.user = await getDb().user.findUnique({
+      ctx.user = await db.user.findUnique({
         where: {
           id: ctx.session.userId,
         },
