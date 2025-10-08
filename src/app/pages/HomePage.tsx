@@ -7,17 +7,11 @@ import GitHubIcon from '../components/ui/icons/GitHubIcon';
 import { getTodos } from './todos/queries';
 
 export async function HomePage({ ctx }: { ctx: AppContext }) {
-  let todoStats = null;
-
-  if (ctx.user) {
-    const todos = await getTodos(ctx.user.id);
-
-    todoStats = {
-      total: todos.length,
-      completed: todos.filter(t => t.done).length,
-      pending: todos.filter(t => !t.done).length,
-    };
-  }
+  let todoStats = {
+    total: 0,
+    completed: 0,
+    pending: 0,
+  };
 
   return (
     <ViewTransition exit="slide-out" enter="slide-out" default="none">
