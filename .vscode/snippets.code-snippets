@@ -5,7 +5,7 @@
     "body": [
       "async function getUserMiddleware({ ctx }) {",
       "  if (ctx.session?.userId) {",
-      "    ctx.user = await db.user.findUnique({",
+      "    ctx.user = await getDb().user.findUnique({",
       "      where: {",
       "        id: ctx.session.userId,",
       "      },",
@@ -56,7 +56,7 @@
   "returnJsx": {
     "scope": "typescriptreact",
     "prefix": "returnJsx",
-    "body": ["index(() => {", "  return <h1>Hello World!</h1>;", "}),"],
+    "body": ["  index(() => {", "    return <h1>Hello World!</h1>;", "  }),"],
   },
   "simpleTodos": {
     "scope": "typescriptreact",
@@ -78,5 +78,10 @@
       "  ]),",
       "]),",
     ],
+  },
+  "viewTransition": {
+    "scope": "typescriptreact",
+    "prefix": "viewTransition",
+    "body": ["<ViewTransition exit=\"slide-out\" enter=\"slide-out\" default=\"none\">", "$1", "</ViewTransition>"],
   },
 }
