@@ -246,7 +246,6 @@ Even with the `requestInfoDeferred` promise removed from the SDK, a final, criti
 
 -   **Outcome:** This change makes the framework robust against the HMR race condition. Instead of crashing, the server now identifies and gracefully terminates orphaned requests, ensuring development stability. This fix, combined with the removal of the original `requestInfoDeferred` promise, was included in a new test release of the SDK.
 
-
 ## 17. Finding: The "Stolen Reference" and Dependency Injection
 
 The `StaleHmrRequestError` solution, while preventing crashes, was a symptom-fix. The root cause was more subtle and was discovered through careful debugging.
@@ -268,3 +267,11 @@ The `StaleHmrRequestError` solution, while preventing crashes, was a symptom-fix
     6.  All other application code (server functions, etc.) was standardized to use a safe `getDb()` function, which reads from the now-stable `requestInfo.ctx.db`.
 
 -   **Outcome:** This pattern completely resolves the HMR race condition. By explicitly passing the stable context object through the call stack, the application is no longer vulnerable to module reloads destroying its state mid-request. This is the architecturally correct and robust solution.
+
+## 18. Conclusion and Decision
+
+After an exhaustive investigation, while several HMR-related race conditions were identified and fixed, the original Prisma-related "cross-request promise resolution" error remains unreproducible.
+
+The other issues that *were* reproduced (like the "stolen reference") only appeared under contrived and extreme conditions: hammering the dev server with an aggressive stress test while simultaneously triggering rapid HMR updates. These are considered edge cases that are unlikely to be related to the problem initially reported.
+
+Given the proximity to a critical presentation, the decision has been made to halt further investigation into these edge cases. Introducing more complex fixes for these scenarios adds unnecessary risk for minimal benefit. The most stable and prudent path forward is to rely on the version of the code currently in the `main` branch.
