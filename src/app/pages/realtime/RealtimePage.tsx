@@ -22,21 +22,15 @@ export const themes = {
   },
 } as const;
 
-export async function RealtimePage({ ctx }: { ctx: AppContext }) {
+export async function RealtimePage() {
   const themeState = await getThemeState();
   const currentThemeData = themes[themeState.currentTheme as Theme];
 
   return (
-    <div className="mx-4 xl:mx-40 2xl:mx-60">
+    <div className="mx-4 mt-8 xl:mx-40 2xl:mx-60">
       <title>Realtime</title>
       <div className="relative w-full flex-col">
-        <div
-          className={cn('fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5', currentThemeData.colors)}
-          style={{
-            animationDuration: '4s',
-            background: `linear-gradient(45deg, ${currentThemeData.colors.replace('from-', '').replace('via-', ', ').replace('to-', ', ')})`,
-          }}
-        />
+        <AnimatedBackground colors={currentThemeData.colors} />
         <div className="absolute top-4 right-4 z-10 sm:top-8 sm:right-8">
           <Card className="hidden h-12 w-12 items-center justify-center overflow-hidden rounded-xl sm:flex sm:h-24 sm:w-24 lg:h-32 lg:w-32">
             <img src="/images/QR.jpeg" alt="QR Code" className="h-full w-full object-cover" />
@@ -46,24 +40,40 @@ export async function RealtimePage({ ctx }: { ctx: AppContext }) {
           <div className="absolute top-2 left-2 sm:top-4 sm:left-4">
             <HomeButton />
           </div>
-          <div className="mb-8 text-center">
-            <h1 className="mb-4 font-serif tracking-tight sm:text-4xl md:text-5xl">
-              <span className={cn('bg-gradient-to-r bg-clip-text text-transparent', currentThemeData.colors)}>
-                ✨ Live Reactions ✨
-              </span>
-            </h1>
-            <p className="text-text-muted text-sm font-medium sm:text-base">{currentThemeData.description}</p>
-          </div>
+          <RealtimeHeader colors={currentThemeData.colors} description={currentThemeData.description} />
           <Reactions />
         </Card>
       </div>
       <div className="relative z-20 p-4 sm:p-8">
         <EmojiPicker
-          theme={themeState.currentTheme}
+          theme={themeState.currentTheme as Theme}
           remainingCooldown={themeState.remainingCooldown || 0}
           currentThemeData={currentThemeData}
         />
       </div>
+    </div>
+  );
+}
+
+function AnimatedBackground({ colors }: { colors: string }) {
+  return (
+    <div
+      className="fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5"
+      style={{
+        animationDuration: '4s',
+        background: `linear-gradient(45deg, ${colors.replace('from-', '').replace('via-', ', ').replace('to-', ', ')})`,
+      }}
+    />
+  );
+}
+
+function RealtimeHeader({ colors, description }: { colors: string; description: string }) {
+  return (
+    <div className="mb-8 text-center">
+      <h1 className="mb-4 font-serif tracking-tight sm:text-4xl md:text-5xl">
+        <span className={cn('bg-gradient-to-r bg-clip-text text-transparent', colors)}>✨ Live Reactions ✨</span>
+      </h1>
+      <p className="text-text-muted text-sm font-medium sm:text-base">{description}</p>
     </div>
   );
 }

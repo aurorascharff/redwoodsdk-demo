@@ -21,24 +21,6 @@ export default function Todos({ todosPromise }: Props) {
   const [sortOrder, setSortOrder] = useState<SortOrder>('newest');
   const formRef = useRef<HTMLFormElement>(null);
 
-  const addTodoAction = (e: React.FormEvent) => {
-    e.preventDefault();
-    startTransition(() => {
-      const formData = new FormData(formRef.current!);
-      const title = formData.get('title')?.toString();
-      if (!title?.trim()) return;
-      const id = crypto.randomUUID();
-      const createdAt = new Date();
-      const todo: Todo = { createdAt, done: false, id, title: title.trim(), userId: '' };
-
-      setOptimisticTodos((prev: Todo[]) => {
-        return [todo, ...prev];
-      });
-      dispatch({ payload: { todo: { done: false, id, title: title.trim() } }, type: 'add' });
-      formRef.current?.reset();
-    });
-  };
-
   const statusChangeAction = (done: boolean, todo: Todo) => {
     const payload = { id: todo.id, updatedTodo: { ...todo, done } };
     setOptimisticTodos((prev: Todo[]) => {
@@ -57,6 +39,24 @@ export default function Todos({ todosPromise }: Props) {
       });
     });
     dispatch({ payload, type: 'delete' });
+  };
+
+  const addTodoAction = (e: React.FormEvent) => {
+    e.preventDefault();
+    startTransition(() => {
+      const formData = new FormData(formRef.current!);
+      const title = formData.get('title')?.toString();
+      if (!title?.trim()) return;
+      const id = crypto.randomUUID();
+      const createdAt = new Date();
+      const todo: Todo = { createdAt, done: false, id, title: title.trim(), userId: '' };
+
+      setOptimisticTodos((prev: Todo[]) => {
+        return [todo, ...prev];
+      });
+      dispatch({ payload: { todo: { done: false, id, title: title.trim() } }, type: 'add' });
+      formRef.current?.reset();
+    });
   };
 
   const sortedTodos = getSortedTodos(optimisticTodos, sortOrder);
