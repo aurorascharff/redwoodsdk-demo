@@ -1,11 +1,11 @@
 import { PrismaClient } from '@generated/prisma';
 import { PrismaD1 } from '@prisma/adapter-d1';
-import { requestInfo } from 'rwsdk/worker';
+import { defineRequestState } from 'rwsdk/worker';
 export type * from '@generated/prisma';
 
-export type { PrismaClient };
-
-export const getDb = () => requestInfo.ctx.db;
+// context(justinvdm, 2025-10-06): Use request-scoped state to prevent cross-request
+// state corruption in Prisma client
+export const [db, setDb] = defineRequestState<PrismaClient>();
 
 // context(justinvdm, 21-05-2025): We need to instantiate the client via a
 // function rather that at the module level for several reasons:
@@ -27,5 +27,5 @@ export const setupDb = async (env: Env) => {
   await client.$queryRaw`SELECT 1`;
 
   // Set the client in the current request context
-  requestInfo.ctx.db = client;
+  setDb(client);
 };
