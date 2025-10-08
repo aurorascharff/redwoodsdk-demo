@@ -24,14 +24,8 @@ export async function HomePage({ ctx }: { ctx: AppContext }) {
       <div className="w-full sm:w-[500px]">
         <div className="mb-8 text-center">
           <h1 className="mb-2 font-serif text-4xl font-bold">
-            {ctx.user ? (
-              <>
-                <span className="text-primary dark:text-primary-dark">RedwoodSDK</span>{' '}
-                <span className="text-text dark:text-text-dark">Todos</span>
-              </>
-            ) : (
-              <span className="text-primary dark:text-primary-dark">TodoApp</span>
-            )}
+            <span className="text-primary dark:text-primary-dark">RedwoodSDK</span>{' '}
+            <span className="text-text dark:text-text-dark">Todos</span>
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
             {ctx.user ? `Welcome back, ${ctx.user.username}!` : 'Sign in to access your todos'}

@@ -20,6 +20,15 @@ export { SessionDurableObject } from './session/durableObject';
 export { ReactionsDurableObject } from './app/pages/realtime/reactionsDurableObject';
 export { RealtimeDurableObject } from 'rwsdk/realtime/durableObject';
 
+export const isAuthenticated = ({ ctx }: { ctx: AppContext }) => {
+  if (!ctx.user) {
+    return new Response(null, {
+      headers: { Location: link('/user/login') },
+      status: 302,
+    });
+  }
+};
+
 export type AppContext = {
   db: PrismaClient;
   session: Session | null;
@@ -58,7 +67,7 @@ export default defineApp([
     layout(AppLayout, [
       index(HomePage),
       prefix('/user', userRoutes),
-      route('/todos', FancyTodosPage)
+      route('/todos', [isAuthenticated, FancyTodosPage])
     ]),
   ]),
   render(RealtimeDocument, [
@@ -66,16 +75,8 @@ export default defineApp([
   ]),
   render(NoJSDocument, [
     layout(AppLayout, [
-      route('/todos/simple', SimpleTodosPage)
+      route('/todos/simple', [isAuthenticated, SimpleTodosPage])
     ])
   ]),
 ]);
 
-export const requireAuth = ({ ctx }: { ctx: AppContext }) => {
-  if (!ctx.user) {
-    return new Response(null, {
-      headers: { Location: link('/user/login') },
-      status: 302,
-    });
-  }
-};
