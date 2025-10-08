@@ -1,5 +1,5 @@
 import { route } from 'rwsdk/router';
-import { getDb } from '@/db';
+import { db } from '@/db';
 
 export const apiRoutes = [
   route('/stress-test', async () => {
@@ -24,7 +24,7 @@ export const apiRoutes = [
         return Response.redirect(`${url.origin}/todos/simple`);
       }
 
-      await getDb().todo.create({
+      await db.todo.create({
         data: {
           done: false,
           id: crypto.randomUUID(),
@@ -42,7 +42,7 @@ export const apiRoutes = [
       const id = formData.get('id') as string;
       const done = formData.get('done') === 'true';
 
-      await getDb().todo.update({
+      await db.todo.update({
         data: { done: !done },
         where: { id },
       });
@@ -56,7 +56,7 @@ export const apiRoutes = [
       const formData = await request.formData();
       const id = formData.get('id') as string;
 
-      await getDb().todo.delete({
+      await db.todo.delete({
         where: { id },
       });
 
