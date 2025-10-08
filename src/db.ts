@@ -13,7 +13,7 @@ export const getDb = () => requestInfo.ctx.db;
  * @param adapter The real PrismaD1 adapter instance.
  * @param delayMs The delay to introduce in milliseconds.
  */
-function createSlowAdapter(adapter: PrismaD1, delayMs = 500) {
+function createSlowAdapter(adapter: PrismaD1, delayMs = 5000) {
   return new Proxy(adapter, {
     get(target, prop, receiver) {
       const originalMethod = Reflect.get(target, prop, receiver);
@@ -40,15 +40,14 @@ function createSlowAdapter(adapter: PrismaD1, delayMs = 500) {
 // * So that we can encapsulate workarounds, e.g. see `SELECT 1` workaround
 //   below
 export const setupDb = async (env: Env) => {
-  const originalAdapter = new PrismaD1(env.DB);
-  const slowAdapter = createSlowAdapter(originalAdapter);
+  const adapter = new PrismaD1(env.DB);
 
   const client = new PrismaClient({
     // context(justinvdm, 21-05-2025): prisma-client generated type appears to
     // consider D1 adapter incompatible, though in runtime (dev and production)
     // it works
     // @ts-ignore
-    adapter: slowAdapter,
+    adapter,
   });
 
   // context(justinvdm, 21-05-2025): https://github.com/cloudflare/workers-sdk/pull/8283
