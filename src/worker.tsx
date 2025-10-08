@@ -1,21 +1,12 @@
-import { realtimeRoute } from 'rwsdk/realtime/worker';
-import { route, render, prefix, index, layout } from 'rwsdk/router';
+
+import { route,  prefix, index } from 'rwsdk/router';
 import { defineApp } from 'rwsdk/worker';
-import { Document } from '@/app/Document';
 import { setCommonHeaders } from '@/app/headers';
-import { HomePage } from '@/app/pages/HomePage';
-import { userRoutes } from '@/app/pages/user/routes';
-import { type User, type PrismaClient, getDb } from '@/db';
-import { NoJSDocument } from './app/NoJSDocument';
-import { RealtimeDocument } from './app/RealtimeDocument';
+import { type User, type PrismaClient } from '@/db';
 import { apiRoutes } from './app/api/routes';
-import AppLayout from './app/layouts/AppLayout';
-import { RealtimePage } from './app/pages/realtime/RealtimePage';
-import FancyTodosPage from './app/pages/todos/FancyTodosPage';
-import SimpleTodosPage from './app/pages/todos/SimpleTodosPage';
+import { link } from './app/shared/links';
 import { sessionMiddleware } from './session/sessionMiddleware';
 import type { Session } from './session/durableObject';
-import { link } from './app/shared/links';
 export { SessionDurableObject } from './session/durableObject';
 export { ReactionsDurableObject } from './app/pages/realtime/reactionsDurableObject';
 export { RealtimeDurableObject } from 'rwsdk/realtime/durableObject';

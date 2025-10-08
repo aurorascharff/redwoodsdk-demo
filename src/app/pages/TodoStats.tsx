@@ -3,9 +3,13 @@ import { getTodos } from './todos/queries';
 export async function TodoStats() {
   const todos = await getTodos();
   const todoStats = {
+    completed: todos.filter(t => {
+      return t.done;
+    }).length,
+    pending: todos.filter(t => {
+      return !t.done;
+    }).length,
     total: todos.length,
-    completed: todos.filter(t => t.done).length,
-    pending: todos.filter(t => !t.done).length,
   };
 
   return (

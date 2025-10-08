@@ -2,8 +2,8 @@
 
 import { useActionState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import Button from '@/app/components/ui/Button';
 import HomeButton from '@/app/components/HomeButton';
+import Button from '@/app/components/ui/Button';
 import { link } from '@/app/shared/links';
 import { login, register } from './functions';
 
