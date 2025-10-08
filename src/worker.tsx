@@ -1,8 +1,11 @@
-
+/* eslint-disable autofix/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { route,  prefix, index } from 'rwsdk/router';
 import { defineApp } from 'rwsdk/worker';
 import { setCommonHeaders } from '@/app/headers';
 import { type User, type PrismaClient } from '@/db';
+import { Document } from './app/Document';
+import { NoJSDocument } from './app/NoJSDocument';
 import { apiRoutes } from './app/api/routes';
 import { link } from './app/shared/links';
 import { sessionMiddleware } from './session/sessionMiddleware';
