@@ -61,7 +61,7 @@
   "simpleTodos": {
     "scope": "typescriptreact",
     "prefix": "simpleTodos",
-    "body": ["  route('/todos/simple', SimpleTodosPage)"],
+    "body": ["route('/todos/simple', SimpleTodosPage)"],
   },
   "regularDocument": {
     "scope": "typescriptreact",
