@@ -58,7 +58,7 @@
 
 ## Fetch based to stream based payload
 
-- We can actually move beyond this. Redwood provides realtime functionality, utilizing websockets and cloudflare durable objects. I have a third route here, a realtime reactions page. Add it to worker outside mainlayout.
+- We can actually move beyond this. Redwood provides realtime functionality, utilizing websockets and cloudflare durable objects. I have a third route here, a realtime reactions page. Add it to worker.
 - Getting the theme and reactions from a durable object, using server components.
 - Mutation with an emoji picker client component and server functions.
 - (Double tabs, working as expected here).
