@@ -1,7 +1,7 @@
 import { getTodos } from './todos/queries';
 
-export async function TodoStats({ userId }: { userId: string }) {
-  const todos = await getTodos(userId);
+export async function TodoStats() {
+  const todos = await getTodos();
   const todoStats = {
     total: todos.length,
     completed: todos.filter(t => t.done).length,

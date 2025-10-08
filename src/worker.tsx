@@ -65,6 +65,7 @@ export default defineApp([
   }),
   render(Document, [
     layout(AppLayout, [
+      index(HomePage),
       prefix('/user', userRoutes),
       route('/todos', [isAuthenticated, FancyTodosPage])
     ]),
@@ -74,7 +75,6 @@ export default defineApp([
   ]),
   render(NoJSDocument, [
     layout(AppLayout, [
-      index(HomePage),
       route('/todos/simple', [isAuthenticated, SimpleTodosPage])
     ])
   ]),

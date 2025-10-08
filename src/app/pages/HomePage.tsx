@@ -21,7 +21,7 @@ export function HomePage({ ctx }: { ctx: AppContext }) {
         </div>
         {ctx.user?.id && (
           <Suspense fallback={<TodoStatsSkeleton />}>
-            <TodoStats userId={ctx.user?.id} />
+            <TodoStats />
           </Suspense>
         )}
         <div className="space-y-3">
