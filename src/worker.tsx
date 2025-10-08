@@ -71,7 +71,9 @@ export default defineApp([
     ]),
   ]),
   render(RealtimeDocument, [
-    route('/realtime', RealtimePage),
+    layout(AppLayout, [
+      route('/realtime', RealtimePage),
+    ])
   ]),
   render(NoJSDocument, [
     layout(AppLayout, [
