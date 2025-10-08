@@ -1,11 +1,11 @@
 'use server';
 
 import { getDb } from '@/db';
-import type { Todo, TodoAction } from '@/types/todo';
+import type { Todo, TodoAction, OptimisticTodo } from '@/types/todo';
 import { slow } from '@/utils/slow';
 import { requestInfo } from 'rwsdk/worker';
 
-export async function createTodo(todo: Omit<Todo, 'createdAt' | 'userId'>): Promise<Todo> {
+export async function createTodo(todo: Omit<OptimisticTodo, 'createdAt'>): Promise<Todo> {
   await slow();
   const { ctx } = requestInfo;
   if (!ctx.user) {
