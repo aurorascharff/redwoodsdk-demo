@@ -5,7 +5,7 @@
     "body": [
       "async function getUserMiddleware({ ctx }) {",
       "  if (ctx.session?.userId) {",
-      "    ctx.user = await db.user.findUnique({",
+      "    ctx.user = await getDb().user.findUnique({",
       "      where: {",
       "        id: ctx.session.userId,",
       "      },",
