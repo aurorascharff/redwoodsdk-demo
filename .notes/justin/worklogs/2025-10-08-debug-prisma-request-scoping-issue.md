@@ -44,3 +44,36 @@ However, the situation remains unresolved:
 -   The issue reportedly persists intermittently for another team member. This strongly suggests the root cause might be environmental (e.g., a caching issue, different Node/pnpm versions, OS-specific behavior) rather than a flaw in the current code logic.
 
 The path forward is unclear. The inability to reproduce the issue locally is a significant blocker to further investigation.
+
+## 6. Attempt #3: Re-evaluating with New Stack Trace
+
+Another look at the stack trace has provided a critical clue, shifting the investigation's focus.
+
+**Error Log:**
+```
+7:30:08 AM [vite] Internal server error: The Workers runtime canceled this request because it detected that your Worker's code had hung and would never generate a response. Refer to: https://developers.cloudflare.com/workers/observability/errors/
+      at async ProxyServer.fetch (file:///Users/aurorascharff/Documents/Development/redwoodsdk-v1/node_modules/.pnpm/miniflare@4.20250924.0/node_modules/miniflare/src/workers/core/proxy.worker.ts:174:11)
+Warning: A promise was resolved or rejected from a different request context than the one it was created in. However, the creating request has already been completed or canceled. Continuations for that request are unlikely to run safely and have been canceled. If this behavior breaks your worker, consider setting the no_handle_cross_request_promise_resolution compatibility flag for your worker.
+    at Object.resolve (<anonymous>)
+    at /Users/aurorascharff/Documents/Development/redwoodsdk-v1/node_modules/.vite/deps_worker/@prisma_client_runtime_wasm.js:4152:54
+
+Failed to fetch RSC update: Internal Server Error
+```
+
+**Analysis and Refined Hypothesis:**
+
+The stack trace consistently points to a specific line within `@prisma/client/runtime/wasm.js`, inside a function named `dispatchBatches`. This is a strong indicator that the root cause is not simply the shared `PrismaClient` instance itself, but rather Prisma's internal **query batching mechanism**.
+
+The new hypothesis is as follows:
+1.  Prisma's query engine automatically batches multiple queries that are made within the same tick of the Node.js event loop into a single database roundtrip for performance.
+2.  In a high-concurrency serverless environment, it's possible for queries from two completely separate incoming HTTP requests (Request A and Request B) to land in the same event loop tick.
+3.  Prisma's batcher may combine these queries. It creates promises for each original query.
+4.  The batch is executed.
+5.  By the time the database responds and `dispatchBatches` attempts to resolve the promise for Request A, its original request context may have already been torn down by the Cloudflare Workers runtime.
+6.  If Request B's context is still active, the resolution of Request A's promise happens within Request B's context, triggering the "cross-request promise resolution" error and causing the worker to hang.
+
+This explains why the previous fix of request-scoping the `PrismaClient` made the issue less frequent but did not eliminate it. The core issue lies in the interaction between Prisma's `nextTick`-based batching and the strict request context separation of the Workers runtime.
+
+**Next Steps:**
+
+The current stress test (many short, fast queries) may not be sufficient to reliably trigger this batching behavior. The next step is to devise a new test that creates longer, more complex database transactions to increase the likelihood of queries from different requests overlapping within Prisma's batching window.
