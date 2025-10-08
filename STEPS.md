@@ -43,6 +43,7 @@
 ## Client side navigation
 
 - What else might we want? Well, client side navigation. Doing full page reload.
+- For example we want to add page transitions with view transitions. Add a view transition on the Home page, so we can see the view transition working with client side nav of redwoodsdk! Enter exit. Not working!
 - Let's init client side navigation as well here. Internal links will now be intercepted by redwoodSDK, handle pushing the URL, fetch the new RSC payload, and then hydrate it on the client.
 - Now we have our client side navs no browser spinner in our hydrated document.
 - (SSR false, we are in SPA mode! Or static marketing side with RSC payload false).
@@ -50,7 +51,6 @@
 ## Fancy todos
 
 - Let's jump further, to some modern React patterns and new stuff.
-- Add a view transition on the Home page, so we can see the view transition working with client side nav of redwoodsdk! Enter exit.
 - I tried to build something with react 19 and new stuff in redwood.
 - And I also added VT on the suspense. Execute navigation. Streaming with Suspense and server components, animating.
 - Todos, lots of modern, fancy stuff, using use() to read a promise from the server in this client component and suspend with a fallback.

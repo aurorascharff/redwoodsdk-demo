@@ -5,7 +5,7 @@ import HomeButton from '@/app/components/HomeButton';
 import Todos, { TodosSkeleton } from './Todos';
 import { getTodos } from './queries';
 
-export default async function FancyTodosPage() {
+export default function FancyTodosPage() {
   const initialTodos = getTodos();
 
   return (
