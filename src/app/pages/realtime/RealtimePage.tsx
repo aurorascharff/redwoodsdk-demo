@@ -30,11 +30,7 @@ export async function RealtimePage() {
       <title>Realtime</title>
       <div className="relative w-full flex-col">
         <AnimatedBackground colors={currentThemeData.colors} />
-        <div className="absolute top-4 right-4 z-10 sm:top-8 sm:right-8">
-          <Card className="hidden h-12 w-12 items-center justify-center overflow-hidden rounded-xl sm:flex sm:h-24 sm:w-24 lg:h-32 lg:w-32">
-            <img src="/images/QR.jpeg" alt="QR Code" className="h-full w-full object-cover" />
-          </Card>
-        </div>
+        <QrCode />
         <Card className="realtime-card-main">
           <div className="absolute top-2 left-2 sm:top-4 sm:left-4">
             <HomeButton />
@@ -50,6 +46,16 @@ export async function RealtimePage() {
           currentThemeData={currentThemeData}
         />
       </div>
+    </div>
+  );
+}
+
+function QrCode() {
+  return (
+    <div className="absolute top-4 right-4 z-10 sm:top-8 sm:right-8">
+      <Card className="hidden h-12 w-12 items-center justify-center overflow-hidden rounded-xl sm:flex sm:h-24 sm:w-24 lg:h-32 lg:w-32">
+        <img src="/images/QR.jpeg" alt="QR Code" className="h-full w-full object-cover" />
+      </Card>
     </div>
   );
 }
