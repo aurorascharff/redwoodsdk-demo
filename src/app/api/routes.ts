@@ -2,6 +2,18 @@ import { route } from 'rwsdk/router';
 import { db } from '@/db';
 
 export const apiRoutes = [
+  route('/stress-test', async () => {
+    // Add delay to increase likelihood of concurrent request overlap
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    // Perform a simple database query to test request-scoped state
+    const count = await db.todo.count();
+
+    // Add another delay to keep the request open longer
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    return Response.json({ count, timestamp: Date.now() });
+  }),
   route('/todos/add', async ({ request }) => {
     if (request.method === 'POST') {
       const formData = await request.formData();
