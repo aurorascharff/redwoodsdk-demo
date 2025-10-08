@@ -1,15 +1,15 @@
 import { defineScript } from 'rwsdk/worker';
-import { db, setupDb } from '@/db';
+import { getDb, setupDb } from '@/db';
 
 export default defineScript(async ({ env }) => {
   await setupDb(env);
 
-  await db.$executeRawUnsafe(`\
+  await getDb().$executeRawUnsafe(`\
     DELETE FROM User;
     DELETE FROM sqlite_sequence;
   `);
 
-  await db.user.create({
+  await getDb().user.create({
     data: {
       id: '1',
       username: 'testuser',
