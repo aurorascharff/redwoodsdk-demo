@@ -5,9 +5,7 @@ export default async function AppLayout({ children }: LayoutProps) {
   return (
     <div className="flex min-h-dvh flex-col px-4 xl:px-40 2xl:px-60">
       <div className="flex-1">
-        <div className="relative my-4 h-full w-full sm:my-8 md:my-12">
-          <div className="flex w-full justify-center py-16">{children}</div>
-        </div>
+        <div className="relative my-4 flex h-full w-full justify-center py-16 sm:my-8 md:my-12">{children}</div>
       </div>
       <footer className="mt-auto flex flex-col items-center justify-center gap-4 p-4 sm:flex-row sm:justify-between sm:p-6">
         <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
