@@ -46,10 +46,11 @@ export default defineApp([
           data: todosToCreate,
         });
 
+        const titlesToDelete = todosToCreate.map(todo => todo.title);
         await db.todo.deleteMany({
           where: {
             title: {
-              startsWith: `stress-test-bulk-${batchId}`,
+              in: titlesToDelete,
             },
           },
         });

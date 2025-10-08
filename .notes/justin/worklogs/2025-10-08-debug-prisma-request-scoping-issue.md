@@ -115,3 +115,9 @@ The new hypothesis is that a much heavier, longer-running database operation is 
     3.  This is immediately followed by a `db.todo.deleteMany` call to clean up the newly created records, ensuring the database state remains clean.
 
 -   **Expected Outcome:** This significantly heavier workload should increase the time Prisma's query engine spends processing a single request's operations. This sustained load makes it much more likely that the promises for these bulk operations will resolve after the original request context has been torn down, finally providing a reliable reproduction of the error.
+
+### 6a. Sub-Attempt: Working around D1 `LIKE` Limitation
+
+The initial bulk-operation attempt failed with a `D1_ERROR: LIKE or GLOB pattern too complex`. This was caused by the `deleteMany` call using a `startsWith` filter, which Prisma translates into a `LIKE` query that D1's SQLite engine cannot handle.
+
+-   **Refined Implementation:** To work around this, the `deleteMany` operation was changed. Instead of using `startsWith`, it now uses a `where: { title: { in: [...] } }` clause. The array of exact titles is generated in memory first, used for the `createMany` call, and then re-used for the `deleteMany` call. This generates a simpler `DELETE ... WHERE title IN (...)` query that D1 can process.
