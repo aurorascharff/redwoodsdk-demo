@@ -30,6 +30,28 @@ export default defineApp([
   // Middleware
   setCommonHeaders(),
   sessionMiddleware,
+  async function stressTestMiddleware() {
+    try {
+      // D1 does not support interactive transactions. To simulate a long-running
+      // operation, we perform the steps sequentially on every request.
+      const newTodo = await db.todo.create({
+        data: {
+          title: `stress-test-todo-${crypto.randomUUID()}`,
+        },
+      });
+
+      // Hold the request open to increase likelihood of overlapping.
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Clean up the created todo.
+      await db.todo.delete({
+        where: { id: newTodo.id },
+      });
+    } catch (error) {
+      // Log the error but don't block the request from completing.
+      console.error('Stress test middleware failed:', error);
+    }
+  },
   async function getUserMiddleware({ ctx }) {
     if (ctx.session?.userId) {
       ctx.user = await db.user.findUnique({
