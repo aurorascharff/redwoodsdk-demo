@@ -23,8 +23,15 @@ export async function HomePage({ ctx }: { ctx: AppContext }) {
     <ViewTransition exit="slide-out" enter="slide-out" default="none">
       <div className="w-full sm:w-[500px]">
         <div className="mb-8 text-center">
-          <h1 className="mb-2 font-serif text-4xl font-bold text-orange-600 dark:text-orange-400">
-            {ctx.user ? 'RedwoodSDK Todos' : 'TodoApp'}
+          <h1 className="mb-2 font-serif text-4xl font-bold">
+            {ctx.user ? (
+              <>
+                <span className="text-primary dark:text-primary-dark">RedwoodSDK</span>{' '}
+                <span className="text-text dark:text-text-dark">Todos</span>
+              </>
+            ) : (
+              <span className="text-primary dark:text-primary-dark">TodoApp</span>
+            )}
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
             {ctx.user ? `Welcome back, ${ctx.user.username}!` : 'Sign in to access your todos'}
@@ -34,16 +41,16 @@ export async function HomePage({ ctx }: { ctx: AppContext }) {
           <div className="mb-6 flex justify-center">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{todoStats.total}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Total</div>
+                <div className="text-text dark:text-text-dark text-2xl font-bold">{todoStats.total}</div>
+                <div className="text-text-muted dark:text-text-muted-dark text-sm">Total</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-green-600 dark:text-green-400">{todoStats.completed}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Done</div>
+                <div className="text-primary dark:text-primary-dark text-2xl font-bold">{todoStats.completed}</div>
+                <div className="text-text-muted dark:text-text-muted-dark text-sm">Done</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{todoStats.pending}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Pending</div>
+                <div className="text-text-muted dark:text-text-muted-dark text-2xl font-bold">{todoStats.pending}</div>
+                <div className="text-text-muted dark:text-text-muted-dark text-sm">Pending</div>
               </div>
             </div>
           </div>
