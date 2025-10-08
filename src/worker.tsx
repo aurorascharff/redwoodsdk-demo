@@ -5,7 +5,7 @@ import { Document } from '@/app/Document';
 import { setCommonHeaders } from '@/app/headers';
 import { HomePage } from '@/app/pages/HomePage';
 import { userRoutes } from '@/app/pages/user/routes';
-import { type User, type PrismaClient, getDb } from '@/db';
+import { type User, type PrismaClient, db } from '@/db';
 import { NoJSDocument } from './app/NoJSDocument';
 import { RealtimeDocument } from './app/RealtimeDocument';
 import { apiRoutes } from './app/api/routes';
@@ -42,7 +42,7 @@ export default defineApp([
         // effectively creating a slow query. This simulates a long-running
         // database operation without needing a `sleep` function, which SQLite
         // does not have. The LIMIT can be adjusted to control the delay.
-        await getDb().$queryRaw`
+        await db.$queryRaw`
           WITH RECURSIVE cnt(x) AS (
             SELECT 1
             UNION ALL
@@ -58,7 +58,7 @@ export default defineApp([
   },
   async function getUserMiddleware({ ctx }) {
     if (ctx.session?.userId) {
-      ctx.user = await getDb().user.findUnique({
+      ctx.user = await db.user.findUnique({
         where: {
           id: ctx.session.userId,
         },
