@@ -5,7 +5,7 @@ import { Document } from '@/app/Document';
 import { setCommonHeaders } from '@/app/headers';
 import { HomePage } from '@/app/pages/HomePage';
 import { userRoutes } from '@/app/pages/user/routes';
-import { type User, type PrismaClient, db } from '@/db';
+import { type User, type PrismaClient, getDb } from '@/db';
 import { NoJSDocument } from './app/NoJSDocument';
 import { RealtimeDocument } from './app/RealtimeDocument';
 import { apiRoutes } from './app/api/routes';
@@ -30,20 +30,20 @@ export default defineApp([
   // Middleware
   setCommonHeaders(),
   sessionMiddleware,
-  function stressTestMiddleware() {
-    db.$queryRaw`
-      WITH RECURSIVE cnt(x) AS (
-        SELECT 1
-        UNION ALL
-        SELECT x+1 FROM cnt
-        LIMIT 2000000
-      )
-      SELECT count(*) FROM cnt
-    `;
-  },
+  //function stressTestMiddleware() {
+  //  getDb().$queryRaw`
+  //    WITH RECURSIVE cnt(x) AS (
+  //      SELECT 1
+  //      UNION ALL
+  //      SELECT x+1 FROM cnt
+  //      LIMIT 2000000
+  //    )
+  //    SELECT count(*) FROM cnt
+  //  `;
+  //},
   async function getUserMiddleware({ ctx }) {
     if (ctx.session?.userId) {
-      ctx.user = await db.user.findUnique({
+      ctx.user = await getDb().user.findUnique({
         where: {
           id: ctx.session.userId,
         },
