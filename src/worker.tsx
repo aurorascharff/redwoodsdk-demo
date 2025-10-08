@@ -31,26 +31,26 @@ export default defineApp([
   setCommonHeaders(),
   sessionMiddleware,
   async function stressTestMiddleware() {
-    try {
-      // D1 does not support interactive transactions. To simulate a long-running
-      // operation, we perform the steps sequentially on every request.
-      const newTodo = await db.todo.create({
-        data: {
-          title: `stress-test-todo-${crypto.randomUUID()}`,
-        },
-      });
-
-      // Hold the request open to increase likelihood of overlapping.
-      await new Promise(resolve => setTimeout(resolve, 100));
-
-      // Clean up the created todo.
-      await db.todo.delete({
-        where: { id: newTodo.id },
-      });
-    } catch (error) {
-      // Log the error but don't block the request from completing.
-      console.error('Stress test middleware failed:', error);
-    }
+    // Fire-and-forget the database operations. We don't await this IIFE.
+    // This allows the request to continue immediately, while the DB work
+    // happens in the background. This is a deliberate attempt to trigger
+    // the cross-request promise resolution error.
+    (async () => {
+      try {
+        const newTodo = await db.todo.create({
+          data: {
+            title: `stress-test-todo-${crypto.randomUUID()}`,
+          },
+        });
+        console.log('Created todo:', newTodo);
+        await new Promise(resolve => setTimeout(resolve, 100));
+        await db.todo.delete({
+          where: { id: newTodo.id },
+        });
+      } catch (error) {
+        console.error('Fire-and-forget stress test failed:', error);
+      }
+    })();
   },
   async function getUserMiddleware({ ctx }) {
     if (ctx.session?.userId) {

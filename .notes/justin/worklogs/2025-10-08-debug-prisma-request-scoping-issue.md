@@ -90,3 +90,15 @@ The new strategy combines both approaches for maximum pressure: a database-inten
     3.  **Client-Side Trigger:** A new `<StressTest />` component was created and placed in the main `AppLayout`. This component uses a `setInterval` to call the `noOp` server function every 50ms, ensuring a constant, high-frequency stream of requests to the server.
 
 -   **Current Status:** The stress test is now a two-part system. A client-side component acts as a high-frequency trigger, ensuring the server is always busy. On every one of those requests, the middleware creates significant database contention. This represents the most realistic and aggressive attempt to reproduce the race condition so far.
+
+## 8. Attempt #5: Fire-and-Forget Database Operations
+
+Previous attempts focused on creating contention by making requests long-running. The new hypothesis is that the issue might be triggered by the opposite scenario: a request that finishes *too quickly*, leaving database operations to complete after the request context has been torn down.
+
+This attempt will test this by intentionally creating "orphaned" promises. The stress test middleware will trigger database operations but will *not* `await` their completion. This allows the request to proceed and potentially finish before the database work is done.
+
+-   **Implementation:**
+    1.  The `stressTestMiddleware` in `src/worker.tsx` will be modified.
+    2.  The `db.todo.create()` and `db.todo.delete()` calls will be wrapped in an immediately-invoked `async` function without awaiting the function itself. This will cause the database operations to run in the background, detached from the request lifecycle.
+
+-   **Expected Outcome:** This should reliably trigger the "cross-request promise resolution" warning. If it does, it will confirm that the core issue is related to promise resolution timing and not necessarily just database contention. If it *doesn't* trigger the error, it would be a very surprising result, suggesting something more complex is at play.
