@@ -3,7 +3,7 @@
 import { useActionState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import Button from '@/app/components/ui/Button';
-import Card from '@/app/components/ui/Card';
+import HomeButton from '@/app/components/HomeButton';
 import { link } from '@/app/shared/links';
 import { login, register } from './functions';
 
@@ -40,10 +40,14 @@ export function LoginPage() {
 
   return (
     <>
+      <div className="absolute top-0 left-0 z-10 sm:top-6 sm:left-6">
+        <HomeButton />
+      </div>
       <title>Login</title>
-      <Card className="w-full max-w-md space-y-6 px-6 py-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold">Login</h1>
+      <div className="w-full sm:w-[500px]">
+        <div className="mb-8 text-center">
+          <h1 className="mb-2 text-3xl font-bold tracking-tight">Sign In</h1>
+          <p className="text-gray-600 dark:text-gray-300">Welcome to TodoApp</p>
         </div>
         <ErrorBoundary fallbackRender={ErrorFallback}>
           <div className="space-y-6">
@@ -56,7 +60,7 @@ export function LoginPage() {
                 className="w-full rounded-md border p-3"
                 required
               />
-              <Button name="action" value="login" className="h-10 w-full min-w-[120px]">
+              <Button name="action" value="login" className="h-11 w-full">
                 Login
               </Button>
             </form>
@@ -77,15 +81,17 @@ export function LoginPage() {
                 className="w-full rounded-md border p-3"
                 required
               />
-              <Button variant="secondary" name="action" value="register" className="h-10 w-full min-w-[140px]">
+              <Button variant="secondary" name="action" value="register" className="h-11 w-full">
                 Register
               </Button>
             </form>
           </div>
         </ErrorBoundary>
-        {state?.error && <div className="error-message">{state.error}</div>}
-        {state?.message && <div className="success-message">{state.message}</div>}
-      </Card>
+        {state?.error && <div className="mt-4 text-center text-sm text-red-600 dark:text-red-400">{state.error}</div>}
+        {state?.message && (
+          <div className="mt-4 text-center text-sm text-green-600 dark:text-green-400">{state.message}</div>
+        )}
+      </div>
     </>
   );
 }

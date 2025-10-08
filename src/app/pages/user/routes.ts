@@ -3,16 +3,6 @@ import { link } from '@/app/shared/links';
 import { sessions } from '@/session/store';
 import type { AppContext } from '@/worker';
 import { LoginPage } from './LoginPage';
-import Profile from './Profile';
-
-const isAuthenticated = ({ ctx }: { ctx: AppContext }) => {
-  if (!ctx.user) {
-    return new Response(null, {
-      headers: { Location: link('/user/login') },
-      status: 302,
-    });
-  }
-};
 
 const shouldRedirectHome = ({ ctx }: { ctx: AppContext }) => {
   if (ctx.user) {
@@ -25,7 +15,6 @@ const shouldRedirectHome = ({ ctx }: { ctx: AppContext }) => {
 
 export const userRoutes = [
   route('/login', [shouldRedirectHome, LoginPage]),
-  route('/profile', [isAuthenticated, Profile]),
   route('/logout', async function ({ request, response }) {
     await sessions.remove(request, response.headers);
     response.headers.set('Location', '/');

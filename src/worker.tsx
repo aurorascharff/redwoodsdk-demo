@@ -10,12 +10,12 @@ import { NoJSDocument } from './app/NoJSDocument';
 import { RealtimeDocument } from './app/RealtimeDocument';
 import { apiRoutes } from './app/api/routes';
 import AppLayout from './app/layouts/AppLayout';
-import MainLayout from './app/layouts/MainLayout';
 import { RealtimePage } from './app/pages/realtime/RealtimePage';
 import FancyTodosPage from './app/pages/todos/FancyTodosPage';
 import SimpleTodosPage from './app/pages/todos/SimpleTodosPage';
 import { sessionMiddleware } from './session/sessionMiddleware';
 import type { Session } from './session/durableObject';
+import { link } from './app/shared/links';
 export { SessionDurableObject } from './session/durableObject';
 export { ReactionsDurableObject } from './app/pages/realtime/reactionsDurableObject';
 export { RealtimeDurableObject } from 'rwsdk/realtime/durableObject';
@@ -57,21 +57,25 @@ export default defineApp([
   render(Document, [
     layout(AppLayout, [
       index(HomePage),
-      layout(MainLayout, [
-        prefix('/user', userRoutes),
-        route('/todos', FancyTodosPage)]),
+      prefix('/user', userRoutes),
+      route('/todos', FancyTodosPage)
     ]),
   ]),
   render(RealtimeDocument, [
-    layout(AppLayout, [
-      route('/realtime', RealtimePage),
-    ])
+    route('/realtime', RealtimePage),
   ]),
   render(NoJSDocument, [
     layout(AppLayout, [
-      layout(MainLayout, [
-        route('/todos/simple', SimpleTodosPage)
-      ])
+      route('/todos/simple', SimpleTodosPage)
     ])
   ]),
 ]);
+
+export const requireAuth = ({ ctx }: { ctx: AppContext }) => {
+  if (!ctx.user) {
+    return new Response(null, {
+      headers: { Location: link('/user/login') },
+      status: 302,
+    });
+  }
+};

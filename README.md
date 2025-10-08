@@ -1,4 +1,4 @@
-# RedwoodSDK Demo
+# RedwoodSDK Todos
 
 A full-stack React application built with RedwoodSDK showcasing SSR, real-time features, React 19 features, View Transitions, and Cloudflare edge infrastructure.
 

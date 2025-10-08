@@ -3,6 +3,7 @@ export interface Todo {
   title: string;
   done: boolean;
   createdAt: Date;
+  userId: string;
 }
 
 export type TodoAction =

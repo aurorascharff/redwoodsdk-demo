@@ -4,61 +4,98 @@ import { link } from '@/app/shared/links';
 import type { AppContext } from '@/worker';
 import Button from '../components/ui/Button';
 import GitHubIcon from '../components/ui/icons/GitHubIcon';
+import { getTodos } from './todos/queries';
 
-export function HomePage({ ctx }: { ctx: AppContext }) {
+export async function HomePage({ ctx }: { ctx: AppContext }) {
+  let todoStats = null;
+
+  if (ctx.user) {
+    const todos = await getTodos(ctx.user.id);
+
+    todoStats = {
+      total: todos.length,
+      completed: todos.filter(t => t.done).length,
+      pending: todos.filter(t => !t.done).length,
+    };
+  }
+
   return (
     <ViewTransition exit="slide-out" enter="slide-out" default="none">
-      <div className="page-container">
-        <div className="w-full max-w-4xl text-center">
-          <div className="my-8 sm:my-12 md:my-16">
-            <h1 className="hero-title">RedwoodSDK</h1>
-            <p className="hero-subtitle">Web Standards Meet Full-Stack React</p>
-          </div>
-          <p className="hero-description">
-            A full-stack React framework that strips web development back to its essentials. TypeScript-only,
-            composable, and built on web standards.
+      <div className="w-full sm:w-[500px]">
+        <div className="mb-8 text-center">
+          <h1 className="mb-2 font-serif text-4xl font-bold text-orange-600 dark:text-orange-400">
+            {ctx.user ? 'RedwoodSDK Todos' : 'TodoApp'}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            {ctx.user ? `Welcome back, ${ctx.user.username}!` : 'Sign in to access your todos'}
           </p>
-          <div className="button-grid">
-            <a href={link('/todos/simple')} className="w-full sm:w-auto">
-              <Button type="button" variant="secondary" className="w-full sm:w-auto">
-                Simple Todos
-              </Button>
-            </a>
-            {ctx.user ? (
-              <a href={link('/user/profile')} className="w-full sm:w-auto">
-                <Button type="button" variant="secondary" className="w-full sm:w-auto">
-                  Profile
+        </div>
+        {ctx.user && todoStats && (
+          <div className="mb-6 flex justify-center">
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{todoStats.total}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">Total</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-green-600 dark:text-green-400">{todoStats.completed}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">Done</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{todoStats.pending}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">Pending</div>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="space-y-3">
+          {ctx.user ? (
+            <>
+              <a href={link('/todos/simple')} className="block">
+                <Button type="button" variant="secondary" className="h-12 w-full">
+                  Simple Todos
                 </Button>
               </a>
-            ) : (
-              <a href={link('/user/login')} className="w-full sm:w-auto">
-                <Button type="submit" variant="secondary" className="w-full sm:w-auto">
-                  Login
+              <a href={link('/todos')} className="block">
+                <Button type="button" className="h-12 w-full">
+                  Fancy Todos
                 </Button>
               </a>
-            )}
-            <a href={link('/todos')} className="w-full sm:w-auto">
-              <Button type="button" variant="secondary" className="w-full sm:w-auto">
-                <span>Fancy Todos</span>
+            </>
+          ) : (
+            <a href={link('/user/login')} className="block">
+              <Button type="button" className="h-11 w-full">
+                Sign In
               </Button>
             </a>
-            <a href={link('/realtime')} className="w-full sm:w-auto">
-              <Button type="button" variant="secondary" className="w-full sm:w-auto">
-                Realtime
+          )}
+        </div>
+        {ctx.user && (
+          <div className="mt-6 text-center">
+            <form action={link('/user/logout')}>
+              <Button type="submit" variant="secondary" className="px-4 py-2 text-sm">
+                Logout
               </Button>
-            </a>
+            </form>
           </div>
-          <div className="text-center">
-            <a
-              href="https://github.com/aurorascharff/redwoodsdk-demo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="external-link"
-            >
-              <GitHubIcon className="h-5 w-5" />
-              View on GitHub
-            </a>
-          </div>
+        )}
+        <div className="mt-8 text-center">
+          <a href={link('/realtime')} className="block">
+            <Button type="button" variant="secondary" className="h-10 w-full">
+              🚀 Realtime Demo
+            </Button>
+          </a>
+        </div>
+        <div className="mt-4 text-center">
+          <a
+            href="https://github.com/aurorascharff/redwoodsdk-demo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-xs text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+          >
+            <GitHubIcon className="h-3 w-3" />
+            Source
+          </a>
         </div>
       </div>
     </ViewTransition>

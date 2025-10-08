@@ -1,12 +1,17 @@
 import Button from '@/app/components/ui/Button';
+import HomeButton from '@/app/components/HomeButton';
 import { cn } from '@/utils/cn';
+import type { AppContext } from '@/worker';
 import { getTodos } from './queries';
 
-export default async function SimpleTodosPage() {
-  const todos = await getTodos();
+export default async function SimpleTodosPage({ ctx }: { ctx: AppContext }) {
+  const todos = await getTodos(ctx.user!.id);
 
   return (
     <>
+      <div className="absolute top-0 left-0 z-10 sm:top-6 sm:left-6">
+        <HomeButton />
+      </div>
       <title>Simple Todos</title>
       <div className="w-full sm:w-[500px]">
         <div className="mb-8 text-center">

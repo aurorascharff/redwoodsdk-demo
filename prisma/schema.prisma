@@ -25,6 +25,7 @@ model User {
   id          String      @id @default(uuid()) // User ID (UUID-based)
   username    String      @unique
   createdAt   DateTime    @default(now())
+  todos       Todo[]
 }
 
 model Todo {
@@ -32,4 +33,6 @@ model Todo {
   title     String
   done      Boolean  @default(false)
   createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

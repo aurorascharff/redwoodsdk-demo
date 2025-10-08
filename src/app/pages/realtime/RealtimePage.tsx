@@ -1,6 +1,7 @@
 import HomeButton from '@/app/components/HomeButton';
 import Card from '@/app/components/ui/Card';
 import type { Theme } from '@/types/reaction';
+import type { AppContext } from '@/worker';
 import { cn } from '@/utils/cn';
 import { EmojiPicker } from './EmojiPicker';
 import Reactions from './Reactions';
@@ -21,12 +22,12 @@ export const themes = {
   },
 } as const;
 
-export async function RealtimePage() {
+export async function RealtimePage({ ctx }: { ctx: AppContext }) {
   const themeState = await getThemeState();
   const currentThemeData = themes[themeState.currentTheme as Theme];
 
   return (
-    <div className="py-4">
+    <div className="mx-4 py-4 xl:mx-40 2xl:mx-60">
       <title>Realtime</title>
       <div className="relative mt-4 w-full flex-col">
         <div

@@ -71,10 +71,6 @@
     @apply text-text-muted dark:text-text-muted-dark hover:text-primary dark:hover:text-primary-dark inline-flex items-center gap-2 text-sm transition-colors duration-200;
   }
 
-  .surface-card {
-    @apply bg-surface border-border dark:bg-surface-dark dark:border-border-dark rounded-lg border;
-  }
-
   .surface-card-padded {
     @apply bg-surface border-border dark:bg-surface-dark dark:border-border-dark rounded-lg border p-8 text-center;
   }
@@ -83,36 +79,12 @@
     @apply bg-surface border-border dark:bg-surface-dark dark:border-border-dark flex items-center gap-3 rounded-lg border p-3 transition-colors;
   }
 
-  .page-container {
-    @apply bg-background dark:bg-background-dark flex h-full w-full items-center justify-center justify-items-center px-4 py-8;
-  }
-
-  .hero-title {
-    @apply text-primary dark:text-primary-dark mb-4 font-serif text-4xl font-bold tracking-tight sm:mb-6 sm:text-6xl md:text-7xl lg:text-8xl;
-  }
-
-  .hero-subtitle {
-    @apply text-text dark:text-text-dark text-lg font-medium sm:text-xl md:text-2xl lg:text-3xl;
-  }
-
-  .hero-description {
-    @apply text-text-muted dark:text-text-muted-dark mx-auto mb-8 max-w-2xl text-base leading-relaxed sm:mb-12 sm:text-lg md:mb-16;
-  }
-
-  .button-grid {
-    @apply mb-8 flex flex-col flex-wrap justify-center gap-3 sm:mb-12 sm:flex-row sm:gap-4;
-  }
-
   .reactions-container {
     @apply relative flex w-full max-w-4xl flex-1 items-center justify-center overflow-hidden rounded-2xl text-2xl sm:text-4xl;
   }
 
   .realtime-card-main {
     @apply relative flex h-[500px] grow flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:h-[70vh] md:px-12 md:py-16;
-  }
-
-  .qr-card {
-    @apply hidden h-12 w-12 items-center justify-center overflow-hidden rounded-xl sm:flex sm:h-24 sm:w-24 lg:h-32 lg:w-32;
   }
 
   .theme-selector-container {
