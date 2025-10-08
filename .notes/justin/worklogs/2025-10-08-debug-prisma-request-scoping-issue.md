@@ -77,3 +77,16 @@ This explains why the previous fix of request-scoping the `PrismaClient` made th
 **Next Steps:**
 
 The current stress test (many short, fast queries) may not be sufficient to reliably trigger this batching behavior. The next step is to devise a new test that creates longer, more complex database transactions to increase the likelihood of queries from different requests overlapping within Prisma's batching window.
+
+## 7. Attempt #4: Combined Middleware and Client-Side Stress Test
+
+The transaction-based approach was blocked by Cloudflare D1's limitation on interactive transactions. Even after refactoring to a sequential create/wait/delete flow, the issue could not be reproduced. The hypothesis shifted again: perhaps the stress test was too isolated from the rest of the application's lifecycle. An API endpoint that only performs database operations might not create the same complex interactions as a full page render cycle. The subsequent attempt to move the logic into a middleware was a step in the right direction, but it lacked a mechanism to guarantee high-frequency execution.
+
+The new strategy combines both approaches for maximum pressure: a database-intensive middleware that is constantly triggered by a client-side component.
+
+-   **Implementation:**
+    1.  **Database Middleware:** A middleware remains in `src/worker.tsx` that runs on every request. It executes a sequential, long-running database operation: `todo.create()`, `await setTimeout(100)`, and `todo.delete()`.
+    2.  **No-Op Server Function:** A new, empty `async` server function, `noOp`, was created. Its sole purpose is to provide a target for the client to call, triggering the full server middleware pipeline.
+    3.  **Client-Side Trigger:** A new `<StressTest />` component was created and placed in the main `AppLayout`. This component uses a `setInterval` to call the `noOp` server function every 50ms, ensuring a constant, high-frequency stream of requests to the server.
+
+-   **Current Status:** The stress test is now a two-part system. A client-side component acts as a high-frequency trigger, ensuring the server is always busy. On every one of those requests, the middleware creates significant database contention. This represents the most realistic and aggressive attempt to reproduce the race condition so far.
