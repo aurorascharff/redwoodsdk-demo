@@ -37,21 +37,20 @@ export default defineApp([
     // the cross-request promise resolution error.
     (async () => {
       try {
-        // Create 100 individual create promises to execute in parallel.
-        const createPromises = Array.from({ length: 100 }, (_, i) =>
-          getDb().todo.create({
-            data: {
-              title: `stress-test-promise-all-${crypto.randomUUID()}-${i}`,
-            },
-          }),
-        );
-        const createdTodos = await Promise.all(createPromises);
-
-        // Create 100 individual delete promises to clean up.
-        const deletePromises = createdTodos.map(todo =>
-          getDb().todo.delete({ where: { id: todo.id } }),
-        );
-        await Promise.all(deletePromises);
+        // This raw SQL query uses a recursive Common Table Expression (CTE) to
+        // force the database to perform a computationally expensive task,
+        // effectively creating a slow query. This simulates a long-running
+        // database operation without needing a `sleep` function, which SQLite
+        // does not have. The LIMIT can be adjusted to control the delay.
+        await getDb().$queryRaw`
+          WITH RECURSIVE cnt(x) AS (
+            SELECT 1
+            UNION ALL
+            SELECT x+1 FROM cnt
+            LIMIT 2000000
+          )
+          SELECT count(*) FROM cnt
+        `;
       } catch (error) {
         console.error('Fire-and-forget stress test failed:', error);
       }

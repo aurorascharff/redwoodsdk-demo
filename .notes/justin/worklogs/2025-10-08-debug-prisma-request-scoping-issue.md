@@ -203,6 +203,21 @@ A direct code inspection revealed the likely source of the "stale promise": a `d
 
 -   **Validation:** Manually commenting out `requestInfoDeferred.resolve()` in `node_modules` immediately stopped the "cross-request promise resolution" error. However, this introduced a new, predictable race condition (`Cannot set properties of undefined (setting DB)`), as other parts of the code rely on this deferred promise to ensure the request context is available before they execute. This experiment confirms that the deferred promise is the root cause.
 
--   **Path Forward:** Two solutions are possible:
-    1.  **Pragmatic Fix (Path A):** Remove the `requestInfoDeferred` pattern entirely from the SDK. This is a direct fix for the identified problem but may require careful management of the new race condition it introduces. It doesn't solve the broader class of issues related to background tasks.
-    2.  **Robust Fix (Path B):** Implement a system to track background promises and pass them to `ctx.waitUntil()`. This is the idiomatic Cloudflare Workers solution for managing tasks that might outlive the response. It would involve creating a mechanism to register promises against the current request context and ensuring they are passed to `waitUntil()` before the handler finishes. This would solve not only this specific issue but also make the entire framework more resilient to HMR and background processing.
+## 12. Deeper Analysis: The "Garbage Collection Trail"
+
+The investigation deepened to consider why promises from third-party libraries like Prisma would also be vulnerable. The conclusion is that any asynchronous operation is at risk due to the "garbage collection trail."
+
+-   **The Core Issue:** A `PrismaClient` instance is created per-request and attached to the `AsyncLocalStorage` context. However, access to this context is brokered by the `requestInfo` proxy, which is a **module-level variable**.
+-   **The Vulnerability:** During HMR, the entire module containing `requestInfo` is hot-swapped. This orphans the `AsyncLocalStorage` context for any in-flight request. Consequently, *any promise* created within that context—whether it's ours, Prisma's, or another library's—will be resolving within a dead context if it completes after the HMR swap. HMR is the trigger because it's the only mechanism that destroys the foundational, module-level state that underpins the request context.
+
+## 13. Path Forward: Pragmatic vs. Robust Solutions
+
+Two solutions were identified:
+1.  **Pragmatic Fix (Path A):** Remove the `requestInfoDeferred` pattern entirely from the SDK. This is a direct fix for the most immediate self-inflicted problem but doesn't solve the broader class of issues related to background tasks.
+2.  **Robust Fix (Path B):** Implement a system to track background promises and pass them to `ctx.waitUntil()`. This is the idiomatic Cloudflare Workers solution that would protect all async operations by explicitly telling the runtime to keep their context alive until they settle.
+
+Given the time-critical nature of the situation, the decision was made to pursue the pragmatic fix first. A test release of the SDK was created with the `requestInfoDeferred` logic removed.
+
+## 14. New Investigation: Reproducing the Issue Without HMR
+
+With the SDK's most obvious deferred promise removed, the focus now shifts to proving that the underlying race condition with Prisma can still occur. The hypothesis is that HMR is just a chaotic amplifier of a more fundamental problem: a long-running, "fire-and-forget" promise from one request resolving after its context has been replaced by a subsequent request. The next step is to devise an experiment to trigger this deliberately, without HMR.
