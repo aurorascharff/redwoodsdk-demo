@@ -14,7 +14,7 @@ export function StressTest() {
           return;
         }
 
-        // Fire off a server action to trigger the middleware.
+        // Fire off a server action to trigger the middleware pipeline.
         // We don't await it because we want to fire them rapidly.
         noOp();
       }, 50); // Fire every 50ms for high frequency.

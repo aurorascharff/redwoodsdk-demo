@@ -167,3 +167,30 @@ As a final tweak to the `Promise.all` strategy, the 50ms artificial delay was re
     4.  Refactoring the demo application to use `getDb()` instead of the proxy.
 
     This approach decouples the database instance from the module's lifecycle, making it resilient to HMR. The user will now manually test this refactor.
+
+## 9. Attempt #9: Isolating HMR as the Trigger
+
+The "revert the revert" strategy (moving back to a direct `requestInfo.ctx.db` attachment) did not fully resolve the issue. The "cross-request promise resolution" warning still appears intermittently during HMR, though less frequently.
+
+**A New Clue:** The stack trace for the error has changed. It no longer points to Prisma's internal query batching mechanism. Instead, it now originates from our own SDK's `runWithRequestInfo` function.
+
+```
+Warning: A promise was resolved or rejected from a different request context...
+    at Object.resolve (<anonymous>)
+    at runWithRequestInfoFn (/Users/justin/rw/blotter/redwoodsdk-demo/node_modules/.vite/deps_worker/chunk-IUYTT4XY.js:60:25)
+    at runWithRequestInfo (...)
+    at Object.fetch (...)
+```
+
+**Revised Hypothesis:** The problem is not specific to Prisma, but is a more fundamental race condition between the Cloudflare Workers runtime's handling of HMR and Node.js's `AsyncLocalStorage`. During an HMR update, it seems possible for the context of an in-flight request to be lost or incorrectly swapped, causing promises created within that request's scope to resolve outside of it. The high-concurrency stress test was merely an amplifier for this underlying HMR instability.
+
+**Next Steps:** To test this, the stress test will be removed completely. The goal is to see if HMR, triggered by manually saving files during normal application use, is sufficient to cause the `runWithRequestInfo` error on its own. This will isolate HMR as the sole variable.
+
+## 10. Reinstating the Stress Test
+
+The attempt to reproduce the issue with HMR alone proved difficult. It's now clear that both factors are required:
+
+1.  **High Concurrency:** A constant stream of requests, as provided by the stress test.
+2.  **State Instability:** The context-switching chaos introduced by HMR.
+
+The stress test has been reinstated to its previous state (a client-side component calling a `noOp` server function, triggering a fire-and-forget database middleware) to provide a reliable environment for debugging the HMR interaction.
