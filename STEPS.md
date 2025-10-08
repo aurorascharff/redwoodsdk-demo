@@ -16,9 +16,9 @@
 
 ## Server components, App context
 
-- Redwoodsdk uses server components as the default, and everything you might be used to in a framework like next.js works with the same mental model in redwoodsdk.
+- Home page: Redwoodsdk uses server components as the default, and everything you might be used to in a framework like next.js works with the same mental model in redwoodsdk.
 - Enabling server-side fetching and composability without need for useEffect, with less boilerplate. It's streaming and suspense friendly, and ensures the fastest time to visible content.
-- Fetch todos stats and showcase on home page! Server component simplicity.
+- Add todos stats component with suspense and showcase on home page! Server component simplicity. Streaming in to avoid blocking.
 - Prisma Hooked up to the cloudflare d1 database! (Locally, it uses miniflare to emulate cloudflare workers. It just works between dev and prod.)
 
 ## Api routes, server components TodosSimple, forms

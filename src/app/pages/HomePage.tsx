@@ -6,12 +6,6 @@ import Button from '../components/ui/Button';
 import GitHubIcon from '../components/ui/icons/GitHubIcon';
 
 export async function HomePage({ ctx }: { ctx: AppContext }) {
-  let todoStats = {
-    total: 0,
-    completed: 0,
-    pending: 0,
-  };
-
   return (
     <ViewTransition exit="slide-out" enter="slide-out" default="none">
       <div className="w-full sm:w-[500px]">
@@ -24,24 +18,6 @@ export async function HomePage({ ctx }: { ctx: AppContext }) {
             {ctx.user ? `Welcome back, ${ctx.user.username}!` : 'Sign in to access your todos'}
           </p>
         </div>
-        {ctx.user && todoStats && (
-          <div className="mb-6 flex justify-center">
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <div className="text-text dark:text-text-dark text-2xl font-bold">{todoStats.total}</div>
-                <div className="text-text-muted dark:text-text-muted-dark text-sm">Total</div>
-              </div>
-              <div>
-                <div className="text-primary dark:text-primary-dark text-2xl font-bold">{todoStats.completed}</div>
-                <div className="text-text-muted dark:text-text-muted-dark text-sm">Done</div>
-              </div>
-              <div>
-                <div className="text-text-muted dark:text-text-muted-dark text-2xl font-bold">{todoStats.pending}</div>
-                <div className="text-text-muted dark:text-text-muted-dark text-sm">Pending</div>
-              </div>
-            </div>
-          </div>
-        )}
         <div className="space-y-3">
           {ctx.user ? (
             <>
