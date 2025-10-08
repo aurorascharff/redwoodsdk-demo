@@ -39,44 +39,14 @@ export default defineApp([
   // Middleware
   setCommonHeaders(),
   sessionMiddleware,
-  async function getUserMiddleware({ ctx }) {
-    if (ctx.session?.userId) {
-      ctx.user = await getDb().user.findUnique({
-        where: {
-          id: ctx.session.userId,
-        },
-      });
-    }
-  },
-  realtimeRoute(env => {
-    return env.REALTIME_DURABLE_OBJECT;
-  }),
   // Route handlers
   prefix('/api', apiRoutes),
-  route('/ping', () => {
+  index(() => {
     return new Response('pong', { status: 200 });
   }),
   route('/hello/:name', requestInfo => {
     const { name } = requestInfo.params;
     return new Response(`Hello ${name}`, { status: 200 });
   }),
-  route('/hello', () => {
-    return <h1>Hello World!</h1>;
-  }),
-  render(Document, [
-    layout(AppLayout, [
-      index(HomePage),
-      prefix('/user', userRoutes),
-      route('/todos', [isAuthenticated, FancyTodosPage])
-    ]),
-  ]),
-  render(RealtimeDocument, [
-    route('/realtime', RealtimePage),
-  ]),
-  render(NoJSDocument, [
-    layout(AppLayout, [
-      route('/todos/simple', [isAuthenticated, SimpleTodosPage])
-    ])
-  ]),
 ]);
 
