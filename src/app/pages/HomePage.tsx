@@ -5,69 +5,67 @@ import type { AppContext } from '@/worker';
 import Button from '../components/ui/Button';
 import GitHubIcon from '../components/ui/icons/GitHubIcon';
 
-export async function HomePage({ ctx }: { ctx: AppContext }) {
+export function HomePage({ ctx }: { ctx: AppContext }) {
   return (
-    <ViewTransition exit="slide-out" enter="slide-out" default="none">
-      <div className="w-full sm:w-[500px]">
-        <div className="mb-8 text-center">
-          <h1 className="mb-2 font-serif text-4xl font-bold">
-            <span className="text-primary dark:text-primary-dark">RedwoodSDK</span>{' '}
-            <span className="text-text dark:text-text-dark">Todos</span>
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300">
-            {ctx.user ? `Welcome back, ${ctx.user.username}!` : 'Sign in to access your todos'}
-          </p>
-        </div>
-        <div className="space-y-3">
-          {ctx.user ? (
-            <>
-              <a href={link('/todos/simple')} className="block">
-                <Button type="button" variant="secondary" className="h-12 w-full">
-                  Simple Todos
-                </Button>
-              </a>
-              <a href={link('/todos')} className="block">
-                <Button type="button" className="h-12 w-full">
-                  Fancy Todos
-                </Button>
-              </a>
-            </>
-          ) : (
-            <a href={link('/user/login')} className="block">
-              <Button type="button" className="h-11 w-full">
-                Sign In
+    <div className="w-full sm:w-[500px]">
+      <div className="mb-8 text-center">
+        <h1 className="mb-2 font-serif text-4xl font-bold">
+          <span className="text-primary dark:text-primary-dark">RedwoodSDK</span>{' '}
+          <span className="text-text dark:text-text-dark">Todos</span>
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300">
+          {ctx.user ? `Welcome back, ${ctx.user.username}!` : 'Sign in to access your todos'}
+        </p>
+      </div>
+      <div className="space-y-3">
+        {ctx.user ? (
+          <>
+            <a href={link('/todos/simple')} className="block">
+              <Button type="button" variant="secondary" className="h-12 w-full">
+                Simple Todos
               </Button>
             </a>
-          )}
-        </div>
-        {ctx.user && (
-          <div className="mt-6 text-center">
-            <form action={link('/user/logout')}>
-              <Button type="submit" variant="secondary" className="px-4 py-2 text-sm">
-                Logout
+            <a href={link('/todos')} className="block">
+              <Button type="button" className="h-12 w-full">
+                Fancy Todos
               </Button>
-            </form>
-          </div>
-        )}
-        <div className="mt-8 text-center">
-          <a href={link('/realtime')} className="block">
-            <Button type="button" variant="secondary" className="h-10 w-full">
-              🚀 Realtime Demo
+            </a>
+          </>
+        ) : (
+          <a href={link('/user/login')} className="block">
+            <Button type="button" className="h-11 w-full">
+              Sign In
             </Button>
           </a>
-        </div>
-        <div className="mt-4 text-center">
-          <a
-            href="https://github.com/aurorascharff/redwoodsdk-demo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
-          >
-            <GitHubIcon className="h-3 w-3" />
-            Source
-          </a>
-        </div>
+        )}
       </div>
-    </ViewTransition>
+      {ctx.user && (
+        <div className="mt-6 text-center">
+          <form action={link('/user/logout')}>
+            <Button type="submit" variant="secondary" className="px-4 py-2 text-sm">
+              Logout
+            </Button>
+          </form>
+        </div>
+      )}
+      <div className="mt-8 text-center">
+        <a href={link('/realtime')} className="block">
+          <Button type="button" variant="secondary" className="h-10 w-full">
+            🚀 Realtime Demo
+          </Button>
+        </a>
+      </div>
+      <div className="mt-4 text-center">
+        <a
+          href="https://github.com/aurorascharff/redwoodsdk-demo"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-xs text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+        >
+          <GitHubIcon className="h-3 w-3" />
+          Source
+        </a>
+      </div>
+    </div>
   );
 }
