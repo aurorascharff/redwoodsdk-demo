@@ -52,7 +52,7 @@ export async function RealtimePage() {
 function AnimatedBackground({ colors }: { colors: string }) {
   return (
     <div
-      className="fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5"
+      className={cn('fixed inset-0 h-full animate-pulse bg-gradient-to-br opacity-5', colors)}
       style={{
         animationDuration: '4s',
         background: `linear-gradient(45deg, ${colors.replace('from-', '').replace('via-', ', ').replace('to-', ', ')})`,
