@@ -194,3 +194,15 @@ The attempt to reproduce the issue with HMR alone proved difficult. It's now cle
 2.  **State Instability:** The context-switching chaos introduced by HMR.
 
 The stress test has been reinstated to its previous state (a client-side component calling a `noOp` server function, triggering a fire-and-forget database middleware) to provide a reliable environment for debugging the HMR interaction.
+
+## 11. Final Breakthrough: Identifying the Orphaned Promise
+
+A direct code inspection revealed the likely source of the "stale promise": a `deferred` promise pattern within the SDK's core `runWithRequestInfo` function.
+
+-   **Discovery:** The `requestInfo` implementation uses a module-level deferred promise (`requestInfoDeferred`) that is resolved whenever a new request context is run. The hypothesis is that during HMR, the entire module is reloaded, but in-flight requests may still hold references to promises from the *previous* module incarnation. When these orphaned promises are eventually resolved or garbage-collected by the runtime, it happens outside their original context, triggering the error.
+
+-   **Validation:** Manually commenting out `requestInfoDeferred.resolve()` in `node_modules` immediately stopped the "cross-request promise resolution" error. However, this introduced a new, predictable race condition (`Cannot set properties of undefined (setting DB)`), as other parts of the code rely on this deferred promise to ensure the request context is available before they execute. This experiment confirms that the deferred promise is the root cause.
+
+-   **Path Forward:** Two solutions are possible:
+    1.  **Pragmatic Fix (Path A):** Remove the `requestInfoDeferred` pattern entirely from the SDK. This is a direct fix for the identified problem but may require careful management of the new race condition it introduces. It doesn't solve the broader class of issues related to background tasks.
+    2.  **Robust Fix (Path B):** Implement a system to track background promises and pass them to `ctx.waitUntil()`. This is the idiomatic Cloudflare Workers solution for managing tasks that might outlive the response. It would involve creating a mechanism to register promises against the current request context and ensuring they are passed to `waitUntil()` before the handler finishes. This would solve not only this specific issue but also make the entire framework more resilient to HMR and background processing.
