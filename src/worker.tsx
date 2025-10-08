@@ -17,6 +17,7 @@ import SimpleTodosPage from './app/pages/todos/SimpleTodosPage';
 import { sessionMiddleware } from './session/sessionMiddleware';
 import type { Session } from './session/durableObject';
 export { SessionDurableObject } from './session/durableObject';
+
 export { ReactionsDurableObject } from './app/pages/realtime/reactionsDurableObject';
 export { RealtimeDurableObject } from 'rwsdk/realtime/durableObject';
 
@@ -30,17 +31,33 @@ export default defineApp([
   // Middleware
   setCommonHeaders(),
   sessionMiddleware,
-  //function stressTestMiddleware() {
-  //  getDb().$queryRaw`
-  //    WITH RECURSIVE cnt(x) AS (
-  //      SELECT 1
-  //      UNION ALL
-  //      SELECT x+1 FROM cnt
-  //      LIMIT 2000000
-  //    )
-  //    SELECT count(*) FROM cnt
-  //  `;
-  //},
+  async function stressTestMiddleware() {
+    // Fire-and-forget the database operations. We don't await this IIFE.
+    // This allows the request to continue immediately, while the DB work
+    // happens in the background. This is a deliberate attempt to trigger
+    // the cross-request promise resolution error.
+    (async () => {
+      try {
+        // Create 100 individual create promises to execute in parallel.
+        const createPromises = Array.from({ length: 100 }, (_, i) =>
+          getDb().todo.create({
+            data: {
+              title: `stress-test-promise-all-${crypto.randomUUID()}-${i}`,
+            },
+          }),
+        );
+        const createdTodos = await Promise.all(createPromises);
+
+        // Create 100 individual delete promises to clean up.
+        const deletePromises = createdTodos.map(todo =>
+          getDb().todo.delete({ where: { id: todo.id } }),
+        );
+        await Promise.all(deletePromises);
+      } catch (error) {
+        console.error('Fire-and-forget stress test failed:', error);
+      }
+    })();
+  },
   async function getUserMiddleware({ ctx }) {
     if (ctx.session?.userId) {
       ctx.user = await getDb().user.findUnique({
