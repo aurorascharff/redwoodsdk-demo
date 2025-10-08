@@ -37,15 +37,21 @@ export default defineApp([
     // the cross-request promise resolution error.
     (async () => {
       try {
-        const newTodo = await db.todo.create({
-          data: {
-            title: `stress-test-todo-${crypto.randomUUID()}`,
-          },
+        const batchId = crypto.randomUUID();
+        const todosToCreate = Array.from({ length: 100 }, (_, i) => ({
+          title: `stress-test-bulk-${batchId}-${i}`,
+        }));
+
+        await db.todo.createMany({
+          data: todosToCreate,
         });
-        console.log('Created todo:', newTodo);
-        await new Promise(resolve => setTimeout(resolve, 100));
-        await db.todo.delete({
-          where: { id: newTodo.id },
+
+        await db.todo.deleteMany({
+          where: {
+            title: {
+              startsWith: `stress-test-bulk-${batchId}`,
+            },
+          },
         });
       } catch (error) {
         console.error('Fire-and-forget stress test failed:', error);

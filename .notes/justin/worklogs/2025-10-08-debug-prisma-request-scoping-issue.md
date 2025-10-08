@@ -102,3 +102,16 @@ This attempt will test this by intentionally creating "orphaned" promises. The s
     2.  The `db.todo.create()` and `db.todo.delete()` calls will be wrapped in an immediately-invoked `async` function without awaiting the function itself. This will cause the database operations to run in the background, detached from the request lifecycle.
 
 -   **Expected Outcome:** This should reliably trigger the "cross-request promise resolution" warning. If it does, it will confirm that the core issue is related to promise resolution timing and not necessarily just database contention. If it *doesn't* trigger the error, it would be a very surprising result, suggesting something more complex is at play.
+
+## 9. Attempt #6: Bulk Operations to Stress the Query Engine
+
+The fire-and-forget strategy with single `create`/`delete` operations failed to reproduce the error. The console logging revealed that these operations were completing almost instantaneously, likely not creating enough sustained load to trigger a race condition in Prisma's batching scheduler.
+
+The new hypothesis is that a much heavier, longer-running database operation is required to keep the query engine busy long enough for the context-switching issue to occur.
+
+-   **Implementation:**
+    1.  The `stressTestMiddleware` will be modified to perform bulk database operations.
+    2.  Inside the non-awaited, "fire-and-forget" async function, it will now use `db.todo.createMany` to insert a payload of 100 new todo records.
+    3.  This is immediately followed by a `db.todo.deleteMany` call to clean up the newly created records, ensuring the database state remains clean.
+
+-   **Expected Outcome:** This significantly heavier workload should increase the time Prisma's query engine spends processing a single request's operations. This sustained load makes it much more likely that the promises for these bulk operations will resolve after the original request context has been torn down, finally providing a reliable reproduction of the error.
