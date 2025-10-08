@@ -26,7 +26,7 @@ export async function RealtimePage() {
   const currentThemeData = themes[themeState.currentTheme as Theme];
 
   return (
-    <div>
+    <div className="w-full">
       <title>Realtime</title>
       <div className="relative w-full flex-col">
         <AnimatedBackground colors={currentThemeData.colors} />
