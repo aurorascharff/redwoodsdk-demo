@@ -121,3 +121,21 @@ The new hypothesis is that a much heavier, longer-running database operation is 
 The initial bulk-operation attempt failed with a `D1_ERROR: LIKE or GLOB pattern too complex`. This was caused by the `deleteMany` call using a `startsWith` filter, which Prisma translates into a `LIKE` query that D1's SQLite engine cannot handle.
 
 -   **Refined Implementation:** To work around this, the `deleteMany` operation was changed. Instead of using `startsWith`, it now uses a `where: { title: { in: [...] } }` clause. The array of exact titles is generated in memory first, used for the `createMany` call, and then re-used for the `deleteMany` call. This generates a simpler `DELETE ... WHERE title IN (...)` query that D1 can process.
+
+## 10. Attempt #7: `Promise.all` for High-Concurrency Load
+
+The bulk operation approach, while avoiding the D1 `LIKE` limitation, introduced a new problem: excessive `prisma:warn` noise in the console because D1 de-sugars `createMany`/`deleteMany` into individual queries. More importantly, it still failed to reproduce the bug.
+
+The new strategy is to create a similar high-concurrency load, but without using the specific Prisma methods that generate warnings.
+
+-   **Implementation:**
+    1.  The `stressTestMiddleware` will be modified again.
+    2.  Instead of a single `createMany` call, it will now create an array of 100 individual `db.todo.create()` promises.
+    3.  It will then use `await Promise.all()` to execute all 100 create operations concurrently.
+    4.  After creation, it will gather the IDs of the new todos and use another `Promise.all` with `db.todo.delete()` to clean them up concurrently.
+
+-   **Expected Outcome:** This approach still generates a massive, parallelized load on the database to stress the query batching engine. However, by using standard single-operation methods, it should avoid the D1 transaction warnings, giving us a cleaner environment to observe the actual bug if it occurs. This is a more direct simulation of many concurrent users interacting with the database at once.
+
+### 7a. Sub-Attempt: Maximizing Request Turnover
+
+As a final tweak to the `Promise.all` strategy, the 50ms artificial delay was removed from the `noOp` server function. The goal is to make the request handler itself complete as quickly as possible, creating the largest possible time window between the request context being torn down and the background "fire-and-forget" database promises resolving.
