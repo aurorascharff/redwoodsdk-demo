@@ -140,7 +140,7 @@ The new strategy is to create a similar high-concurrency load, but without using
 
 As a final tweak to the `Promise.all` strategy, the 50ms artificial delay was removed from the `noOp` server function. The goal is to make the request handler itself complete as quickly as possible, creating the largest possible time window between the request context being torn down and the background "fire-and-forget" database promises resolving.
 
-## 8. Breakthrough: Reproducing the HMR Race Condition
+## 8. Finding: Reproducing the HMR Race Condition
 
 **Success.** The issue has been reliably reproduced.
 
@@ -195,7 +195,7 @@ The attempt to reproduce the issue with HMR alone proved difficult. It's now cle
 
 The stress test has been reinstated to its previous state (a client-side component calling a `noOp` server function, triggering a fire-and-forget database middleware) to provide a reliable environment for debugging the HMR interaction.
 
-## 11. Final Breakthrough: Identifying the Orphaned Promise
+## 11. Finding: Identifying the Orphaned Promise
 
 A direct code inspection revealed the likely source of the "stale promise": a `deferred` promise pattern within the SDK's core `runWithRequestInfo` function.
 
@@ -233,3 +233,49 @@ To create a definitive test without HMR, a new strategy was devised to simulate 
     4.  The `PrismaClient` in `src/db.ts` will be instantiated with this "slow" adapter proxy instead of the real one.
 
 -   **Expected Outcome:** This will make every database query appear to take at least 500ms from the perspective of Prisma's query engine. When combined with the "fire-and-forget" stress test middleware, this will create a perfect scenario to reproduce the race condition. A request will fire off a query, its handler will complete, and well before the 500ms delay is over, another request will have established a new context. When the delayed query finally resolves, it will do so in the wrong context, definitively proving the vulnerability and providing the final justification for a `waitUntil`-based solution.
+
+## 16. Finding: The HMR Context-Tearing Race Condition
+
+Even with the `requestInfoDeferred` promise removed from the SDK, a final, critical race condition was identified, occurring exclusively during HMR under high concurrency.
+
+-   **Problem:** When HMR triggers, it can tear down the `AsyncLocalStorage` context for an in-flight request. If middleware (like `setupDb`) for that now-orphaned request attempts to write to the context (e.g., `setupDb` setting `requestInfo.ctx.db`) to fail with a `TypeError: Cannot set properties of undefined`, crashing the dev server. An initial attempt to fix this by having the `requestInfo` proxy return an empty object `{}` proved insufficient, as it simply pushed the "undefined" error downstream.
+
+-   **Solution: Short-Circuiting Stale Requests:** The definitive solution was to make the SDK resilient to this exact failure mode.
+    1.  **Throw on Write:** The `setter` within the `requestInfo` proxy was modified. It now detects if the `AsyncLocalStorage` store is missing. If so, it throws a custom `StaleHmrRequestError`.
+    2.  **Catch and Gracefully Exit:** The main request handler in `sdk/src/runtime/worker.tsx` was wrapped in a `try...catch` block. It specifically catches the `StaleHmrRequestError`, logs a warning, and immediately returns a `204 No Content` response.
+
+-   **Outcome:** This change makes the framework robust against the HMR race condition. Instead of crashing, the server now identifies and gracefully terminates orphaned requests, ensuring development stability. This fix, combined with the removal of the original `requestInfoDeferred` promise, was included in a new test release of the SDK.
+
+---
+
+## PR for Demo App Update
+
+### Title:
+chore: Update to latest rwsdk test release for HMR stability
+
+### Description:
+
+Hi Aurora o/
+
+This PR upgrades to the latest `rwsdk` test release.
+
+*   **What it fixes:** This new release is purpose-built to solve the HMR race condition and make the dev server stable. It contains two key changes:
+    1.  **Removal of an Internal Leaky Promise:** We found a specific promise inside the SDK's request handling that was being orphaned during HMR, causing instability. It has been removed.
+    2.  **Graceful HMR Handling:** The SDK now detects when a request has been orphaned by an HMR update. Instead of crashing, it now gracefully terminates that broken request, logs a warning, and keeps the server running.
+
+This should make the development experience completely stable, even with the stress test running and frequent file changes.
+
+#### ⚠️ **Important: How to Test**
+
+To avoid any "ghost" caching issues from Vite or `node_modules` and make sure you're running with a completely fresh environment, please follow these steps exactly:
+
+1.  **Shut down** any `pnpm dev` processes you have running and close their terminal windows/tabs.
+2.  Then, in your project directory, run the following commands to start fresh:
+
+```sh
+rm -rf node_modules
+pnpm install
+pnpm dev
+```
+
+Let me know how it goes!
